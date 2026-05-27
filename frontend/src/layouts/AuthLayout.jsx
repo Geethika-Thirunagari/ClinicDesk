@@ -74,7 +74,7 @@ const AnalyticsCard = ({ title, value, subtitle, icon: Icon, delay, className })
 );
 
 const AuthLayout = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('clinicdesk-theme') === 'dark');
   const controls = useAnimation();
 
   useEffect(() => {
@@ -83,6 +83,16 @@ const AuthLayout = () => {
       transition: { repeat: Infinity, duration: 20, ease: 'linear', repeatType: 'reverse' }
     });
   }, [controls]);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('clinicdesk-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('clinicdesk-theme', 'light');
+    }
+  }, [isDarkMode]);
 
   return (
     <div className={cn(
@@ -122,14 +132,14 @@ const AuthLayout = () => {
         {/* ECG Animation */}
         <ECGLine />
 
-        <div className="relative z-10 flex flex-col h-full p-8 xl:p-12">
+        <div className="relative z-10 flex flex-col h-full px-8 py-9 xl:px-12 xl:py-10">
           
           {/* Header Branding */}
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 xl:gap-4 mb-8 xl:mb-12 shrink-0"
+            className="flex items-center gap-3 xl:gap-4 mb-6 xl:mb-8 shrink-0"
           >
             <div className="w-12 h-12 xl:w-14 xl:h-14 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/40 relative overflow-hidden group">
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -141,14 +151,14 @@ const AuthLayout = () => {
           </motion.div>
 
           {/* Main Hero Content */}
-          <div className="flex-1 flex flex-col justify-center relative z-10 max-w-xl mx-auto lg:mx-0 min-h-0">
+          <div className="flex-1 flex flex-col justify-start pt-4 xl:pt-6 relative z-10 max-w-xl mx-auto lg:mx-0 min-h-0">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               className="shrink-0"
             >
-              <div className="inline-flex items-center gap-2 xl:gap-3 px-3 py-1.5 xl:px-4 xl:py-2 rounded-full bg-white/5 border border-white/10 mb-6 xl:mb-8 backdrop-blur-md">
+                <div className="inline-flex items-center gap-2 xl:gap-3 px-3 py-1.5 xl:px-4 xl:py-2 rounded-full bg-white/5 border border-white/10 mb-4 xl:mb-5 backdrop-blur-md">
                 <span className="flex h-2 w-2 xl:h-2.5 xl:w-2.5 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-full w-full bg-green-500"></span>
@@ -156,20 +166,20 @@ const AuthLayout = () => {
                 <span className="text-xs xl:text-sm font-medium text-blue-200 tracking-wide uppercase">All Systems Operational</span>
               </div>
               
-              <h1 className="text-4xl xl:text-5xl 2xl:text-6xl font-bold text-white mb-4 xl:mb-6 leading-[1.1] xl:leading-tight">
+              <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-bold text-white mb-3 xl:mb-4 leading-[1.1] xl:leading-tight">
                 Healthcare,<br/>
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400">Intelligently Unified.</span>
               </h1>
-              <p className="text-base xl:text-lg text-slate-300 max-w-md font-light leading-relaxed mb-6 xl:mb-8">
+              <p className="text-sm xl:text-base text-slate-300 max-w-md font-light leading-relaxed mb-4 xl:mb-6">
                 Experience the enterprise standard in clinical management. Streamline scheduling, automate billing, and elevate patient care.
               </p>
             </motion.div>
 
             {/* Analytics Stats Cards Grid */}
-            <div className="grid grid-cols-2 gap-3 xl:gap-4 relative shrink-0">
+            <div className="grid grid-cols-2 gap-3 xl:gap-4 relative shrink-0 auto-rows-fr">
               <AnalyticsCard title="Active Providers" value="12+" subtitle="Online now" icon={Stethoscope} delay={0.4} />
-              <AnalyticsCard title="Patients Managed" value="1,248+" subtitle="+5% this week" icon={Users} delay={0.5} className="mt-4 xl:mt-6" />
-              <AnalyticsCard title="Efficiency Rate" value="98%" subtitle="Optimal" icon={TrendingUp} delay={0.6} className="-mt-4 xl:-mt-6" />
+              <AnalyticsCard title="Patients Managed" value="1,248+" subtitle="+5% this week" icon={Users} delay={0.5} />
+              <AnalyticsCard title="Efficiency Rate" value="98%" subtitle="Optimal" icon={TrendingUp} delay={0.6} />
               <AnalyticsCard title="Appointments" value="Live" subtitle="Tracking active" icon={Calendar} delay={0.7} />
               
               {/* Decorative Floating Elements around cards */}
@@ -183,16 +193,16 @@ const AuthLayout = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-auto pt-4 xl:pt-6 border-t border-white/10 shrink-0"
+            className="mt-auto pt-6 xl:pt-8 border-t border-white/10 shrink-0"
           >
-            <div className="flex items-center justify-between gap-2 xl:gap-4 overflow-hidden">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 xl:gap-4 overflow-hidden">
               {[
                 { icon: Lock, label: "Secure & Encrypted" },
                 { icon: ShieldCheck, label: "HIPAA Compliant" },
                 { icon: Headphones, label: "24/7 Support" },
                 { icon: Cpu, label: "AI-Powered Insights" },
               ].map((badge, idx) => (
-                <div key={idx} className="flex items-center gap-1.5 xl:gap-2 group cursor-default min-w-0">
+                <div key={idx} className="flex items-center gap-1.5 xl:gap-2 group cursor-default min-w-0 justify-start">
                   <div className="p-1.5 xl:p-2 rounded-lg bg-white/5 group-hover:bg-blue-500/20 transition-colors border border-white/5 shrink-0">
                     <badge.icon className="text-slate-400 group-hover:text-blue-400 transition-colors w-3.5 h-3.5 xl:w-4 xl:h-4" />
                   </div>

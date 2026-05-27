@@ -75,7 +75,7 @@ export default function DoctorAnalytics() {
             <select 
               value={timeRange} 
               onChange={(e) => setTimeRange(e.target.value)}
-              className="appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-350 rounded-xl py-2.5 pl-4 pr-10 text-xs font-bold shadow-sm cursor-pointer focus:ring-2 focus:ring-blue-500 outline-none"
+              className="appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl py-2.5 pl-4 pr-10 text-xs font-bold shadow-sm cursor-pointer focus:ring-2 focus:ring-blue-500 outline-none"
             >
               <option>Last 30 Days</option>
               <option>6 Months</option>
@@ -165,7 +165,7 @@ export default function DoctorAnalytics() {
             </ResponsiveContainer>
           </div>
           
-          <div className="space-y-2 mt-4 text-xs font-semibold text-slate-650 dark:text-slate-350">
+          <div className="space-y-2 mt-4 text-xs font-semibold text-slate-600 dark:text-slate-300">
             {diagnosisData.map((d, i) => (
               <div key={i} className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
@@ -208,7 +208,7 @@ export default function DoctorAnalytics() {
             {/* Age cohort breakdown */}
             <div className="space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Age Bracket Distribution</h3>
-              <div className="space-y-3 font-semibold text-xs text-slate-650 dark:text-slate-350">
+              <div className="space-y-3 font-semibold text-xs text-slate-600 dark:text-slate-300">
                 {demographicsData.age.map((a, idx) => (
                   <div key={idx} className="space-y-1.5">
                     <div className="flex justify-between items-center">

@@ -99,9 +99,9 @@ export default function ReceptionFeedback() {
               <div>
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
                 <h3 className="text-3xl font-extrabold text-slate-800 dark:text-white mt-2 leading-none">{stat.value}</h3>
-                <p className="text-xs font-semibold text-slate-450 mt-2.5">{stat.sub}</p>
+                <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5">{stat.sub}</p>
               </div>
-              <div className="p-3 bg-slate-50 dark:bg-slate-950 rounded-xl text-slate-450"><stat.icon size={20} className={stat.color} /></div>
+              <div className="p-3 bg-slate-50 dark:bg-slate-950 rounded-xl text-slate-400"><stat.icon size={20} className={stat.color} /></div>
             </div>
           </div>
         ))}
@@ -147,7 +147,7 @@ export default function ReceptionFeedback() {
               </ResponsiveContainer>
             </div>
             
-            <div className="space-y-2.5 flex-1 w-full text-xs font-semibold text-slate-650 dark:text-slate-350">
+            <div className="space-y-2.5 flex-1 w-full text-xs font-semibold text-slate-600 dark:text-slate-300">
               {sentimentBreakdown.map((s, idx) => (
                 <div key={idx} className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
@@ -173,7 +173,7 @@ export default function ReceptionFeedback() {
           
           <form onSubmit={handleCreateMockFeedback} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Select Recent Visitor</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Select Recent Visitor</label>
               <select 
                 value={selectedPatientId}
                 onChange={(e) => setSelectedPatientId(e.target.value)}
@@ -187,7 +187,7 @@ export default function ReceptionFeedback() {
             </div>
             
             <div>
-              <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Survey Template</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Survey Template</label>
               <select 
                 value={surveyType}
                 onChange={(e) => setSurveyType(e.target.value)}
@@ -224,7 +224,7 @@ export default function ReceptionFeedback() {
           <div className="space-y-4 max-h-[280px] overflow-y-auto pr-2 custom-scrollbar">
             {comments.map((c, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }}
-                className="p-4 bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-850 rounded-xl relative overflow-hidden group hover:shadow-sm transition-all"
+                className="p-4 bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-700 rounded-xl relative overflow-hidden group hover:shadow-sm transition-all"
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-2">
@@ -240,7 +240,7 @@ export default function ReceptionFeedback() {
                     ))}
                   </div>
                 </div>
-                <p className="text-xs font-medium text-slate-600 dark:text-slate-350 leading-relaxed font-sans">{c.text}</p>
+                <p className="text-xs font-medium text-slate-600 dark:text-slate-300 leading-relaxed font-sans">{c.text}</p>
               </motion.div>
             ))}
           </div>

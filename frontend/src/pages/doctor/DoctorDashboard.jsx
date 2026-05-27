@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, Calendar, Clock, Activity, Star, ChevronRight, 
-  Video, FileText, CheckCircle, Quote 
+  Video, FileText, CheckCircle, Quote, Moon, Sun 
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
@@ -36,6 +36,17 @@ const StatCard = ({ title, value, subtext, icon: Icon, color, delay }) => (
 
 const DoctorDashboard = () => {
   const [activeVoice, setActiveVoice] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('clinicdesk-theme') === 'dark');
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('clinicdesk-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('clinicdesk-theme', 'light');
+    }
+  }, [isDarkMode]);
 
   // Simple auto-rotate for voices widget
   React.useEffect(() => {
@@ -54,7 +65,15 @@ const DoctorDashboard = () => {
           <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Doctor Workspace</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Here is your summary for today, Dr. Smith.</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setIsDarkMode((prev) => !prev)}
+            className="p-2 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:shadow-md transition-all"
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
             className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 dark:bg-slate-700 text-white rounded-xl font-semibold text-sm shadow-md transition-all">
             <Video size={18} /> Start Teleconsult

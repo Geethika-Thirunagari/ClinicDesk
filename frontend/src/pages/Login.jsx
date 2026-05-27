@@ -131,13 +131,13 @@ const Login = () => {
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       let user = null;
-      if (formData.email.includes('admin')) {
+      if (activeRole.id === 'admin') {
         user = { id: 1, name: 'Admin User', role: 'admin' };
-      } else if (formData.email.includes('doctor')) {
+      } else if (activeRole.id === 'doctor') {
         user = { id: 2, name: 'Dr. Sarah Smith', role: 'doctor' };
-      } else if (formData.email.includes('desk')) {
+      } else if (activeRole.id === 'reception') {
         user = { id: 4, name: 'Receptionist Jane', role: 'receptionist' }; 
-      } else if (formData.email.includes('patient')) {
+      } else if (activeRole.id === 'patient') {
         user = { id: 3, name: 'John Doe', role: 'patient' };
       }
 

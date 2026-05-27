@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, Activity, FileText, CreditCard, Star, Bell, Clock, 
-  ChevronRight, Pill, Heart, TrendingUp 
+  ChevronRight, Pill, Heart, TrendingUp, Moon, Sun 
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useNavigate } from 'react-router-dom';
@@ -25,14 +25,35 @@ const vitals = [
 
 const PatientDashboard = () => {
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('clinicdesk-theme') === 'dark');
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('clinicdesk-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('clinicdesk-theme', 'light');
+    }
+  }, [isDarkMode]);
 
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
       
       {/* Header */}
-      <div>
-        <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Welcome back, Alice 👋</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Here's your health summary for today.</p>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Welcome back, Alice 👋</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Here's your health summary for today.</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setIsDarkMode((prev) => !prev)}
+          className="p-2 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:shadow-md transition-all"
+          aria-label="Toggle dark mode"
+        >
+          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
       </div>
 
       {/* Quick Actions */}

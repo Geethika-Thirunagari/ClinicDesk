@@ -95,14 +95,14 @@ export default function ReceptionCheckin() {
         ].map((s) => (
           <div key={s.num} className="flex items-center gap-2 text-xs font-bold">
             <div className={cn("w-6 h-6 rounded-full flex items-center justify-center border", 
-              step === s.num ? "bg-blue-600 border-blue-650 text-white shadow-sm" :
+              step === s.num ? "bg-blue-600 border-blue-700 text-white shadow-sm" :
               step > s.num ? "bg-emerald-500 border-emerald-600 text-white" :
-              "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-850 text-slate-400"
+              "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-400"
             )}>
               {s.num}
             </div>
             <span className={cn(step >= s.num ? "text-slate-700 dark:text-white" : "text-slate-400")}>{s.label}</span>
-            {s.num < 3 && <ChevronRight size={14} className="text-slate-350" />}
+            {s.num < 3 && <ChevronRight size={14} className="text-slate-400" />}
           </div>
         ))}
       </div>
@@ -126,7 +126,7 @@ export default function ReceptionCheckin() {
 
               <form onSubmit={handleSearch} className="flex gap-2.5">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-450" size={18} />
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   <input 
                     type="text" 
                     placeholder="Search e.g. Alice Johnson, 555-0192, PT-1024..."
@@ -147,20 +147,20 @@ export default function ReceptionCheckin() {
                     <div 
                       key={p.id}
                       onClick={() => handleSelectPatient(p)}
-                      className="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-950/60 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-850 rounded-2xl flex items-center justify-between transition-all cursor-pointer shadow-sm group"
+                      className="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-950/60 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-between transition-all cursor-pointer shadow-sm group"
                     >
                       <div className="flex items-center gap-3.5">
                         <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600"><User size={20} /></div>
                         <div>
                           <h4 className="font-extrabold text-sm text-slate-800 dark:text-white group-hover:text-blue-600 transition-colors leading-tight">{p.name}</h4>
-                          <p className="text-xs text-slate-450 mt-1 font-mono">{p.id} • DOB: {p.dob} (Age {p.age})</p>
+                          <p className="text-xs text-slate-400 mt-1 font-mono">{p.id} • DOB: {p.dob} (Age {p.age})</p>
                         </div>
                       </div>
                       <ChevronRight size={16} className="text-slate-400" />
                     </div>
                   ))
                 ) : searchQuery && (
-                  <div className="p-8 text-center text-slate-405 border border-dashed border-slate-200 dark:border-slate-850 rounded-xl text-xs font-medium">
+                  <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium">
                     No records matched search parameters. Check details or register as a new client walk-in.
                   </div>
                 )}
@@ -177,27 +177,27 @@ export default function ReceptionCheckin() {
                 </button>
                 <div>
                   <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-0.5 leading-none">Check-In Verification & Routing</h2>
-                  <p className="text-xs font-semibold text-slate-450">Review identity profile and select medical routing destinations.</p>
+                  <p className="text-xs font-semibold text-slate-400 dark:text-slate-400">Review identity profile and select medical routing destinations.</p>
                 </div>
               </div>
 
               {/* Bio summary */}
-              <div className="p-4 bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-850 rounded-2xl flex flex-col sm:flex-row justify-between gap-4 text-xs font-semibold">
+              <div className="p-4 bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-700 rounded-2xl flex flex-col sm:flex-row justify-between gap-4 text-xs font-semibold">
                 <div>
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Verifying Client profile</span>
-                  <h4 className="font-extrabold text-sm text-slate-850 dark:text-white mt-1 leading-none">{selectedPatient.name}</h4>
+                  <h4 className="font-extrabold text-sm text-slate-800 dark:text-white mt-1 leading-none">{selectedPatient.name}</h4>
                   <p className="text-slate-500 mt-1 font-mono">{selectedPatient.id} • Phone: {selectedPatient.phone}</p>
                 </div>
                 <div className="text-left sm:text-right shrink-0">
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Last Visit Registry</span>
-                  <p className="text-slate-800 dark:text-slate-350 mt-1 font-mono">{selectedPatient.lastVisit}</p>
+                  <p className="text-slate-800 dark:text-slate-300 mt-1 font-mono">{selectedPatient.lastVisit}</p>
                 </div>
               </div>
 
               {/* Selection inputs */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Assign Consulting Practitioner</label>
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Assign Consulting Practitioner</label>
                   <select 
                     value={selectedDoctor}
                     onChange={(e) => setSelectedDoctor(e.target.value)}
@@ -210,7 +210,7 @@ export default function ReceptionCheckin() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Visit Category classification</label>
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Visit Category classification</label>
                   <select 
                     value={visitType}
                     onChange={(e) => setVisitType(e.target.value)}
@@ -253,19 +253,19 @@ export default function ReceptionCheckin() {
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-slate-800 dark:text-white">Check-In Registry Complete!</h2>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-450 mt-1.5 leading-relaxed">
+                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
                     Patient <strong className="text-slate-700 dark:text-white">{selectedPatient.name}</strong> was assigned to <strong className="text-slate-700 dark:text-white">{selectedDoctor}</strong> queue segment.
                   </p>
                 </div>
 
                 {/* Queue ticket visualization */}
-                <div className="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-850 rounded-2xl p-5 border-dashed relative overflow-hidden">
+                <div className="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 border-dashed relative overflow-hidden">
                   <Ticket className="absolute -bottom-4 -right-4 w-20 h-20 text-slate-200 dark:text-slate-900 pointer-events-none" />
                   
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Queue Token Registry</span>
                   <div className="text-4xl font-extrabold text-blue-600 dark:text-blue-400 font-mono tracking-wider mt-1.5">{generatedToken}</div>
                   
-                  <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800/80 text-xs font-semibold text-slate-550 dark:text-slate-400">
+                  <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800/80 text-xs font-semibold text-slate-500 dark:text-slate-400">
                     <div className="text-left">
                       <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Clinic Dept</span>
                       <p className="mt-0.5 leading-none">Primary Care</p>

@@ -61,7 +61,7 @@ const Unauthorized = () => {
           </p>
           {user && (
             <p className="text-xs font-semibold text-slate-400 mt-2">
-              Logged in as: <span className="font-bold text-slate-600 dark:text-slate-350">{user.name}</span> (<span className="capitalize">{user.role}</span>)
+              Logged in as: <span className="font-bold text-slate-600 dark:text-slate-300">{user.name}</span> (<span className="capitalize">{user.role}</span>)
             </p>
           )}
         </div>

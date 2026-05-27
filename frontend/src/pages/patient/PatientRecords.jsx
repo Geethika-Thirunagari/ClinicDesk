@@ -77,7 +77,7 @@ const PatientRecords = () => {
                 "px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all",
                 activeCategory === cat 
                   ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                  : "bg-white dark:bg-slate-850 border-slate-250 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50"
+                  : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50"
               )}
             >
               {cat === 'All' ? 'All Records' : cat}
@@ -116,14 +116,14 @@ const PatientRecords = () => {
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Prescribed by: <span className="font-semibold">{record.doctor}</span></p>
 
                 {/* Short notes preview */}
-                <p className="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-100 dark:border-slate-850 mt-4 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-100 dark:border-slate-800 mt-4 line-clamp-2 leading-relaxed">
                   {record.notes}
                 </p>
               </div>
 
               {/* Actions Footer */}
               <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-4 text-xs font-semibold text-slate-400">
-                <span className="flex items-center gap-1.5 font-medium font-mono text-slate-500 dark:text-slate-450">
+                <span className="flex items-center gap-1.5 font-medium font-mono text-slate-500 dark:text-slate-400">
                   <Clock size={14} className="text-slate-400" />
                   {record.date}
                 </span>
@@ -131,7 +131,7 @@ const PatientRecords = () => {
                 <div className="flex gap-2">
                   <button 
                     onClick={() => setSelectedRecord(record)}
-                    className="p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-350 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-colors"
+                    className="p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-colors"
                   >
                     <Eye size={15} /> View Notes
                   </button>
@@ -146,7 +146,7 @@ const PatientRecords = () => {
             </motion.div>
           ))
         ) : (
-          <div className="col-span-full p-12 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-850 rounded-2xl">
+          <div className="col-span-full p-12 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
             No medical records found. Try adjusting your search query.
           </div>
         )}
@@ -183,18 +183,18 @@ const PatientRecords = () => {
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{selectedRecord.type}</span>
                 </div>
 
-                <h3 className="text-xl font-extrabold text-slate-850 dark:text-white leading-snug">
+                <h3 className="text-xl font-extrabold text-slate-800 dark:text-white leading-snug">
                   {selectedRecord.name}
                 </h3>
 
-                <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-850">
+                <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Assigned Doctor</span>
                     <span className="text-slate-800 dark:text-white font-extrabold mt-0.5 block">{selectedRecord.doctor}</span>
                   </div>
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Record Date</span>
-                    <span className="text-slate-850 dark:text-white font-extrabold mt-0.5 block font-mono">{selectedRecord.date}</span>
+                    <span className="text-slate-800 dark:text-white font-extrabold mt-0.5 block font-mono">{selectedRecord.date}</span>
                   </div>
                   <div>
                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Record ID</span>
@@ -209,7 +209,7 @@ const PatientRecords = () => {
                 {/* Details Notes */}
                 <div className="space-y-2">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Clinical Notes & Assessments</span>
-                  <div className="text-sm text-slate-600 dark:text-slate-350 leading-relaxed bg-blue-50/20 dark:bg-blue-500/5 border border-blue-50/50 dark:border-blue-500/10 p-4 rounded-2xl">
+                  <div className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-blue-50/20 dark:bg-blue-500/5 border border-blue-50/50 dark:border-blue-500/10 p-4 rounded-2xl">
                     {selectedRecord.notes}
                   </div>
                 </div>

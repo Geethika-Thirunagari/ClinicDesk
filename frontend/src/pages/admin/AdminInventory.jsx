@@ -78,7 +78,7 @@ export default function AdminInventory() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-5 hover:shadow-md transition-all flex justify-between items-center">
           <div>
-            <p className="text-xs font-bold text-slate-450 uppercase tracking-wider">Total SKU Categories</p>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total SKU Categories</p>
             <h3 className="text-3xl font-extrabold text-slate-800 dark:text-white mt-1.5 leading-none">{inventory.length} SKUs</h3>
             <span className="text-[10px] text-slate-400 font-semibold block mt-2">Active database entries</span>
           </div>
@@ -89,16 +89,16 @@ export default function AdminInventory() {
           criticalItems.length > 0 ? "border-rose-200/50 bg-rose-50/10" : ""
         )}>
           <div>
-            <p className="text-xs font-bold text-slate-450 uppercase tracking-wider">Low Stock Warnings</p>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Low Stock Warnings</p>
             <h3 className={cn("text-3xl font-extrabold mt-1.5 leading-none", criticalItems.length > 0 ? "text-rose-500" : "text-slate-800 dark:text-white")}>{criticalItems.length} Alarms</h3>
             <span className="text-[10px] text-slate-400 font-semibold block mt-2">Items below safety margins</span>
           </div>
-          <div className={cn("p-3 rounded-xl", criticalItems.length > 0 ? "bg-rose-500/10 text-rose-500" : "bg-slate-50 dark:bg-slate-950 text-slate-450")}><AlertTriangle size={20} /></div>
+          <div className={cn("p-3 rounded-xl", criticalItems.length > 0 ? "bg-rose-500/10 text-rose-500" : "bg-slate-50 dark:bg-slate-950 text-slate-400")}><AlertTriangle size={20} /></div>
         </div>
 
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-5 hover:shadow-md transition-all flex justify-between items-center">
           <div>
-            <p className="text-xs font-bold text-slate-450 uppercase tracking-wider">Estimated Stock Value</p>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Estimated Stock Value</p>
             <h3 className="text-3xl font-extrabold text-slate-800 dark:text-white mt-1.5 leading-none">$14,845.00</h3>
             <span className="text-[10px] text-slate-400 font-semibold block mt-2">Valuation of physical stocks</span>
           </div>
@@ -113,7 +113,7 @@ export default function AdminInventory() {
           <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-4 flex flex-col sm:flex-row justify-between gap-4">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-450" size={16} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
               <input 
                 type="text" 
                 placeholder="Search SKU by name, ID, or supplier name..." 
@@ -148,7 +148,7 @@ export default function AdminInventory() {
             <div className="overflow-x-auto w-full">
               <table className="w-full text-left text-xs font-semibold text-slate-500 dark:text-slate-400 border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-100 dark:border-slate-800 text-[10px] font-extrabold text-slate-405 uppercase tracking-wider">
+                  <tr className="border-b border-slate-100 dark:border-slate-800 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
                     <th className="pb-3.5 pl-2">SKU ID</th>
                     <th className="pb-3.5">Name</th>
                     <th className="pb-3.5">Category</th>
@@ -158,13 +158,13 @@ export default function AdminInventory() {
                     <th className="pb-3.5 text-center">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-850">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                   {filteredInventory.length > 0 ? (
                     filteredInventory.map((item) => {
                       const isLow = item.stock < item.minStock;
                       return (
-                        <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-850/50 transition-colors">
-                          <td className="py-4 pl-2 font-mono font-bold text-blue-600 dark:text-blue-405">{item.id}</td>
+                        <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                          <td className="py-4 pl-2 font-mono font-bold text-blue-600 dark:text-blue-400">{item.id}</td>
                           <td className="py-4">
                             <div>
                               <div className="font-extrabold text-slate-800 dark:text-white">{item.name}</div>
@@ -172,11 +172,11 @@ export default function AdminInventory() {
                             </div>
                           </td>
                           <td className="py-4">
-                            <span className="text-[10px] font-extrabold bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded uppercase tracking-wider text-slate-550 dark:text-slate-450">
+                            <span className="text-[10px] font-extrabold bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded uppercase tracking-wider text-slate-500 dark:text-slate-400">
                               {item.category === "Pharmaceuticals" ? "Pharmacy" : item.category}
                             </span>
                           </td>
-                          <td className={cn("py-4 font-extrabold font-mono", isLow ? "text-rose-500" : "text-slate-700 dark:text-slate-350")}>{item.stock} {item.unit}</td>
+                          <td className={cn("py-4 font-extrabold font-mono", isLow ? "text-rose-500" : "text-slate-700 dark:text-slate-300")}>{item.stock} {item.unit}</td>
                           <td className="py-4 font-mono text-slate-500">{item.minStock} {item.unit}</td>
                           <td className="py-4 font-mono text-slate-500">{item.cost}</td>
                           <td className="py-4 text-center">
@@ -192,7 +192,7 @@ export default function AdminInventory() {
                     })
                   ) : (
                     <tr>
-                      <td colSpan="7" className="py-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-850 rounded-xl">
+                      <td colSpan="7" className="py-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
                         No supply listings matched search query.
                       </td>
                     </tr>
@@ -214,7 +214,7 @@ export default function AdminInventory() {
             
             <form onSubmit={handleCreateRestockOrder} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Identify Supply SKU</label>
+                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Identify Supply SKU</label>
                 <select 
                   value={selectedItemId}
                   onChange={(e) => setSelectedItemId(e.target.value)}
@@ -228,7 +228,7 @@ export default function AdminInventory() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Restock Target volume</label>
+                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Restock Target volume</label>
                 <input 
                   type="number" 
                   value={restockQty}

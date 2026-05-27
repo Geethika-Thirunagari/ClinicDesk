@@ -69,7 +69,7 @@ const PatientAppointments = () => {
             "pb-3 text-sm font-bold transition-all relative outline-none",
             activeTab === 'upcoming' 
               ? "text-blue-600 dark:text-blue-400" 
-              : "text-slate-400 hover:text-slate-650"
+              : "text-slate-400 hover:text-slate-600"
           )}
         >
           Upcoming Visits ({upcoming.length})
@@ -83,7 +83,7 @@ const PatientAppointments = () => {
             "pb-3 text-sm font-bold transition-all relative outline-none",
             activeTab === 'past' 
               ? "text-blue-600 dark:text-blue-400" 
-              : "text-slate-400 hover:text-slate-650"
+              : "text-slate-400 hover:text-slate-600"
           )}
         >
           Past & Cancelled ({past.length})
@@ -151,7 +151,7 @@ const PatientAppointments = () => {
               </motion.div>
             ))
           ) : (
-            <div className="p-12 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-850 rounded-2xl">
+            <div className="p-12 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
               You have no upcoming appointments. Click "Book New Visit" to schedule one.
             </div>
           )
@@ -163,7 +163,7 @@ const PatientAppointments = () => {
                 initial={{ opacity: 0, y: 12 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: i * 0.05 }}
-                className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 dark:border-slate-850 shadow-sm rounded-2xl p-5 flex flex-col md:flex-row justify-between md:items-center gap-4"
+                className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 dark:border-slate-700 shadow-sm rounded-2xl p-5 flex flex-col md:flex-row justify-between md:items-center gap-4"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400">
@@ -196,7 +196,7 @@ const PatientAppointments = () => {
                   {apt.status === 'Completed' && (
                     <button 
                       onClick={() => navigate('/patient/book')}
-                      className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+                      className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
                     >
                       <RefreshCw size={12} /> Book Again
                     </button>
@@ -205,7 +205,7 @@ const PatientAppointments = () => {
               </motion.div>
             ))
           ) : (
-            <div className="p-12 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-850 rounded-2xl">
+            <div className="p-12 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
               No past visit history found.
             </div>
           )

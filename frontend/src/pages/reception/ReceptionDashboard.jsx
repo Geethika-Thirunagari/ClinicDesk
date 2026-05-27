@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Calendar, CreditCard, Clock, UserPlus, ChevronRight, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Users, Calendar, CreditCard, Clock, UserPlus, ChevronRight, AlertTriangle, CheckCircle, Moon, Sun } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +23,18 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
 
 const ReceptionDashboard = () => {
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('clinicdesk-theme') === 'dark');
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('clinicdesk-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('clinicdesk-theme', 'light');
+    }
+  }, [isDarkMode]);
+
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -30,10 +42,20 @@ const ReceptionDashboard = () => {
           <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Reception Desk</h1>
           <p className="text-sm text-slate-500 mt-1">Manage walk-ins, bookings, and patient flow.</p>
         </div>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => navigate('/reception/registration')}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold text-sm shadow-lg shadow-blue-500/30">
-          <UserPlus size={18} /> Register Patient
-        </motion.button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setIsDarkMode((prev) => !prev)}
+            className="p-2 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:shadow-md transition-all"
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => navigate('/reception/registration')}
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold text-sm shadow-lg shadow-blue-500/30">
+            <UserPlus size={18} /> Register Patient
+          </motion.button>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

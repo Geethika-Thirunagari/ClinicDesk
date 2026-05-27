@@ -16,7 +16,7 @@ import EmergencyManagement from '../../components/admin/EmergencyManagement';
 const AdminDashboard = () => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('clinicdesk-theme') === 'dark');
 
   const handleLogout = () => {
     logout();
@@ -24,12 +24,14 @@ const AdminDashboard = () => {
   };
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    // In a real app, this would also toggle the dark class on document.documentElement
-    if (!isDarkMode) {
+    const nextMode = !isDarkMode;
+    setIsDarkMode(nextMode);
+    if (nextMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('clinicdesk-theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('clinicdesk-theme', 'light');
     }
   };
 

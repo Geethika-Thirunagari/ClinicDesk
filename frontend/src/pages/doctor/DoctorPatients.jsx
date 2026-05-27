@@ -109,11 +109,11 @@ const DoctorPatients = () => {
                 <div className="space-y-2 border-t border-slate-100 dark:border-slate-800/80 pt-4 text-xs font-semibold text-slate-500 dark:text-slate-400">
                   <div className="flex items-center gap-2">
                     <Activity size={14} className="text-slate-400" />
-                    <span>Primary Diagnosis: <strong className="text-slate-700 dark:text-slate-350">{p.condition}</strong></span>
+                    <span>Primary Diagnosis: <strong className="text-slate-700 dark:text-slate-300">{p.condition}</strong></span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar size={14} className="text-slate-400" />
-                    <span>Last Consulted: <span className="font-mono text-slate-600 dark:text-slate-450">{p.lastVisit}</span></span>
+                    <span>Last Consulted: <span className="font-mono text-slate-600 dark:text-slate-400">{p.lastVisit}</span></span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail size={14} className="text-slate-400" />
@@ -130,7 +130,7 @@ const DoctorPatients = () => {
               <div className="grid grid-cols-2 gap-2 mt-6 border-t border-slate-100 dark:border-slate-800/80 pt-4">
                 <button
                   onClick={() => navigate('/doctor/records')}
-                  className="py-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold border border-slate-150 dark:border-slate-850 transition-colors flex items-center justify-center gap-1.5"
+                  className="py-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <FileText size={14} /> EMR History
                 </button>
@@ -144,7 +144,7 @@ const DoctorPatients = () => {
             </motion.div>
           ))
         ) : (
-          <div className="col-span-full p-12 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-850 rounded-2xl">
+          <div className="col-span-full p-12 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
             No patients match your search criteria.
           </div>
         )}

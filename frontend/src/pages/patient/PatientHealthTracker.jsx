@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HeartPulse, Heart, Activity, TrendingUp, Sparkles, Smile, Save, CheckCircle2, ChevronRight } from 'lucide-react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { cn } from '../../utils/cn';
 
 const initialHistory = [
   { day: 'Mon', systolic: 120, diastolic: 80, sugar: 95, weight: 74.2 },
@@ -73,7 +74,7 @@ export default function PatientHealthTracker() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Daily Vitals logger form */}
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 h-fit">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-850">
+          <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
             <Activity className="text-rose-500" size={18} />
             Log Vitals Checklist
           </h2>
@@ -82,7 +83,7 @@ export default function PatientHealthTracker() {
             {/* BP field group */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Systolic BP (mmHg)</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Systolic BP (mmHg)</label>
                 <input 
                   type="number" 
                   value={systolic}
@@ -91,7 +92,7 @@ export default function PatientHealthTracker() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Diastolic BP (mmHg)</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Diastolic BP (mmHg)</label>
                 <input 
                   type="number" 
                   value={diastolic}
@@ -104,7 +105,7 @@ export default function PatientHealthTracker() {
             {/* Sugar & Weight */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Blood Sugar (mg/dL)</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Blood Sugar (mg/dL)</label>
                 <input 
                   type="number" 
                   value={sugar}
@@ -113,7 +114,7 @@ export default function PatientHealthTracker() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Body Weight (kg)</label>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Body Weight (kg)</label>
                 <input 
                   type="number" 
                   step="0.1"
@@ -126,7 +127,7 @@ export default function PatientHealthTracker() {
 
             {/* Interactive Mood Tracker */}
             <div className="pt-2">
-              <label className="block text-xs font-bold text-slate-450 uppercase mb-2.5">How are you feeling today?</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2.5">How are you feeling today?</label>
               <div className="grid grid-cols-5 gap-2">
                 {moodEmojis.map((m, idx) => (
                   <button 
@@ -136,7 +137,7 @@ export default function PatientHealthTracker() {
                     className={cn("p-2.5 rounded-xl border flex flex-col items-center justify-center transition-all", 
                       selectedMood === idx 
                         ? m.color + " ring-2 ring-rose-500/20 scale-105" 
-                        : "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-850 hover:bg-slate-100"
+                        : "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:bg-slate-100"
                     )}
                   >
                     <span className="text-xl mb-0.5">{m.emoji}</span>
@@ -253,13 +254,13 @@ export default function PatientHealthTracker() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {mockInsights.map((insight, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }}
-              className="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 rounded-xl relative overflow-hidden group">
+              className="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-20 h-20 bg-rose-500/5 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-all" />
               <div className="flex justify-between items-center text-xs font-extrabold text-rose-500 uppercase tracking-wider mb-2.5">
                 <span>Insight Indicator #{idx + 1}</span>
                 <ChevronRight size={14} />
               </div>
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-350 leading-relaxed">{insight}</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">{insight}</p>
             </motion.div>
           ))}
         </div>
