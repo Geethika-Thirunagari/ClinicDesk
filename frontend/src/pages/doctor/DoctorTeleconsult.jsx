@@ -496,7 +496,7 @@ const DoctorTeleconsult = () => {
                           initial={{ opacity: 0, y: -5 }} 
                           animate={{ opacity: 1, y: 0 }} 
                           onSubmit={addPrescription}
-                          className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-150 dark:border-slate-900 mb-3 space-y-2 text-xs"
+                          className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-900 mb-3 space-y-2 text-xs"
                         >
                           <div>
                             <input 
@@ -514,21 +514,21 @@ const DoctorTeleconsult = () => {
                               placeholder="Dosage" 
                               value={newMedDosage} 
                               onChange={(e) => setNewMedDosage(e.target.value)} 
-                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-850 dark:text-white"
+                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-800 dark:text-white"
                             />
                             <input 
                               type="text" 
                               placeholder="Frequency" 
                               value={newMedFrequency} 
                               onChange={(e) => setNewMedFrequency(e.target.value)} 
-                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-850 dark:text-white"
+                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-800 dark:text-white"
                             />
                             <input 
                               type="text" 
                               placeholder="Duration" 
                               value={newMedDuration} 
                               onChange={(e) => setNewMedDuration(e.target.value)} 
-                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-850 dark:text-white"
+                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-800 dark:text-white"
                             />
                           </div>
                           <div className="flex gap-2 justify-end pt-1">
@@ -586,7 +586,7 @@ const DoctorTeleconsult = () => {
                           "flex flex-col max-w-[85%] rounded-2xl p-2.5 text-xs shadow-sm",
                           msg.sender === 'doctor' 
                             ? "bg-blue-600 text-white rounded-br-none ml-auto" 
-                            : "bg-slate-100 dark:bg-slate-950 text-slate-750 dark:text-slate-350 rounded-bl-none mr-auto border border-slate-200/20 dark:border-slate-800/40"
+                            : "bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 rounded-bl-none mr-auto border border-slate-200/20 dark:border-slate-800/40"
                         )}
                       >
                         <p className="leading-relaxed">{msg.text}</p>
@@ -605,7 +605,7 @@ const DoctorTeleconsult = () => {
                       placeholder="Ask Alice a question..." 
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
-                      className="flex-1 pl-3.5 pr-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-250 dark:border-slate-850 rounded-xl text-xs outline-none focus:border-blue-500 dark:text-white"
+                      className="flex-1 pl-3.5 pr-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-xs outline-none focus:border-blue-500 dark:text-white"
                     />
                     <button 
                       type="submit" 

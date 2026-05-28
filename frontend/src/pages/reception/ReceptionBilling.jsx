@@ -204,7 +204,7 @@ const ReceptionBilling = () => {
                 <button
                   key={item.id}
                   onClick={() => handleAddItem(item)}
-                  className="p-3 bg-slate-50 hover:bg-blue-50 dark:bg-slate-850 dark:hover:bg-blue-500/5 border border-slate-100 dark:border-slate-800/80 hover:border-blue-200 dark:hover:border-blue-500/20 rounded-xl text-left transition-all flex flex-col justify-between h-24 group"
+                  className="p-3 bg-slate-50 hover:bg-blue-50 dark:bg-slate-900 dark:hover:bg-blue-500/5 border border-slate-100 dark:border-slate-800/80 hover:border-blue-200 dark:hover:border-blue-500/20 rounded-xl text-left transition-all flex flex-col justify-between h-24 group"
                 >
                   <div>
                     <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{item.category}</span>
@@ -229,7 +229,7 @@ const ReceptionBilling = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead>
-                    <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850/50">
+                    <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                       <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Item Details</th>
                       <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Unit Price</th>
                       <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center w-24">Qty</th>
@@ -428,7 +428,7 @@ const ReceptionBilling = () => {
                 </div>
 
                 {/* Patient / Payment Summary */}
-                <div className="grid grid-cols-2 gap-4 text-xs bg-slate-50 dark:bg-slate-850 p-4 rounded-2xl">
+                <div className="grid grid-cols-2 gap-4 text-xs bg-slate-50 dark:bg-slate-900 p-4 rounded-2xl">
                   <div>
                     <h5 className="font-bold text-slate-400 uppercase tracking-wider text-[9px] mb-1">Billed To</h5>
                     <p className="font-extrabold text-slate-800 dark:text-white">{selectedPatient.name}</p>
@@ -491,7 +491,7 @@ const ReceptionBilling = () => {
                     <span>Tax:</span>
                     <span className="font-semibold text-slate-700 dark:text-slate-300">${taxAmount.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between w-48 border-t border-slate-150 dark:border-slate-800 pt-1.5 text-sm font-extrabold">
+                  <div className="flex justify-between w-48 border-t border-slate-200 dark:border-slate-800 pt-1.5 text-sm font-extrabold">
                     <span className="text-slate-800 dark:text-white">Amount Due:</span>
                     <span className="text-blue-600 dark:text-blue-400">${total.toFixed(2)}</span>
                   </div>

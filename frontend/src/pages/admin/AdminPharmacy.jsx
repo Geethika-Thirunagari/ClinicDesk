@@ -14,11 +14,11 @@ const inventory = [
 
 const StatCard = ({ title, value, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-all">
+    className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-700 shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-all">
     <div className="flex items-center justify-between">
       <div>
         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{title}</p>
-        <h3 className="text-2xl font-extrabold text-slate-800">{value}</h3>
+        <h3 className="text-2xl font-extrabold text-slate-800 dark:text-white">{value}</h3>
       </div>
       <div className={cn("p-3 rounded-xl", color)}><Icon size={22} className="text-white" /></div>
     </div>
@@ -35,10 +35,10 @@ const AdminPharmacy = () => {
   );
 
   const statusColor = (s) => {
-    if (s === 'In Stock') return 'bg-emerald-100 text-emerald-700';
-    if (s === 'Low Stock') return 'bg-amber-100 text-amber-700';
-    if (s === 'Critical') return 'bg-rose-100 text-rose-700';
-    return 'bg-slate-100 text-slate-500';
+    if (s === 'In Stock') return 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400';
+    if (s === 'Low Stock') return 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400';
+    if (s === 'Critical') return 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400';
+    return 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400';
   };
 
   return (
@@ -46,12 +46,12 @@ const AdminPharmacy = () => {
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 tracking-tight">Pharmacy Inventory</h1>
-          <p className="text-sm text-slate-500 mt-1">Manage medicines, stock levels, and supply chain.</p>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Pharmacy Inventory</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage medicines, stock levels, and supply chain.</p>
         </div>
         <div className="flex gap-3">
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-xl font-semibold text-sm shadow-md hover:bg-slate-700 transition-all">
+            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 dark:bg-slate-700 text-white rounded-xl font-semibold text-sm shadow-md hover:bg-slate-700 dark:hover:bg-slate-600 transition-all">
             <PackageSearch size={18} /> Purchase Order
           </motion.button>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
@@ -68,21 +68,21 @@ const AdminPharmacy = () => {
         <StatCard title="Critical/Out" value="14" icon={AlertTriangle} color="bg-rose-500" delay={0.25} />
       </div>
 
-      <div className="bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm rounded-2xl p-6">
+      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-700 shadow-sm rounded-2xl p-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-          <h2 className="text-lg font-bold text-slate-800">Inventory Master List</h2>
+          <h2 className="text-lg font-bold text-slate-800 dark:text-white">Inventory Master List</h2>
           <div className="relative w-full md:w-80">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
             <input type="text" placeholder="Search by name, category, or ID..." value={search} onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+              className="w-full pl-9 pr-4 py-2.5 bg-slate-50/50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white dark:placeholder:text-slate-500" />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-200">
-                <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Item ID & Name</th>
+              <tr className="border-b border-slate-200 dark:border-slate-700">
+                <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Item ID &amp; Name</th>
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Category</th>
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Stock Level</th>
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unit Price</th>
@@ -94,22 +94,22 @@ const AdminPharmacy = () => {
               {filtered.map(item => {
                 const stockPercent = Math.min(100, Math.round((item.stock / item.minStock) * 100));
                 return (
-                  <tr key={item.id} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+                  <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                     <td className="py-4">
-                      <p className="text-sm font-bold text-slate-800">{item.name}</p>
-                      <p className="text-xs text-slate-500 font-mono">{item.id}</p>
+                      <p className="text-sm font-bold text-slate-800 dark:text-white">{item.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">{item.id}</p>
                     </td>
-                    <td className="py-4 text-sm text-slate-600">{item.category}</td>
+                    <td className="py-4 text-sm text-slate-600 dark:text-slate-300">{item.category}</td>
                     <td className="py-4">
                       <div className="flex items-center gap-3">
-                        <span className="text-sm font-semibold text-slate-700 w-12">{item.stock}</span>
-                        <div className="w-20 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-200 w-12">{item.stock}</span>
+                        <div className="w-20 bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 overflow-hidden">
                           <div className={cn("h-1.5 rounded-full", item.status === 'In Stock' ? 'bg-emerald-500' : item.status === 'Low Stock' ? 'bg-amber-500' : 'bg-rose-500')} style={{ width: `${stockPercent}%` }}></div>
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 text-sm font-semibold text-slate-700">{item.price}</td>
-                    <td className="py-4 text-sm text-slate-500">{item.expiry}</td>
+                    <td className="py-4 text-sm font-semibold text-slate-700 dark:text-slate-200">{item.price}</td>
+                    <td className="py-4 text-sm text-slate-500 dark:text-slate-400">{item.expiry}</td>
                     <td className="py-4"><span className={cn("text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider", statusColor(item.status))}>{item.status}</span></td>
                   </tr>
                 );

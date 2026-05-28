@@ -183,7 +183,7 @@ export default function DoctorAIAssistant() {
                 <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Try quick-testing clinical profiles:</span>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
                   {initialSuggestions.map((s, idx) => (
-                    <button key={idx} onClick={() => handleSend(s.text)} className="p-3 text-left bg-white dark:bg-slate-850 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-lg text-xs font-medium transition-all text-slate-700 dark:text-slate-300">
+                    <button key={idx} onClick={() => handleSend(s.text)} className="p-3 text-left bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-lg text-xs font-medium transition-all text-slate-700 dark:text-slate-300">
                       <span className="block font-bold text-blue-600 dark:text-blue-400 mb-0.5">{s.category}</span>
                       {s.text}
                     </button>
@@ -198,7 +198,7 @@ export default function DoctorAIAssistant() {
                 <div key={i} className={cn("flex flex-col max-w-[85%] rounded-2xl p-4 text-sm font-medium", 
                   m.role === 'user' 
                     ? "bg-blue-600 text-white ml-auto rounded-tr-none shadow-md shadow-blue-500/10" 
-                    : "bg-slate-150/70 dark:bg-slate-800 text-slate-850 dark:text-slate-200 mr-auto rounded-tl-none"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 mr-auto rounded-tl-none"
                 )}>
                   <p className="leading-relaxed">{m.text}</p>
                   <span className={cn("text-[9px] mt-1.5 text-right font-semibold block opacity-75", m.role === 'user' ? "text-blue-100" : "text-slate-500")}>{m.time}</span>
@@ -206,7 +206,7 @@ export default function DoctorAIAssistant() {
               ))}
               
               {isGenerating && (
-                <div className="bg-slate-100 dark:bg-slate-850 text-slate-500 mr-auto rounded-2xl rounded-tl-none p-4 max-w-[85%] flex items-center gap-2">
+                <div className="bg-slate-100 dark:bg-slate-900 text-slate-500 mr-auto rounded-2xl rounded-tl-none p-4 max-w-[85%] flex items-center gap-2">
                   <RefreshCw className="animate-spin text-blue-500" size={16} />
                   <span className="text-xs font-semibold">Running diagnostic logic models...</span>
                 </div>
@@ -244,7 +244,7 @@ export default function DoctorAIAssistant() {
                   <div key={idx} className={cn("p-4 rounded-xl border transition-all text-xs font-semibold", 
                     d.critical 
                       ? "bg-rose-50/50 border-rose-200 dark:bg-rose-950/20 dark:border-rose-900/50" 
-                      : "bg-slate-50 border-slate-100 dark:bg-slate-850 dark:border-slate-800"
+                      : "bg-slate-50 border-slate-100 dark:bg-slate-900 dark:border-slate-800"
                   )}>
                     <div className="flex justify-between items-start mb-2">
                       <h4 className="font-extrabold text-slate-800 dark:text-white leading-tight pr-2">{d.diagnosis}</h4>
@@ -266,7 +266,7 @@ export default function DoctorAIAssistant() {
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-850 rounded-xl text-xs font-medium">
+              <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium">
                 No active differential load. Enter symptoms in the analyzer chat to compile differential probabilities.
               </div>
             )}
@@ -288,7 +288,7 @@ export default function DoctorAIAssistant() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Drug substance A</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Drug substance A</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                 <input 
@@ -301,7 +301,7 @@ export default function DoctorAIAssistant() {
               </div>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Drug substance B</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Drug substance B</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                 <input 
@@ -321,10 +321,10 @@ export default function DoctorAIAssistant() {
 
           {interactionResult && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={cn("mt-4 p-4 rounded-xl border flex gap-3 text-xs font-semibold", 
-              interactionResult.severity === 'severe' ? "bg-rose-50/70 border-rose-200 text-rose-800 dark:bg-rose-950/20 dark:border-rose-900/50 dark:text-rose-355" :
-              interactionResult.severity === 'moderate' ? "bg-amber-50/70 border-amber-200 text-amber-800 dark:bg-amber-955/10 dark:border-amber-900/40 dark:text-amber-350" :
-              interactionResult.severity === 'mild' ? "bg-blue-50/70 border-blue-200 text-blue-800 dark:bg-blue-955/10 dark:border-blue-900/40 dark:text-blue-350" :
-              "bg-emerald-50/70 border-emerald-200 text-emerald-800 dark:bg-emerald-955/10 dark:border-emerald-900/40 dark:text-emerald-350"
+              interactionResult.severity === 'severe' ? "bg-rose-50/70 border-rose-200 text-rose-800 dark:bg-rose-950/20 dark:border-rose-900/50 dark:text-rose-300" :
+              interactionResult.severity === 'moderate' ? "bg-amber-50/70 border-amber-200 text-amber-800 dark:bg-amber-950/10 dark:border-amber-900/40 dark:text-amber-300" :
+              interactionResult.severity === 'mild' ? "bg-blue-50/70 border-blue-200 text-blue-800 dark:bg-blue-950/10 dark:border-blue-900/40 dark:text-blue-300" :
+              "bg-emerald-50/70 border-emerald-200 text-emerald-800 dark:bg-emerald-950/10 dark:border-emerald-900/40 dark:text-emerald-300"
             )}>
               <div className="mt-0.5">
                 {interactionResult.severity === 'severe' ? <AlertTriangle className="text-rose-500" size={18} /> :

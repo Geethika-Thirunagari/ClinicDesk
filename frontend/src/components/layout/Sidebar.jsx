@@ -68,7 +68,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Logo Area */}
-      <div className="flex items-center justify-between h-20 px-6 border-b border-white/10">
+      <div className="flex items-center justify-between h-20 px-6 border-b border-white/10 dark:border-slate-800/60">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
             <span className="text-white font-bold text-lg leading-none">+</span>
@@ -78,7 +78,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
-              className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600"
+              className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-sky-300 dark:to-indigo-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]"
             >
               ClinicDesk
             </motion.span>
@@ -88,7 +88,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
         {/* Desktop Collapse Toggle */}
         <button 
           onClick={toggleCollapse}
-          className="hidden md:flex p-1.5 rounded-md hover:bg-black/5 text-slate-500 transition-colors"
+          className="hidden md:flex p-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/10 text-slate-500 dark:text-slate-300 transition-colors"
         >
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </button>
@@ -104,8 +104,8 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
             className={({ isActive }) => cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group relative",
               isActive 
-                ? "bg-white/60 text-blue-700 shadow-sm shadow-blue-500/5 backdrop-blur-md" 
-                : "text-slate-500 hover:bg-white/40 hover:text-slate-800"
+                ? "bg-white/70 dark:bg-slate-900/85 text-blue-700 dark:text-sky-300 shadow-sm shadow-blue-500/5 backdrop-blur-md" 
+                : "text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-800/70 hover:text-slate-900 dark:hover:text-white"
             )}
           >
             {({ isActive }) => (
@@ -113,12 +113,12 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
                 {isActive && (
                   <motion.div 
                     layoutId="active-nav"
-                    className="absolute inset-0 bg-white/60 rounded-xl border border-white/80 shadow-sm"
+                    className="absolute inset-0 bg-white/70 dark:bg-slate-900/85 rounded-xl border border-white/80 dark:border-slate-700/80 shadow-sm"
                     initial={false}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                <item.icon size={20} className={cn("relative z-10 transition-colors", isActive ? "text-blue-600" : "group-hover:text-blue-500")} />
+                <item.icon size={20} className={cn("relative z-10 transition-colors", isActive ? "text-blue-600 dark:text-sky-300" : "group-hover:text-blue-500 dark:group-hover:text-white")} />
                 {!isCollapsed && (
                   <span className="relative z-10 font-medium whitespace-nowrap">{item.label}</span>
                 )}
@@ -150,7 +150,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
         layout
         className={cn(
           "fixed inset-y-0 left-0 z-50 flex-shrink-0 md:static",
-          "bg-white/40 backdrop-blur-xl border-r border-white/40 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]",
+          "bg-white/50 dark:bg-slate-950/85 text-slate-700 dark:text-slate-200 backdrop-blur-xl border-r border-white/40 dark:border-slate-800/70 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)] dark:shadow-[4px_0_24px_-12px_rgba(0,0,0,0.65)]",
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
         initial={false}

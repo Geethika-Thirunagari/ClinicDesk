@@ -111,14 +111,14 @@ const MedicalRecords = () => {
           transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
           className="lg:col-span-1 space-y-3"
         >
-          <div className="bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl shadow-sm p-4">
+          <div className="bg-white/60 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800 rounded-2xl shadow-sm p-4">
             <div className="relative mb-3">
-              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search patients..."
-                className="pl-9 pr-3 h-9 w-full rounded-xl border border-slate-200 bg-white/60 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400"
+                className="pl-9 pr-3 h-9 w-full rounded-xl border border-slate-200 bg-white/60 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 text-slate-800 dark:bg-slate-950/70 dark:border-slate-700 dark:text-slate-100 dark:placeholder:text-slate-500"
               />
             </div>
             <div className="space-y-1.5 max-h-[calc(100vh-360px)] overflow-y-auto custom-scrollbar">
@@ -130,7 +130,7 @@ const MedicalRecords = () => {
                     'w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all',
                     selectedPatient?.id === p.id
                       ? 'bg-blue-500 shadow-md shadow-blue-500/20'
-                      : 'hover:bg-white/60'
+                      : 'hover:bg-white/60 dark:hover:bg-slate-800/70'
                   )}
                 >
                   <img src={p.avatar} alt={p.name} className="w-9 h-9 rounded-full object-cover shrink-0 border-2 border-white shadow-sm" />
@@ -142,7 +142,7 @@ const MedicalRecords = () => {
                       {p.id} &middot; {p.age}y
                     </p>
                   </div>
-                  <ChevronRight size={14} className={cn('ml-auto shrink-0', selectedPatient?.id === p.id ? 'text-white' : 'text-slate-300')} />
+                  <ChevronRight size={14} className={cn('ml-auto shrink-0', selectedPatient?.id === p.id ? 'text-white' : 'text-slate-300 dark:text-slate-500')} />
                 </button>
               ))}
             </div>
@@ -155,7 +155,7 @@ const MedicalRecords = () => {
           <PatientProfile patient={selectedPatient} delay={0.1} />
 
           {/* Tabs */}
-          <div className="bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl shadow-sm p-1.5 flex gap-1 flex-wrap">
+          <div className="bg-white/60 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800 rounded-2xl shadow-sm p-1.5 flex gap-1 flex-wrap">
             {TABS.filter((t) => allowedTabs.includes(t)).map((tab) => (
               <button
                 key={tab}
@@ -164,7 +164,7 @@ const MedicalRecords = () => {
                   'flex-1 min-w-fit px-3 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap',
                   activeTab === tab
                     ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/30'
-                    : 'text-slate-500 hover:bg-white/60 hover:text-slate-700'
+                    : 'text-slate-500 hover:bg-white/60 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-200'
                 )}
               >
                 {tab}

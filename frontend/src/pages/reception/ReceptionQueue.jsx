@@ -67,7 +67,7 @@ const ReceptionQueue = () => {
       <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead><tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50">
+            <thead><tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
               {['Token','Patient','Doctor','Scheduled','Status','Actions'].map(h => <th key={h} className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-wider">{h}</th>)}
             </tr></thead>
             <tbody>

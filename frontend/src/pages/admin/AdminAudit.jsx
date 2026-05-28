@@ -81,7 +81,7 @@ export default function AdminAudit() {
             <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{score.label}</p>
               <h3 className="text-3xl font-extrabold text-slate-800 dark:text-white mt-2 leading-none">{score.value}</h3>
-              <p className="text-xs font-semibold text-slate-450 mt-2">{score.desc}</p>
+              <p className="text-xs font-semibold text-slate-400 mt-2">{score.desc}</p>
             </div>
             <div className="flex items-center gap-1.5 mt-3 text-xs font-bold text-slate-500 dark:text-slate-400">
               <span className={cn("w-2 h-2 rounded-full", 
@@ -98,7 +98,7 @@ export default function AdminAudit() {
       <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-4 flex flex-col md:flex-row justify-between gap-4">
         {/* Search */}
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-450" size={16} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
           <input 
             type="text" 
             placeholder="Search logs by actor, event, EMR codes, description details..." 
@@ -146,14 +146,14 @@ export default function AdminAudit() {
                 <th className="pb-3.5 text-center">Threat Severity</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-850">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {filteredLogs.length > 0 ? (
                 filteredLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-850/50 transition-colors">
+                  <tr key={log.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                     <td className="py-4 pl-2 font-mono font-bold text-blue-600 dark:text-blue-400">{log.id}</td>
                     <td className="py-4 font-mono font-medium text-slate-500">{log.timestamp}</td>
                     <td className="py-4">
-                      <span className="text-[10px] font-extrabold bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded uppercase tracking-wider text-slate-550 dark:text-slate-450">
+                      <span className="text-[10px] font-extrabold bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded uppercase tracking-wider text-slate-500 dark:text-slate-400">
                         {log.category}
                       </span>
                     </td>
@@ -169,7 +169,7 @@ export default function AdminAudit() {
                       <span className={cn("text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-widest", 
                         log.severity === 'high' ? "bg-rose-500 text-white shadow-sm shadow-rose-500/10 animate-pulse" :
                         log.severity === 'medium' ? "bg-amber-500 text-white shadow-sm shadow-amber-500/10" :
-                        "bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-850"
+                        "bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800"
                       )}>
                         {log.severity}
                       </span>
@@ -178,7 +178,7 @@ export default function AdminAudit() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center text-slate-405 border border-dashed border-slate-200 dark:border-slate-850 rounded-xl">
+                  <td colSpan="7" className="py-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
                     No matching audit parameters logged in event stream.
                   </td>
                 </tr>

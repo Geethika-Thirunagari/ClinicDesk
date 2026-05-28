@@ -139,7 +139,7 @@ const ReceptionRegistration = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <button 
               onClick={handleReset}
-              className="flex-1 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl font-bold transition-all"
+              className="flex-1 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl font-bold transition-all"
             >
               Register Another
             </button>

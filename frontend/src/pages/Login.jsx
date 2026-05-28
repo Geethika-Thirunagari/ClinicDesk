@@ -126,6 +126,24 @@ const Login = () => {
 
     setIsLoading(true);
     setErrors({});
+<<<<<<< HEAD
+=======
+    
+    try {
+      // Mocking network delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      let user = null;
+      if (activeRole.id === 'admin') {
+        user = { id: 1, name: 'Admin User', role: 'admin' };
+      } else if (activeRole.id === 'doctor') {
+        user = { id: 2, name: 'Dr. Sarah Smith', role: 'doctor' };
+      } else if (activeRole.id === 'reception') {
+        user = { id: 4, name: 'Receptionist Jane', role: 'receptionist' }; 
+      } else if (activeRole.id === 'patient') {
+        user = { id: 3, name: 'John Doe', role: 'patient' };
+      }
+>>>>>>> 822c505efce474b36751a959a31f2aca31330464
 
     try {
       const response = await authService.login(formData);
