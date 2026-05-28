@@ -11,11 +11,11 @@ const ActivityItem = ({ title, time, type }) => {
   };
 
   return (
-    <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+    <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 :bg-slate-800/50 transition-colors">
       <div className="mt-0.5">{icons[type] || icons.system}</div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-slate-700 dark:text-slate-300 truncate">{title}</p>
-        <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-sm font-medium text-slate-700 truncate">{title}</p>
+        <div className="flex items-center gap-1 text-xs text-slate-500 mt-1">
           <Clock size={12} />
           {time}
         </div>
@@ -26,32 +26,32 @@ const ActivityItem = ({ title, time, type }) => {
 
 const LiveSystemMonitor = () => {
   return (
-    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 rounded-2xl p-6 h-full shadow-sm flex flex-col">
+    <div className="bg-white border border-[#e2e8e2] rounded-[24px] p-6 h-full shadow-sm flex flex-col">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+        <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
           <span className="relative flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
           </span>
           Live Monitoring
         </h2>
-        <span className="text-xs font-semibold px-2 py-1 bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 rounded-lg">
+        <span className="text-xs font-semibold px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg">
           System Healthy
         </span>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Active Users</p>
+        <div className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 ">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Active Users</p>
           <div className="flex items-end gap-2">
-            <span className="text-2xl font-bold text-slate-800 dark:text-white">342</span>
+            <span className="text-2xl font-bold text-[#0a1a0f] ">342</span>
             <span className="text-sm text-emerald-500 font-medium mb-1">Online</span>
           </div>
         </div>
-        <div className="p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Available MDs</p>
+        <div className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 ">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Available MDs</p>
           <div className="flex items-end gap-2">
-            <span className="text-2xl font-bold text-slate-800 dark:text-white">18</span>
+            <span className="text-2xl font-bold text-[#0a1a0f] ">18</span>
             <span className="text-sm text-slate-500 font-medium mb-1">/ 48 Total</span>
           </div>
         </div>

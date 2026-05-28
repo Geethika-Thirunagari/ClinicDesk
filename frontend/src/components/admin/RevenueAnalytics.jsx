@@ -14,13 +14,13 @@ const data = [
 
 const RevenueAnalytics = () => {
   return (
-    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 rounded-2xl p-6 h-full shadow-sm flex flex-col">
+    <div className="bg-white border border-[#e2e8e2] rounded-[24px] p-6 h-full shadow-sm flex flex-col">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+        <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
           <Banknote className="text-emerald-500" />
           Revenue Analytics
         </h2>
-        <select className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 outline-none">
+        <select className="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-600 outline-none">
           <option>Last 6 Months</option>
           <option>This Year</option>
         </select>
@@ -45,7 +45,7 @@ const RevenueAnalytics = () => {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+      <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-100 ">
         <div>
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Income</p>
           <p className="text-sm font-bold text-emerald-500">$19,550</p>

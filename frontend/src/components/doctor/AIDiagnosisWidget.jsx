@@ -28,12 +28,12 @@ export default function AIDiagnosisWidget() {
     };
 
     return (
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 relative overflow-hidden group">
+        <div className="finai-card p-6 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
                 <Sparkles size={80} />
             </div>
 
-            <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+            <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
                 <Sparkles size={16} className="text-indigo-500" />
                 AI Diagnostic Assistant
             </h2>
@@ -44,7 +44,7 @@ export default function AIDiagnosisWidget() {
                     value={symptoms}
                     onChange={(e) => setSymptoms(e.target.value)}
                     placeholder="Enter patient symptoms here (e.g., 'fever and cough' or 'chest pain')..."
-                    className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-sm resize-none focus:ring-2 focus:ring-indigo-500 outline-none text-slate-700 dark:text-slate-300 transition-all placeholder:text-slate-400"
+                    className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm resize-none focus:ring-2 focus:ring-indigo-500 outline-none text-slate-700 transition-all placeholder:text-slate-400"
                 />
             </div>
 
@@ -69,9 +69,9 @@ export default function AIDiagnosisWidget() {
                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-5 space-y-4">
                         <div className={cn(
                             "px-3 py-2 rounded-lg border flex items-center justify-between",
-                            result.severity === 'CRITICAL' ? "bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-500/10 dark:border-rose-500/20 dark:text-rose-400" :
-                                result.severity === 'HIGH' ? "bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400" :
-                                    "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400"
+                            result.severity === 'CRITICAL' ? "bg-rose-50 border-rose-200 text-rose-700 " :
+                                result.severity === 'HIGH' ? "bg-amber-50 border-amber-200 text-amber-700 " :
+                                    "bg-emerald-50 border-emerald-200 text-emerald-700 "
                         )}>
                             <div className="flex items-center gap-2">
                                 {result.severity === 'CRITICAL' ? <AlertTriangle size={16} /> : <ShieldCheck size={16} />}
@@ -83,16 +83,16 @@ export default function AIDiagnosisWidget() {
                         <div className="space-y-2">
                             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Top Predictions</h4>
                             {result.predictions.map((pred, i) => (
-                                <div key={i} className="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{pred.condition}</span>
-                                    <span className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400">{pred.probability}%</span>
+                                <div key={i} className="flex justify-between items-center bg-slate-50 p-2 rounded-lg border border-slate-100 ">
+                                    <span className="text-sm font-semibold text-slate-700 ">{pred.condition}</span>
+                                    <span className="text-xs font-mono font-bold text-indigo-600 ">{pred.probability}%</span>
                                 </div>
                             ))}
                         </div>
 
                         <div className="space-y-2">
                             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1"><Info size={14} /> Recommended Actions</h4>
-                            <ul className="text-sm space-y-1 text-slate-600 dark:text-slate-400 font-medium">
+                            <ul className="text-sm space-y-1 text-slate-600 font-medium">
                                 {result.recommendations.map((rec, i) => (
                                     <li key={i} className="flex gap-2 items-start"><span className="text-indigo-500">•</span> {rec}</li>
                                 ))}

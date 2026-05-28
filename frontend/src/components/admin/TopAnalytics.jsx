@@ -9,10 +9,10 @@ const StatCard = ({ title, value, icon: Icon, trend, isPositive, delay, alert })
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4, delay }}
     className={cn(
-      "backdrop-blur-xl border shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-all",
+      "backdrop-blur-xl border shadow-sm rounded-[24px] p-5 relative overflow-hidden group hover:shadow-md transition-all",
       alert 
-        ? "bg-rose-500/5 border-rose-500/20 dark:bg-rose-500/10 dark:border-rose-500/30" 
-        : "bg-white/60 border-white/40 dark:bg-slate-900/60 dark:border-slate-800"
+        ? "bg-rose-500/5 border-rose-500/20 " 
+        : "bg-white/60 border-[#e2e8e2] "
     )}
   >
     <div className={cn(
@@ -24,17 +24,17 @@ const StatCard = ({ title, value, icon: Icon, trend, isPositive, delay, alert })
     <div className="flex items-center gap-3 mb-4">
       <div className={cn(
         "p-2 rounded-lg",
-        alert ? "bg-rose-100 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400" : "bg-blue-50 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+        alert ? "bg-rose-100 text-rose-600 " : "bg-blue-50 text-blue-600 "
       )}>
         <Icon size={20} />
       </div>
-      <h3 className={cn("font-medium text-sm", alert ? "text-rose-600 dark:text-rose-400" : "text-slate-500 dark:text-slate-400")}>{title}</h3>
+      <h3 className={cn("font-medium text-sm", alert ? "text-rose-600 " : "text-slate-500 ")}>{title}</h3>
     </div>
     <div className="flex items-end justify-between relative z-10">
-      <h2 className={cn("text-3xl font-bold", alert ? "text-rose-700 dark:text-rose-300" : "text-slate-800 dark:text-white")}>{value}</h2>
+      <h2 className={cn("text-3xl font-bold", alert ? "text-rose-700 " : "text-[#0a1a0f] ")}>{value}</h2>
       <div className={cn(
         "flex items-center gap-1 text-sm font-medium px-2 py-1 rounded-full",
-        alert ? "text-rose-700 bg-rose-100 dark:bg-rose-500/20 dark:text-rose-300" : (isPositive ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400" : "text-rose-600 bg-rose-50 dark:bg-rose-500/10 dark:text-rose-400")
+        alert ? "text-rose-700 bg-rose-100 " : (isPositive ? "text-emerald-600 bg-emerald-50 " : "text-rose-600 bg-rose-50 ")
       )}>
         {!alert && (isPositive ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />)}
         {trend}

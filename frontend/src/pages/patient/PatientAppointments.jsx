@@ -48,8 +48,8 @@ const PatientAppointments = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">My Appointments</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Book, reschedule, or cancel your appointments with medical specialists.</p>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">My Appointments</h1>
+          <p className="text-sm text-slate-500 mt-1">Book, reschedule, or cancel your appointments with medical specialists.</p>
         </div>
         <motion.button 
           whileHover={{ scale: 1.02 }} 
@@ -62,13 +62,13 @@ const PatientAppointments = () => {
       </div>
 
       {/* Tabs Row */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800/80 gap-6">
+      <div className="flex border-b border-slate-200 gap-6">
         <button
           onClick={() => setActiveTab('upcoming')}
           className={cn(
             "pb-3 text-sm font-bold transition-all relative outline-none",
             activeTab === 'upcoming' 
-              ? "text-blue-600 dark:text-blue-400" 
+              ? "text-blue-600 " 
               : "text-slate-400 hover:text-slate-600"
           )}
         >
@@ -82,7 +82,7 @@ const PatientAppointments = () => {
           className={cn(
             "pb-3 text-sm font-bold transition-all relative outline-none",
             activeTab === 'past' 
-              ? "text-blue-600 dark:text-blue-400" 
+              ? "text-blue-600 " 
               : "text-slate-400 hover:text-slate-600"
           )}
         >
@@ -103,22 +103,22 @@ const PatientAppointments = () => {
                 initial={{ opacity: 0, y: 12 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: i * 0.05 }}
-                className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-5 hover:shadow-md transition-all flex flex-col md:flex-row justify-between md:items-center gap-4"
+                className="finai-card p-5 hover:shadow-md transition-all flex flex-col md:flex-row justify-between md:items-center gap-4"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-50 dark:bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400">
+                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 ">
                     {apt.type === 'Teleconsult' ? <Video size={22} /> : <Calendar size={22} />}
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <h3 className="font-bold text-[#0a1a0f] flex items-center gap-2">
                       {apt.doctor}
-                      <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 font-semibold px-2 py-0.5 rounded">
+                      <span className="text-[10px] bg-slate-100 text-slate-500 font-semibold px-2 py-0.5 rounded">
                         {apt.specialty}
                       </span>
                     </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5 font-medium">
+                    <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 font-medium">
                       <Clock size={13} className="text-slate-400" />
-                      {apt.date} at <span className="font-semibold text-slate-700 dark:text-slate-300">{apt.time}</span>
+                      {apt.date} at <span className="font-semibold text-slate-700 ">{apt.time}</span>
                     </p>
                   </div>
                 </div>
@@ -127,8 +127,8 @@ const PatientAppointments = () => {
                   <span className={cn(
                     "text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider",
                     apt.status === 'Confirmed' 
-                      ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400"
-                      : "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400"
+                      ? "bg-emerald-100 text-emerald-700 "
+                      : "bg-amber-100 text-amber-700 "
                   )}>
                     {apt.status}
                   </span>
@@ -136,13 +136,13 @@ const PatientAppointments = () => {
                   <div className="flex gap-2">
                     <button 
                       onClick={() => handleCancelClick(apt)}
-                      className="px-3.5 py-1.5 border border-slate-200 dark:border-slate-800 hover:bg-rose-50 dark:hover:bg-rose-500/10 hover:text-rose-600 hover:border-rose-200 dark:hover:border-rose-500/20 text-slate-500 dark:text-slate-400 rounded-xl text-xs font-bold transition-all"
+                      className="px-3.5 py-1.5 border border-slate-200 hover:bg-rose-50 :bg-rose-500/10 hover:text-rose-600 hover:border-rose-200 :border-rose-500/20 text-slate-500 rounded-xl text-xs font-bold transition-all"
                     >
                       Cancel Visit
                     </button>
                     <button 
                       onClick={() => alert(`Requested rescheduling for ${apt.id} (Mock)`)}
-                      className="px-3.5 py-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-100 rounded-xl text-xs font-bold transition-colors"
+                      className="px-3.5 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl text-xs font-bold transition-colors"
                     >
                       Reschedule
                     </button>
@@ -151,7 +151,7 @@ const PatientAppointments = () => {
               </motion.div>
             ))
           ) : (
-            <div className="p-12 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
+            <div className="p-12 text-center text-slate-400 border-2 border-dashed border-slate-200 rounded-[24px]">
               You have no upcoming appointments. Click "Book New Visit" to schedule one.
             </div>
           )
@@ -163,16 +163,16 @@ const PatientAppointments = () => {
                 initial={{ opacity: 0, y: 12 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: i * 0.05 }}
-                className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 dark:border-slate-700 shadow-sm rounded-2xl p-5 flex flex-col md:flex-row justify-between md:items-center gap-4"
+                className="bg-white/40 backdrop-blur-xl border border-white/20 shadow-sm rounded-[24px] p-5 flex flex-col md:flex-row justify-between md:items-center gap-4"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400">
+                  <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400">
                     {apt.type === 'Teleconsult' ? <Video size={22} /> : <Calendar size={22} />}
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                    <h3 className="font-bold text-slate-700 flex items-center gap-2">
                       {apt.doctor}
-                      <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 font-semibold px-2 py-0.5 rounded">
+                      <span className="text-[10px] bg-slate-100 text-slate-500 font-semibold px-2 py-0.5 rounded">
                         {apt.specialty}
                       </span>
                     </h3>
@@ -187,8 +187,8 @@ const PatientAppointments = () => {
                   <span className={cn(
                     "text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider",
                     apt.status === 'Completed' 
-                      ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400"
-                      : "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400"
+                      ? "bg-slate-100 text-slate-600 "
+                      : "bg-rose-100 text-rose-700 "
                   )}>
                     {apt.status}
                   </span>
@@ -196,7 +196,7 @@ const PatientAppointments = () => {
                   {apt.status === 'Completed' && (
                     <button 
                       onClick={() => navigate('/patient/book')}
-                      className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+                      className="px-3.5 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 :bg-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
                     >
                       <RefreshCw size={12} /> Book Again
                     </button>
@@ -205,7 +205,7 @@ const PatientAppointments = () => {
               </motion.div>
             ))
           ) : (
-            <div className="p-12 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
+            <div className="p-12 text-center text-slate-400 border border-dashed border-slate-200 rounded-[24px]">
               No past visit history found.
             </div>
           )
@@ -227,21 +227,21 @@ const PatientAppointments = () => {
               initial={{ opacity: 0, scale: 0.95 }} 
               animate={{ opacity: 1, scale: 1 }} 
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl rounded-3xl p-6 md:p-8 max-w-md w-full relative z-10 text-center space-y-6"
+              className="bg-white border border-slate-200 shadow-2xl rounded-3xl p-6 md:p-8 max-w-md w-full relative z-10 text-center space-y-6"
             >
-              <div className="w-16 h-16 bg-rose-100 dark:bg-rose-500/10 rounded-full flex items-center justify-center mx-auto text-rose-600">
+              <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto text-rose-600">
                 <AlertCircle size={28} />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white">Cancel Appointment?</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                <h3 className="text-xl font-bold text-[#0a1a0f] ">Cancel Appointment?</h3>
+                <p className="text-sm text-slate-500 mt-2">
                   Are you sure you want to cancel your appointment with <strong>{selectedApt.doctor}</strong> on <strong>{selectedApt.date}</strong> at {selectedApt.time}? This action cannot be undone.
                 </p>
               </div>
               <div className="flex gap-3">
                 <button 
                   onClick={() => setShowCancelModal(false)}
-                  className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-bold text-sm transition-all"
+                  className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 :bg-slate-700 text-slate-700 rounded-xl font-bold text-sm transition-all"
                 >
                   No, Keep It
                 </button>

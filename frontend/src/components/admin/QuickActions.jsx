@@ -14,7 +14,7 @@ const ActionButton = ({ label, icon: Icon, color, delay, onClick }) => (
     onClick={onClick}
     className={cn(
       "flex flex-col items-center justify-center gap-3 p-4 rounded-xl border transition-all shadow-sm",
-      "bg-white/50 border-white/40 hover:bg-white/80 dark:bg-slate-900/50 dark:border-slate-800 dark:hover:bg-slate-800/80"
+      "bg-white/50 border-[#e2e8e2] hover:bg-white/80 :bg-slate-800/80"
     )}
   >
     <div className={cn(
@@ -23,7 +23,7 @@ const ActionButton = ({ label, icon: Icon, color, delay, onClick }) => (
     )}>
       <Icon size={24} className="text-white" />
     </div>
-    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 text-center leading-tight">
+    <span className="text-sm font-semibold text-slate-700 text-center leading-tight">
       {label}
     </span>
   </motion.button>
@@ -33,8 +33,8 @@ const QuickActions = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 rounded-2xl p-6 h-full shadow-sm">
-      <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+    <div className="bg-white border border-[#e2e8e2] rounded-[24px] p-6 h-full shadow-sm">
+      <h2 className="text-lg font-bold text-[#0a1a0f] mb-6 flex items-center gap-2">
         <div className="w-2 h-6 bg-blue-500 rounded-full" />
         Quick Actions
       </h2>

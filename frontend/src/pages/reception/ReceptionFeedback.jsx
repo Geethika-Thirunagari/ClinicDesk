@@ -77,11 +77,11 @@ export default function ReceptionFeedback() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-2">
             <MessageSquareHeart className="text-blue-500" size={32} />
             Client Experience & Feedback Analytics
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             Aggregate patient satisfaction scores, send clinical surveys, and monitor service Net Promoter Scores.
           </p>
         </div>
@@ -94,14 +94,14 @@ export default function ReceptionFeedback() {
           { label: "Net Promoter Score (NPS)", value: "+64", sub: "Classified as Excellent Score", color: "text-blue-500", icon: Smile },
           { label: "Pending Survey Invites", value: "2 Clients", sub: "From recent check-outs", color: "text-indigo-500", icon: ClipboardList }
         ].map((stat, idx) => (
-          <div key={idx} className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-5 hover:shadow-md transition-all">
+          <div key={idx} className="finai-card p-5 hover:shadow-md transition-all">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
-                <h3 className="text-3xl font-extrabold text-slate-800 dark:text-white mt-2 leading-none">{stat.value}</h3>
-                <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5">{stat.sub}</p>
+                <h3 className="text-3xl font-extrabold text-[#0a1a0f] mt-2 leading-none">{stat.value}</h3>
+                <p className="text-xs font-semibold text-slate-500 mt-2.5">{stat.sub}</p>
               </div>
-              <div className="p-3 bg-slate-50 dark:bg-slate-950 rounded-xl text-slate-400"><stat.icon size={20} className={stat.color} /></div>
+              <div className="p-3 bg-slate-50 rounded-xl text-slate-400"><stat.icon size={20} className={stat.color} /></div>
             </div>
           </div>
         ))}
@@ -110,8 +110,8 @@ export default function ReceptionFeedback() {
       {/* Row 2: Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Rating Breakdown Bar Chart */}
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Clinic Rating Distribution</h2>
+        <div className="finai-card p-6">
+          <h2 className="text-lg font-bold text-[#0a1a0f] mb-6">Clinic Rating Distribution</h2>
           <div className="h-[220px] w-full font-medium text-xs">
             <ResponsiveContainer width="99%" height="99%">
               <BarChart data={ratingDistribution} layout="vertical" margin={{ top: 0, right: 10, left: -20, bottom: 0 }}>
@@ -130,8 +130,8 @@ export default function ReceptionFeedback() {
         </div>
 
         {/* Sentiment breakdown Donut */}
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 flex flex-col justify-between">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">NPS Sentiment Classification</h2>
+        <div className="finai-card p-6 flex flex-col justify-between">
+          <h2 className="text-lg font-bold text-[#0a1a0f] mb-4">NPS Sentiment Classification</h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="h-[140px] w-[140px] shrink-0">
@@ -146,13 +146,8 @@ export default function ReceptionFeedback() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-<<<<<<< HEAD
-
-            <div className="space-y-2.5 flex-1 w-full text-xs font-semibold text-slate-650 dark:text-slate-350">
-=======
             
-            <div className="space-y-2.5 flex-1 w-full text-xs font-semibold text-slate-600 dark:text-slate-300">
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
+            <div className="space-y-2.5 flex-1 w-full text-xs font-semibold text-slate-600 ">
               {sentimentBreakdown.map((s, idx) => (
                 <div key={idx} className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
@@ -170,24 +165,19 @@ export default function ReceptionFeedback() {
       {/* Row 3: Dispatch Surveys & Reviews timeline */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* dispatch wizard panel */}
-        <div className="lg:col-span-1 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-          <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+        <div className="lg:col-span-1 finai-card p-6">
+          <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
             <Send size={16} className="text-blue-500" />
             Dispatch Clinic Survey
           </h2>
 
           <form onSubmit={handleCreateMockFeedback} className="space-y-4">
             <div>
-<<<<<<< HEAD
-              <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Select Recent Visitor</label>
-              <select
-=======
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Select Recent Visitor</label>
+              <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Select Recent Visitor</label>
               <select 
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
                 value={selectedPatientId}
                 onChange={(e) => setSelectedPatientId(e.target.value)}
-                className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
+                className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">-- Select Client --</option>
                 {surveyList.filter(s => s.status === "Not Sent").map((p, idx) => (
@@ -197,16 +187,11 @@ export default function ReceptionFeedback() {
             </div>
 
             <div>
-<<<<<<< HEAD
-              <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Survey Template</label>
-              <select
-=======
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Survey Template</label>
+              <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Survey Template</label>
               <select 
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
                 value={surveyType}
                 onChange={(e) => setSurveyType(e.target.value)}
-                className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
+                className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
               >
                 <option>Standard Post-Consultation</option>
                 <option>Teleconsultation Review</option>
@@ -222,7 +207,7 @@ export default function ReceptionFeedback() {
           {/* Alert Success */}
           <AnimatePresence>
             {successMsg && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/25 rounded-xl flex items-center gap-2 text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/25 rounded-xl flex items-center gap-2 text-[10px] font-extrabold text-emerald-600 uppercase tracking-wide">
                 <CheckCircle2 size={14} className="shrink-0" /> {successMsg}
               </motion.div>
             )}
@@ -230,8 +215,8 @@ export default function ReceptionFeedback() {
         </div>
 
         {/* Survey List & Patient Voices feed */}
-        <div className="lg:col-span-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-          <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-5 flex items-center gap-2">
+        <div className="lg:col-span-2 finai-card p-6">
+          <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-5 flex items-center gap-2">
             <ClipboardList size={16} className="text-indigo-500" />
             Live Client Feedback Logs
           </h2>
@@ -239,13 +224,13 @@ export default function ReceptionFeedback() {
           <div className="space-y-4 max-h-[280px] overflow-y-auto pr-2 custom-scrollbar">
             {comments.map((c, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }}
-                className="p-4 bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-700 rounded-xl relative overflow-hidden group hover:shadow-sm transition-all"
+                className="p-4 bg-slate-50 border border-slate-100 rounded-xl relative overflow-hidden group hover:shadow-sm transition-all"
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-600 text-xs font-bold font-sans">{c.patient.charAt(0)}</div>
                     <div>
-                      <h4 className="font-extrabold text-xs text-slate-800 dark:text-white">{c.patient}</h4>
+                      <h4 className="font-extrabold text-xs text-[#0a1a0f] ">{c.patient}</h4>
                       <span className="text-[9px] font-semibold text-slate-400 font-mono">{c.date}</span>
                     </div>
                   </div>
@@ -255,7 +240,7 @@ export default function ReceptionFeedback() {
                     ))}
                   </div>
                 </div>
-                <p className="text-xs font-medium text-slate-600 dark:text-slate-300 leading-relaxed font-sans">{c.text}</p>
+                <p className="text-xs font-medium text-slate-600 leading-relaxed font-sans">{c.text}</p>
               </motion.div>
             ))}
           </div>

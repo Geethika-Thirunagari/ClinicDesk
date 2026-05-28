@@ -15,11 +15,11 @@ const initialHistory = [
 ];
 
 const moodEmojis = [
-  { emoji: "😀", label: "Excellent", color: "bg-emerald-100 border-emerald-300 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/30" },
-  { emoji: "🙂", label: "Good", color: "bg-blue-100 border-blue-300 text-blue-700 dark:bg-blue-500/10 dark:border-blue-500/30" },
-  { emoji: "😐", label: "Neutral", color: "bg-slate-100 border-slate-300 text-slate-700 dark:bg-slate-500/10 dark:border-slate-500/30" },
-  { emoji: "🙁", label: "Unwell", color: "bg-amber-100 border-amber-300 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/30" },
-  { emoji: "🤒", label: "Sick", color: "bg-rose-100 border-rose-300 text-rose-700 dark:bg-rose-500/10 dark:border-rose-500/30" }
+  { emoji: "😀", label: "Excellent", color: "bg-emerald-100 border-emerald-300 text-emerald-700 " },
+  { emoji: "🙂", label: "Good", color: "bg-blue-100 border-blue-300 text-blue-700 " },
+  { emoji: "😐", label: "Neutral", color: "bg-slate-100 border-slate-300 text-slate-700 " },
+  { emoji: "🙁", label: "Unwell", color: "bg-amber-100 border-amber-300 text-amber-700 " },
+  { emoji: "🤒", label: "Sick", color: "bg-rose-100 border-rose-300 text-rose-700 " }
 ];
 
 const mockInsights = [
@@ -61,11 +61,11 @@ export default function PatientHealthTracker() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-2">
             <HeartPulse className="text-rose-500" size={32} />
             My Personal Health Hub
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             Log your daily vitals, monitor physiological trends, and review automated clinical insights.
           </p>
         </div>
@@ -73,8 +73,8 @@ export default function PatientHealthTracker() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Daily Vitals logger form */}
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 h-fit">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
+        <div className="finai-card p-6 h-fit">
+          <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 ">
             <Activity className="text-rose-500" size={18} />
             Log Vitals Checklist
           </h2>
@@ -83,33 +83,21 @@ export default function PatientHealthTracker() {
             {/* BP field group */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-<<<<<<< HEAD
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Systolic BP (mmHg)</label>
-                <input
-                  type="number"
-=======
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Systolic BP (mmHg)</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Systolic BP (mmHg)</label>
                 <input 
                   type="number" 
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
                   value={systolic}
                   onChange={(e) => setSystolic(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all dark:text-white font-mono"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all font-mono"
                 />
               </div>
               <div>
-<<<<<<< HEAD
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Diastolic BP (mmHg)</label>
-                <input
-                  type="number"
-=======
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Diastolic BP (mmHg)</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Diastolic BP (mmHg)</label>
                 <input 
                   type="number" 
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
                   value={diastolic}
                   onChange={(e) => setDiastolic(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all dark:text-white font-mono"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all font-mono"
                 />
               </div>
             </div>
@@ -117,58 +105,39 @@ export default function PatientHealthTracker() {
             {/* Sugar & Weight */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-<<<<<<< HEAD
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Blood Sugar (mg/dL)</label>
-                <input
-                  type="number"
-=======
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Blood Sugar (mg/dL)</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Blood Sugar (mg/dL)</label>
                 <input 
                   type="number" 
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
                   value={sugar}
                   onChange={(e) => setSugar(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all dark:text-white font-mono"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all font-mono"
                 />
               </div>
               <div>
-<<<<<<< HEAD
-                <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Body Weight (kg)</label>
-                <input
-                  type="number"
-=======
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Body Weight (kg)</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Body Weight (kg)</label>
                 <input 
                   type="number" 
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
                   step="0.1"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all dark:text-white font-mono"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all font-mono"
                 />
               </div>
             </div>
 
             {/* Interactive Mood Tracker */}
             <div className="pt-2">
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2.5">How are you feeling today?</label>
+              <label className="block text-xs font-bold text-slate-500 uppercase mb-2.5">How are you feeling today?</label>
               <div className="grid grid-cols-5 gap-2">
                 {moodEmojis.map((m, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => setSelectedMood(idx)}
-<<<<<<< HEAD
-                    className={cn("p-2.5 rounded-xl border flex flex-col items-center justify-center transition-all",
-                      selectedMood === idx
-                        ? m.color + " ring-2 ring-rose-500/20 scale-105"
-                        : "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-850 hover:bg-slate-100"
-=======
                     className={cn("p-2.5 rounded-xl border flex flex-col items-center justify-center transition-all", 
                       selectedMood === idx 
                         ? m.color + " ring-2 ring-rose-500/20 scale-105" 
-                        : "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:bg-slate-100"
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
+                        : "bg-slate-50 border-slate-200 hover:bg-slate-100"
                     )}
                   >
                     <span className="text-xl mb-0.5">{m.emoji}</span>
@@ -186,7 +155,7 @@ export default function PatientHealthTracker() {
           {/* Success Dialog */}
           <AnimatePresence>
             {showSuccess && (
-              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/25 rounded-xl flex items-center gap-2 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/25 rounded-xl flex items-center gap-2 text-xs font-bold text-emerald-600 ">
                 <CheckCircle2 size={16} /> Vitals entry synchronized with Clinical EMR.
               </motion.div>
             )}
@@ -194,11 +163,11 @@ export default function PatientHealthTracker() {
         </div>
 
         {/* Vitals Visual Charts - columns 2 & 3 */}
-        <div className="lg:col-span-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 flex flex-col justify-between">
+        <div className="lg:col-span-2 finai-card p-6 flex flex-col justify-between">
           <div>
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center justify-between mb-6">
+            <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center justify-between mb-6">
               <span>My Physiological Vitals Trends</span>
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-full">Last 7 Logs</span>
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-100 px-3 py-1.5 rounded-full">Last 7 Logs</span>
             </h2>
 
             {/* charts grid */}
@@ -206,7 +175,7 @@ export default function PatientHealthTracker() {
               {/* BP Area Chart */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center px-1">
-                  <span className="text-xs font-extrabold text-slate-700 dark:text-white flex items-center gap-1.5"><Heart size={14} className="text-rose-500" /> Blood Pressure (mmHg)</span>
+                  <span className="text-xs font-extrabold text-slate-700 flex items-center gap-1.5"><Heart size={14} className="text-rose-500" /> Blood Pressure (mmHg)</span>
                   <span className="text-[10px] font-extrabold text-slate-500 bg-rose-500/10 text-rose-500 px-2 py-0.5 rounded-md">Systolic / Diastolic</span>
                 </div>
                 <div className="h-[180px] w-full font-medium text-xs">
@@ -232,7 +201,7 @@ export default function PatientHealthTracker() {
               {/* Glucose Chart */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center px-1">
-                  <span className="text-xs font-extrabold text-slate-700 dark:text-white flex items-center gap-1.5"><Activity size={14} className="text-blue-500" /> Blood Sugar (mg/dL)</span>
+                  <span className="text-xs font-extrabold text-slate-700 flex items-center gap-1.5"><Activity size={14} className="text-blue-500" /> Blood Sugar (mg/dL)</span>
                   <span className="text-[10px] font-extrabold text-slate-500 bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-md">Fasting Target: &lt;100</span>
                 </div>
                 <div className="h-[180px] w-full font-medium text-xs">
@@ -256,19 +225,19 @@ export default function PatientHealthTracker() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-950 p-4 rounded-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 pt-4 border-t border-slate-100 ">
+            <div className="flex items-center gap-3 bg-slate-50 p-4 rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500"><TrendingUp size={20} /></div>
               <div>
-                <h4 className="text-xs font-bold text-slate-800 dark:text-white leading-none">Last Log Weight</h4>
-                <p className="text-lg font-extrabold text-slate-800 dark:text-white mt-1 leading-none">{weight} <span className="text-xs font-medium text-slate-400">kg</span></p>
+                <h4 className="text-xs font-bold text-[#0a1a0f] leading-none">Last Log Weight</h4>
+                <p className="text-lg font-extrabold text-[#0a1a0f] mt-1 leading-none">{weight} <span className="text-xs font-medium text-slate-400">kg</span></p>
               </div>
             </div>
-            <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-950 p-4 rounded-xl">
+            <div className="flex items-center gap-3 bg-slate-50 p-4 rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500"><Smile size={20} /></div>
               <div>
-                <h4 className="text-xs font-bold text-slate-800 dark:text-white leading-none">Avg Mood Score</h4>
-                <p className="text-lg font-extrabold text-slate-800 dark:text-white mt-1 leading-none">Excellent <span className="text-xs font-medium text-slate-400">Stable</span></p>
+                <h4 className="text-xs font-bold text-[#0a1a0f] leading-none">Avg Mood Score</h4>
+                <p className="text-lg font-extrabold text-[#0a1a0f] mt-1 leading-none">Excellent <span className="text-xs font-medium text-slate-400">Stable</span></p>
               </div>
             </div>
           </div>
@@ -276,8 +245,8 @@ export default function PatientHealthTracker() {
       </div>
 
       {/* Row 2: AI Health Recommendations & Insights */}
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-5">
+      <div className="finai-card p-6">
+        <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-5">
           <Sparkles size={20} className="text-amber-500" />
           Wellness Co-Pilot AI Recommendations
         </h2>
@@ -285,13 +254,13 @@ export default function PatientHealthTracker() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {mockInsights.map((insight, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }}
-              className="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl relative overflow-hidden group">
+              className="p-4 bg-slate-50 border border-slate-100 rounded-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-20 h-20 bg-rose-500/5 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-all" />
               <div className="flex justify-between items-center text-xs font-extrabold text-rose-500 uppercase tracking-wider mb-2.5">
                 <span>Insight Indicator #{idx + 1}</span>
                 <ChevronRight size={14} />
               </div>
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">{insight}</p>
+              <p className="text-xs font-semibold text-slate-600 leading-relaxed">{insight}</p>
             </motion.div>
           ))}
         </div>

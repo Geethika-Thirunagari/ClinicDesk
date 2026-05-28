@@ -5,9 +5,9 @@ import { cn } from '../../utils/cn';
 
 const InsightCard = ({ title, description, icon: Icon, type, delay }) => {
   const styles = {
-    prediction: "from-indigo-500/10 to-purple-500/10 border-indigo-500/20 text-indigo-600 dark:text-indigo-400",
-    success: "from-emerald-500/10 to-teal-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400",
-    warning: "from-amber-500/10 to-orange-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400"
+    prediction: "from-indigo-500/10 to-purple-500/10 border-indigo-500/20 text-indigo-600 ",
+    success: "from-emerald-500/10 to-teal-500/10 border-emerald-500/20 text-emerald-600 ",
+    warning: "from-amber-500/10 to-orange-500/10 border-amber-500/20 text-amber-600 "
   };
 
   return (
@@ -23,7 +23,7 @@ const InsightCard = ({ title, description, icon: Icon, type, delay }) => {
       <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
         <Sparkles size={48} />
       </div>
-      <div className="p-2 rounded-lg bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm shrink-0">
+      <div className="p-2 rounded-lg bg-white/50 backdrop-blur-sm shrink-0">
         <Icon size={20} className="opacity-80" />
       </div>
       <div className="relative z-10">
@@ -36,13 +36,13 @@ const InsightCard = ({ title, description, icon: Icon, type, delay }) => {
 
 const AIInsights = () => {
   return (
-    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 rounded-2xl p-6 h-full shadow-sm">
+    <div className="bg-white border border-[#e2e8e2] rounded-[24px] p-6 h-full shadow-sm">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+        <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
           <BrainCircuit className="text-indigo-500" />
           AI Healthcare Insights
         </h2>
-        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 rounded-lg">
+        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 bg-indigo-50 text-indigo-600 rounded-lg">
           Updated Live
         </span>
       </div>

@@ -21,7 +21,7 @@ const PatientNotifications = () => {
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-3">
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-3">
             Notifications {unread > 0 && <span className="bg-rose-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">{unread}</span>}
           </h1>
           <p className="text-sm text-slate-500 mt-1">Stay updated on appointments, medications, and billing.</p>
@@ -33,7 +33,7 @@ const PatientNotifications = () => {
           </button>
         )}
       </div>
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl divide-y divide-slate-100 dark:divide-slate-800 overflow-hidden">
+      <div className="finai-card divide-y divide-slate-100 overflow-hidden">
         <AnimatePresence>
           {notifs.map(n => {
             const Icon = iconMap[n.type];
@@ -44,7 +44,7 @@ const PatientNotifications = () => {
                 <div className={cn("w-11 h-11 rounded-full flex items-center justify-center shrink-0", colorMap[n.type])}><Icon size={20} /></div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-1">
-                    <h3 className={cn("font-bold text-sm", n.read ? "text-slate-700" : "text-slate-900")}>{n.title}</h3>
+                    <h3 className={cn("font-bold text-sm", n.read ? "text-slate-700" : "text-[#0a1a0f]")}>{n.title}</h3>
                     <span className="text-xs text-slate-400 font-semibold">{n.time}</span>
                   </div>
                   <p className={cn("text-sm", n.read ? "text-slate-500" : "text-slate-700")}>{n.message}</p>

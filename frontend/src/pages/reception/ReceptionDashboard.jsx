@@ -12,11 +12,11 @@ const queue = [
 
 const StatCard = ({ title, value, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}
-    className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-5 hover:shadow-md transition-all">
+    className="finai-card p-5 hover:shadow-md transition-all">
     <div className="flex items-center justify-between mb-3">
       <div className={cn("p-3 rounded-xl", color)}><Icon size={22} className="text-white" /></div>
     </div>
-    <h3 className="text-2xl font-extrabold text-slate-800 dark:text-white">{value}</h3>
+    <h3 className="text-2xl font-extrabold text-[#0a1a0f] ">{value}</h3>
     <p className="text-sm font-semibold text-slate-500 mt-1">{title}</p>
   </motion.div>
 );
@@ -39,14 +39,14 @@ const ReceptionDashboard = () => {
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Reception Desk</h1>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Reception Desk</h1>
           <p className="text-sm text-slate-500 mt-1">Manage walk-ins, bookings, and patient flow.</p>
         </div>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => setIsDarkMode((prev) => !prev)}
-            className="p-2 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:shadow-md transition-all"
+            className="p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-600 shadow-sm hover:shadow-md transition-all"
             aria-label="Toggle dark mode"
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -67,20 +67,20 @@ const ReceptionDashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Live Queue */}
-        <div className="lg:col-span-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
+        <div className="lg:col-span-2 finai-card p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2"><Users size={20} className="text-blue-500" /> Live Queue</h2>
+            <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2"><Users size={20} className="text-blue-500" /> Live Queue</h2>
             <button onClick={() => navigate('/reception/queue')} className="text-sm font-semibold text-blue-600">View Full Queue</button>
           </div>
           <div className="space-y-3">
             {queue.map((q, i) => (
               <motion.div key={q.id} initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
                 className={cn("flex items-center justify-between p-4 rounded-xl border transition-all",
-                  q.status === 'In Progress' ? "bg-blue-50 border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/20" : "bg-slate-50/50 border-slate-100 dark:bg-slate-800/50 dark:border-slate-700")}>
+                  q.status === 'In Progress' ? "bg-blue-50 border-blue-200 " : "bg-slate-50/50 border-slate-100 ")}>
                 <div className="flex items-center gap-4">
-                  <span className="text-sm font-mono font-bold text-blue-600 dark:text-blue-400 w-12">{q.token}</span>
+                  <span className="text-sm font-mono font-bold text-blue-600 w-12">{q.token}</span>
                   <div>
-                    <h4 className="font-bold text-sm text-slate-800 dark:text-white">{q.patient}</h4>
+                    <h4 className="font-bold text-sm text-[#0a1a0f] ">{q.patient}</h4>
                     <p className="text-xs text-slate-500">{q.doctor} • {q.time}</p>
                   </div>
                 </div>
@@ -92,18 +92,18 @@ const ReceptionDashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Quick Actions</h2>
+        <div className="finai-card p-6">
+          <h2 className="text-lg font-bold text-[#0a1a0f] mb-6">Quick Actions</h2>
           <div className="space-y-3">
             {[{ label: 'Book Appointment', icon: Calendar, path: '/reception/booking' },
               { label: 'Patient Registration', icon: UserPlus, path: '/reception/registration' },
               { label: 'Generate Bill', icon: CreditCard, path: '/reception/billing' },
               { label: 'Manage Queue', icon: Users, path: '/reception/queue' }].map(a => (
               <button key={a.label} onClick={() => navigate(a.path)}
-                className="w-full flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-left">
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-slate-100 hover:bg-slate-50 :bg-slate-800 transition-all text-left">
                 <div className="flex items-center gap-3">
                   <a.icon size={18} className="text-blue-500" />
-                  <span className="font-semibold text-sm text-slate-700 dark:text-slate-300">{a.label}</span>
+                  <span className="font-semibold text-sm text-slate-700 ">{a.label}</span>
                 </div>
                 <ChevronRight size={16} className="text-slate-400" />
               </button>

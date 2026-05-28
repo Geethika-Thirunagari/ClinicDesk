@@ -76,18 +76,18 @@ export default function ReceptionCheckin() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-2">
             <ScanLine className="text-blue-500" size={32} />
             Patient Check-In Kiosk
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             Perform rapid registration and queue check-in for pre-scheduled or walk-in patients.
           </p>
         </div>
       </div>
 
       {/* Progress tracking indicator */}
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-4 flex items-center justify-between gap-4">
+      <div className="finai-card p-4 flex items-center justify-between gap-4">
         {[
           { num: 1, label: "Search Patient" },
           { num: 2, label: "Verify & Routing" },
@@ -97,18 +97,18 @@ export default function ReceptionCheckin() {
             <div className={cn("w-6 h-6 rounded-full flex items-center justify-center border", 
               step === s.num ? "bg-blue-600 border-blue-700 text-white shadow-sm" :
               step > s.num ? "bg-emerald-500 border-emerald-600 text-white" :
-              "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-700 text-slate-400"
+              "bg-slate-50 border-slate-200 text-slate-400"
             )}>
               {s.num}
             </div>
-            <span className={cn(step >= s.num ? "text-slate-700 dark:text-white" : "text-slate-400")}>{s.label}</span>
+            <span className={cn(step >= s.num ? "text-slate-700 " : "text-slate-400")}>{s.label}</span>
             {s.num < 3 && <ChevronRight size={14} className="text-slate-400" />}
           </div>
         ))}
       </div>
 
       {/* Core Wizard panel */}
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 min-h-[420px] flex flex-col justify-between relative overflow-hidden">
+      <div className="finai-card p-6 min-h-[420px] flex flex-col justify-between relative overflow-hidden">
         
         {/* Abstract floating blur background */}
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
@@ -118,7 +118,7 @@ export default function ReceptionCheckin() {
           {step === 1 && (
             <motion.div key="step1" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }} className="space-y-6">
               <div>
-                <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-1 flex items-center gap-2">
+                <h2 className="text-lg font-bold text-[#0a1a0f] mb-1 flex items-center gap-2">
                   <Search size={18} className="text-blue-500" /> Lookup Patient Record
                 </h2>
                 <p className="text-xs font-semibold text-slate-400">Search by patient name, primary phone number, or EMR identification code.</p>
@@ -132,7 +132,7 @@ export default function ReceptionCheckin() {
                     placeholder="Search e.g. Alice Johnson, 555-0192, PT-1024..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white"
+                    className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all "
                   />
                 </div>
                 <button type="submit" className="px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-blue-500/10 cursor-pointer">
@@ -147,12 +147,12 @@ export default function ReceptionCheckin() {
                     <div 
                       key={p.id}
                       onClick={() => handleSelectPatient(p)}
-                      className="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-950/60 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-between transition-all cursor-pointer shadow-sm group"
+                      className="p-4 bg-slate-50 hover:bg-slate-100 :bg-[#0a1a0f] border border-slate-200 rounded-[24px] flex items-center justify-between transition-all cursor-pointer shadow-sm group"
                     >
                       <div className="flex items-center gap-3.5">
                         <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600"><User size={20} /></div>
                         <div>
-                          <h4 className="font-extrabold text-sm text-slate-800 dark:text-white group-hover:text-blue-600 transition-colors leading-tight">{p.name}</h4>
+                          <h4 className="font-extrabold text-sm text-[#0a1a0f] group-hover:text-blue-600 transition-colors leading-tight">{p.name}</h4>
                           <p className="text-xs text-slate-400 mt-1 font-mono">{p.id} • DOB: {p.dob} (Age {p.age})</p>
                         </div>
                       </div>
@@ -160,7 +160,7 @@ export default function ReceptionCheckin() {
                     </div>
                   ))
                 ) : searchQuery && (
-                  <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium">
+                  <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 rounded-xl text-xs font-medium">
                     No records matched search parameters. Check details or register as a new client walk-in.
                   </div>
                 )}
@@ -172,36 +172,36 @@ export default function ReceptionCheckin() {
           {step === 2 && (
             <motion.div key="step2" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }} className="space-y-6">
               <div className="flex items-center gap-2">
-                <button onClick={() => setStep(1)} className="p-2 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-400 hover:text-slate-700 transition-colors">
+                <button onClick={() => setStep(1)} className="p-2 bg-slate-100 border border-slate-200 rounded-lg text-slate-400 hover:text-slate-700 transition-colors">
                   <ArrowLeft size={14} />
                 </button>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-0.5 leading-none">Check-In Verification & Routing</h2>
-                  <p className="text-xs font-semibold text-slate-400 dark:text-slate-400">Review identity profile and select medical routing destinations.</p>
+                  <h2 className="text-lg font-bold text-[#0a1a0f] mb-0.5 leading-none">Check-In Verification & Routing</h2>
+                  <p className="text-xs font-semibold text-slate-400 ">Review identity profile and select medical routing destinations.</p>
                 </div>
               </div>
 
               {/* Bio summary */}
-              <div className="p-4 bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-700 rounded-2xl flex flex-col sm:flex-row justify-between gap-4 text-xs font-semibold">
+              <div className="p-4 bg-slate-50 border border-slate-200 rounded-[24px] flex flex-col sm:flex-row justify-between gap-4 text-xs font-semibold">
                 <div>
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Verifying Client profile</span>
-                  <h4 className="font-extrabold text-sm text-slate-800 dark:text-white mt-1 leading-none">{selectedPatient.name}</h4>
+                  <h4 className="font-extrabold text-sm text-[#0a1a0f] mt-1 leading-none">{selectedPatient.name}</h4>
                   <p className="text-slate-500 mt-1 font-mono">{selectedPatient.id} • Phone: {selectedPatient.phone}</p>
                 </div>
                 <div className="text-left sm:text-right shrink-0">
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Last Visit Registry</span>
-                  <p className="text-slate-800 dark:text-slate-300 mt-1 font-mono">{selectedPatient.lastVisit}</p>
+                  <p className="text-[#0a1a0f] mt-1 font-mono">{selectedPatient.lastVisit}</p>
                 </div>
               </div>
 
               {/* Selection inputs */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Assign Consulting Practitioner</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Assign Consulting Practitioner</label>
                   <select 
                     value={selectedDoctor}
                     onChange={(e) => setSelectedDoctor(e.target.value)}
-                    className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
+                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">-- Choose Practitioner --</option>
                     {mockDoctorsList.map((d, idx) => (
@@ -210,11 +210,11 @@ export default function ReceptionCheckin() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Visit Category classification</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Visit Category classification</label>
                   <select 
                     value={visitType}
                     onChange={(e) => setVisitType(e.target.value)}
-                    className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
+                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
                   >
                     <option>Consultation</option>
                     <option>Follow-up Visit</option>
@@ -224,7 +224,7 @@ export default function ReceptionCheckin() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+              <div className="pt-4 border-t border-slate-100 flex justify-end">
                 <button 
                   disabled={!selectedDoctor || isProcessing}
                   onClick={handleProcessCheckin}
@@ -252,20 +252,20 @@ export default function ReceptionCheckin() {
                   <CheckCircle2 size={36} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-800 dark:text-white">Check-In Registry Complete!</h2>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
-                    Patient <strong className="text-slate-700 dark:text-white">{selectedPatient.name}</strong> was assigned to <strong className="text-slate-700 dark:text-white">{selectedDoctor}</strong> queue segment.
+                  <h2 className="text-xl font-bold text-[#0a1a0f] ">Check-In Registry Complete!</h2>
+                  <p className="text-xs font-semibold text-slate-500 mt-1.5 leading-relaxed">
+                    Patient <strong className="text-slate-700 ">{selectedPatient.name}</strong> was assigned to <strong className="text-slate-700 ">{selectedDoctor}</strong> queue segment.
                   </p>
                 </div>
 
                 {/* Queue ticket visualization */}
-                <div className="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 border-dashed relative overflow-hidden">
-                  <Ticket className="absolute -bottom-4 -right-4 w-20 h-20 text-slate-200 dark:text-slate-900 pointer-events-none" />
+                <div className="bg-slate-50 border border-slate-200 rounded-[24px] p-5 border-dashed relative overflow-hidden">
+                  <Ticket className="absolute -bottom-4 -right-4 w-20 h-20 text-slate-200 pointer-events-none" />
                   
                   <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Queue Token Registry</span>
-                  <div className="text-4xl font-extrabold text-blue-600 dark:text-blue-400 font-mono tracking-wider mt-1.5">{generatedToken}</div>
+                  <div className="text-4xl font-extrabold text-blue-600 font-mono tracking-wider mt-1.5">{generatedToken}</div>
                   
-                  <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800/80 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                  <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-200 text-xs font-semibold text-slate-500 ">
                     <div className="text-left">
                       <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Clinic Dept</span>
                       <p className="mt-0.5 leading-none">Primary Care</p>
@@ -278,7 +278,7 @@ export default function ReceptionCheckin() {
                 </div>
 
                 {/* Return button */}
-                <button onClick={handleReset} className="w-full py-3 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all">
+                <button onClick={handleReset} className="w-full py-3 bg-slate-800 hover:bg-[#0a1a0f] :bg-slate-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all">
                   Next Registration Check-In
                 </button>
               </div>

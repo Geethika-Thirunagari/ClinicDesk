@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Home, Compass, Stethoscope, AlertTriangle } from 'lucide-react';
+import { Home as HomeIcon, Stethoscope as StethIcon, AlertTriangle as AlertIcon, ArrowLeft as BackIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -17,60 +17,55 @@ const NotFound = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950 text-slate-900 relative overflow-hidden select-none">
-      {/* Decorative Background blur circles */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-500/10 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-500/10 blur-[130px] pointer-events-none" />
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#f4f7f4] text-slate-900 relative overflow-hidden select-none font-['Outfit']">
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.96, y: 15 }}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-2xl rounded-3xl p-8 md:p-12 text-center max-w-lg w-full relative z-10 flex flex-col items-center space-y-6"
+        className="bg-white border border-[#e2e8e2] shadow-sm rounded-[32px] p-8 md:p-12 text-center max-w-lg w-full relative z-10 flex flex-col items-center space-y-8"
       >
-        {/* Animated Heartbeat ECG Flatline 404 Visual */}
+        {/* Animated Visual */}
         <div className="relative w-36 h-28 flex items-center justify-center">
-          {/* Pulsing background circle */}
-          <motion.div 
-            animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="absolute inset-0 bg-blue-500 rounded-full filter blur-xl opacity-20"
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+            className="absolute inset-0 bg-emerald-500 rounded-full filter blur-2xl"
           />
 
-          {/* Heart/Cross Icon */}
           <motion.div
-            animate={{ y: [0, -6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="absolute z-10 bg-gradient-to-tr from-blue-600 to-indigo-500 p-4.5 rounded-2xl shadow-lg shadow-blue-500/20 text-white"
+            animate={{ y: [0, -4, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="absolute z-10 bg-[#0a1a0f] p-5 rounded-2xl shadow-xl shadow-emerald-900/10 text-emerald-400"
           >
-            <Stethoscope size={36} />
+            <StethIcon size={40} />
           </motion.div>
         </div>
 
         {/* Text Details */}
-        <div className="space-y-2">
-          <h1 className="text-4xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center justify-center gap-2">
-            <AlertTriangle className="text-amber-500" size={32} /> 404
+        <div className="space-y-3">
+          <h1 className="text-4xl font-black text-[#0a1a0f] tracking-tight flex items-center justify-center gap-3">
+            <AlertIcon className="text-amber-500" size={32} strokeWidth={3} /> 404
           </h1>
-          <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200">Page Not Found</h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+          <h2 className="text-xl font-bold text-slate-800">Page Not Found</h2>
+          <p className="text-xs font-semibold text-slate-400 max-w-sm mx-auto leading-relaxed uppercase tracking-wider">
             The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let's get you back on track!
           </p>
         </div>
 
         {/* Redirect CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 w-full">
-          <button 
+        <div className="flex flex-col sm:flex-row gap-4 w-full">
+          <button
             onClick={() => navigate(-1)}
-            className="flex-1 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl font-bold transition-all text-sm"
+            className="flex-1 py-4 bg-slate-50 border border-slate-100 text-slate-500 hover:bg-white hover:border-slate-200 hover:text-slate-900 rounded-2xl font-bold transition-all text-xs uppercase tracking-widest"
           >
             Go Back
           </button>
-          <button 
+          <button
             onClick={handleGoHome}
-            className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-lg shadow-blue-500/25 text-white rounded-xl font-bold transition-all text-sm flex items-center justify-center gap-2"
+            className="flex-1 py-4 bg-[#0a1a0f] hover:bg-emerald-950 text-white rounded-2xl font-bold transition-all text-xs flex items-center justify-center gap-2 uppercase tracking-widest shadow-lg shadow-emerald-900/20"
           >
-            <Home size={16} />
+            <HomeIcon size={14} />
             Return to Dashboard
           </button>
         </div>

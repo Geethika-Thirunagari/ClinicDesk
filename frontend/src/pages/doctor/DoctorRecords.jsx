@@ -35,20 +35,20 @@ const DoctorRecords = () => {
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Medical Records</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Access and review patient EMR, lab results, and clinical notes.</p>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Medical Records</h1>
+          <p className="text-sm text-slate-500 mt-1">Access and review patient EMR, lab results, and clinical notes.</p>
         </div>
       </div>
 
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
+      <div className="finai-card p-6">
         
         <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
           <div className="relative w-full md:w-96">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <input type="text" placeholder="Search by patient name, ID, or report name..." value={search} onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white" />
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all " />
           </div>
-          <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+          <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl font-semibold text-sm hover:bg-slate-50 :bg-slate-700 transition-all">
             <Filter size={18} /> Advanced Filter
           </button>
         </div>
@@ -56,7 +56,7 @@ const DoctorRecords = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-200 dark:border-slate-800">
+              <tr className="border-b border-slate-200 ">
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Patient</th>
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Record Details</th>
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Type</th>
@@ -68,37 +68,37 @@ const DoctorRecords = () => {
             <tbody>
               {filtered.map((record, i) => (
                 <motion.tr key={record.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 }}
-                  className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                  className="border-b border-slate-100 hover:bg-slate-50/50 :bg-slate-800/50 transition-colors">
                   <td className="py-4">
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">{record.patient}</p>
+                    <p className="text-sm font-bold text-[#0a1a0f] ">{record.patient}</p>
                     <p className="text-xs text-slate-500 font-mono">{record.pid}</p>
                   </td>
                   <td className="py-4">
-                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">{record.name}</p>
+                    <p className="text-sm font-semibold text-slate-700 ">{record.name}</p>
                     <p className="text-xs text-slate-500 font-mono">{record.id}</p>
                   </td>
                   <td className="py-4">
                     <div className="flex items-center gap-2">
                       <TypeIcon type={record.type} />
-                      <span className="text-sm font-medium text-slate-600 dark:text-slate-400">{record.type}</span>
+                      <span className="text-sm font-medium text-slate-600 ">{record.type}</span>
                     </div>
                   </td>
-                  <td className="py-4 text-sm text-slate-600 dark:text-slate-400 flex items-center gap-1.5 mt-1">
+                  <td className="py-4 text-sm text-slate-600 flex items-center gap-1.5 mt-1">
                     <Clock size={14} className="text-slate-400" /> {record.date}
                   </td>
                   <td className="py-4">
                     <span className={cn(
                       "text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider",
-                      record.status === 'Final' ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400" : "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400"
+                      record.status === 'Final' ? "bg-emerald-100 text-emerald-700 " : "bg-amber-100 text-amber-700 "
                     )}>
                       {record.status}
                     </span>
                   </td>
                   <td className="py-4 text-right space-x-2">
-                    <button className="p-2 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-colors tooltip-trigger" title="View Document">
+                    <button className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 :bg-blue-500/10 transition-colors tooltip-trigger" title="View Document">
                       <Eye size={18} />
                     </button>
-                    <button className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors tooltip-trigger" title="Download">
+                    <button className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 :bg-slate-800 transition-colors tooltip-trigger" title="Download">
                       <Download size={18} />
                     </button>
                   </td>

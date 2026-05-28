@@ -28,11 +28,11 @@ const DoctorPrescriptions = () => {
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">e-Prescription</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Write and issue digital prescriptions.</p>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">e-Prescription</h1>
+          <p className="text-sm text-slate-500 mt-1">Write and issue digital prescriptions.</p>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 dark:bg-slate-700 text-white rounded-xl font-semibold text-sm hover:bg-slate-700 dark:hover:bg-slate-600 transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 text-white rounded-xl font-semibold text-sm hover:bg-slate-700 :bg-slate-600 transition-all">
             <History size={16} /> View History
           </button>
         </div>
@@ -41,36 +41,36 @@ const DoctorPrescriptions = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* E-Prescription Pad (Takes up 2 columns) */}
-        <div className="lg:col-span-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 relative">
+        <div className="lg:col-span-2 finai-card p-6 relative">
           {/* Pad Header */}
-          <div className="border-b border-slate-200 dark:border-slate-800 pb-6 mb-6 flex justify-between items-start">
+          <div className="border-b border-slate-200 pb-6 mb-6 flex justify-between items-start">
             <div>
-              <h2 className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2">
+              <h2 className="text-2xl font-black text-[#0a1a0f] flex items-center gap-2">
                 <FileSignature className="text-blue-600" /> Rx Pad
               </h2>
               <p className="text-sm font-semibold text-slate-500 mt-1">Dr. Sarah Smith, MD • Cardiology</p>
             </div>
             <div className="text-right">
-              <p className="text-sm font-semibold text-slate-800 dark:text-white">Date: {new Date().toLocaleDateString()}</p>
+              <p className="text-sm font-semibold text-[#0a1a0f] ">Date: {new Date().toLocaleDateString()}</p>
               <p className="text-xs text-slate-500 mt-1 font-mono">RX-ID: AUTO-GEN</p>
             </div>
           </div>
 
           {/* Patient Selection */}
           <div className="mb-6">
-            <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Patient</label>
+            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Patient</label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input type="text" placeholder="Search patient name or ID..."
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white" />
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all " />
             </div>
           </div>
 
           {/* Medications Form */}
           <div className="space-y-4 mb-6">
-            <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Medications</label>
+            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Medications</label>
             {medications.map((med, index) => (
-              <div key={med.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 rounded-xl relative group">
+              <div key={med.id} className="p-4 bg-slate-50 border border-slate-100 rounded-xl relative group">
                 <div className="absolute -left-2 -top-2 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-md">
                   {index + 1}
                 </div>
@@ -82,44 +82,44 @@ const DoctorPrescriptions = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                   <div>
                     <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Drug Name</label>
-                    <input type="text" placeholder="e.g. Amoxicillin" className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm outline-none focus:border-blue-500 dark:text-white" />
+                    <input type="text" placeholder="e.g. Amoxicillin" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500 " />
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     <div>
                       <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Dosage</label>
-                      <input type="text" placeholder="e.g. 500mg" className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm outline-none focus:border-blue-500 dark:text-white" />
+                      <input type="text" placeholder="e.g. 500mg" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500 " />
                     </div>
                     <div>
                       <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Freq.</label>
-                      <input type="text" placeholder="e.g. 1x / day" className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm outline-none focus:border-blue-500 dark:text-white" />
+                      <input type="text" placeholder="e.g. 1x / day" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500 " />
                     </div>
                     <div>
                       <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Duration</label>
-                      <input type="text" placeholder="e.g. 7 days" className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm outline-none focus:border-blue-500 dark:text-white" />
+                      <input type="text" placeholder="e.g. 7 days" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500 " />
                     </div>
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Instructions (Optional)</label>
-                    <input type="text" placeholder="e.g. Take after meals" className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm outline-none focus:border-blue-500 dark:text-white" />
+                    <input type="text" placeholder="e.g. Take after meals" className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500 " />
                   </div>
                 </div>
               </div>
             ))}
           </div>
           
-          <button onClick={addMedication} className="flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors mb-8">
+          <button onClick={addMedication} className="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors mb-8">
             <Plus size={16} /> Add Another Medication
           </button>
 
           {/* Action Buttons */}
-          <div className="flex gap-3 pt-6 border-t border-slate-200 dark:border-slate-800">
+          <div className="flex gap-3 pt-6 border-t border-slate-200 ">
             <button className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2">
               <FileSignature size={18} /> Issue Prescription
             </button>
-            <button className="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+            <button className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 :bg-slate-700 transition-all">
               <Printer size={18} />
             </button>
-            <button className="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+            <button className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 :bg-slate-700 transition-all">
               <Save size={18} />
             </button>
           </div>
@@ -127,36 +127,36 @@ const DoctorPrescriptions = () => {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-            <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className="finai-card p-6">
+            <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
               <Pill size={16} className="text-blue-500" />
               Drug Templates
             </h2>
             <div className="space-y-2">
-              <button className="w-full text-left p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-slate-800 transition-all">
-                <p className="font-bold text-sm text-slate-700 dark:text-slate-200">Standard Antibiotic Regimen</p>
+              <button className="w-full text-left p-3 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-blue-50 :bg-slate-800 transition-all">
+                <p className="font-bold text-sm text-slate-700 ">Standard Antibiotic Regimen</p>
                 <p className="text-xs text-slate-500 mt-1">Amoxicillin 500mg • 3x/day • 7 days</p>
               </button>
-              <button className="w-full text-left p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-slate-800 transition-all">
-                <p className="font-bold text-sm text-slate-700 dark:text-slate-200">Pain Management (Mild)</p>
+              <button className="w-full text-left p-3 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-blue-50 :bg-slate-800 transition-all">
+                <p className="font-bold text-sm text-slate-700 ">Pain Management (Mild)</p>
                 <p className="text-xs text-slate-500 mt-1">Ibuprofen 400mg • PRN • 5 days</p>
               </button>
             </div>
           </div>
 
-          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-            <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className="finai-card p-6">
+            <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
               <History size={16} className="text-indigo-500" />
               Recent Issues
             </h2>
             <div className="space-y-3">
               {recentPrescriptions.map(rx => (
-                <div key={rx.id} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+                <div key={rx.id} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 ">
                   <div>
-                    <p className="font-bold text-sm text-slate-700 dark:text-slate-200">{rx.patient}</p>
+                    <p className="font-bold text-sm text-slate-700 ">{rx.patient}</p>
                     <p className="text-[10px] text-slate-500 mt-0.5">{rx.id} • {rx.date}</p>
                   </div>
-                  <span className="text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 px-2 py-1 rounded-md">{rx.medications} Meds</span>
+                  <span className="text-xs font-bold bg-blue-100 text-blue-700 px-2 py-1 rounded-md">{rx.medications} Meds</span>
                 </div>
               ))}
             </div>

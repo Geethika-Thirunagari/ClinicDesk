@@ -40,7 +40,7 @@ const DoctorNotifications = () => {
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-3">
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-3">
             Alerts & Notifications
             {unreadCount > 0 && (
               <span className="bg-rose-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
@@ -48,33 +48,33 @@ const DoctorNotifications = () => {
               </span>
             )}
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Stay updated on patients, schedules, and system alerts.</p>
+          <p className="text-sm text-slate-500 mt-1">Stay updated on patients, schedules, and system alerts.</p>
         </div>
       </div>
 
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden">
+      <div className="finai-card overflow-hidden">
         
         {/* Toolbar */}
-        <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
-          <div className="flex bg-slate-200 dark:bg-slate-800 p-1 rounded-xl">
-            <button onClick={() => setFilter('all')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", filter === 'all' ? "bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-white" : "text-slate-500")}>All</button>
-            <button onClick={() => setFilter('unread')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", filter === 'unread' ? "bg-white dark:bg-slate-700 shadow-sm text-slate-800 dark:text-white" : "text-slate-500")}>Unread</button>
+        <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/50 ">
+          <div className="flex bg-slate-200 p-1 rounded-xl">
+            <button onClick={() => setFilter('all')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", filter === 'all' ? "bg-white shadow-sm text-[#0a1a0f] " : "text-slate-500")}>All</button>
+            <button onClick={() => setFilter('unread')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", filter === 'unread' ? "bg-white shadow-sm text-[#0a1a0f] " : "text-slate-500")}>Unread</button>
           </div>
           {unreadCount > 0 && (
-            <button onClick={markAllRead} className="flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-500/10">
+            <button onClick={markAllRead} className="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50 :bg-blue-500/10">
               <CheckSquare size={16} /> Mark all read
             </button>
           )}
         </div>
 
         {/* List */}
-        <div className="divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="divide-y divide-slate-100 ">
           <AnimatePresence>
             {filtered.map((n) => (
               <motion.div key={n.id} layout initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
                 className={cn(
                   "p-5 flex gap-4 transition-colors relative group",
-                  n.read ? "bg-white/40 dark:bg-slate-950/40" : "bg-blue-50/30 dark:bg-blue-900/10"
+                  n.read ? "bg-white/40 " : "bg-blue-50/30 "
                 )}
               >
                 {!n.read && <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r-full" />}
@@ -82,10 +82,10 @@ const DoctorNotifications = () => {
                 <div className="shrink-0 mt-1">
                   <div className={cn(
                     "w-12 h-12 rounded-full flex items-center justify-center",
-                    n.type === 'critical' ? "bg-rose-100 dark:bg-rose-500/20" :
-                    n.type === 'warning' ? "bg-amber-100 dark:bg-amber-500/20" :
-                    n.type === 'success' ? "bg-emerald-100 dark:bg-emerald-500/20" :
-                    "bg-blue-100 dark:bg-blue-500/20"
+                    n.type === 'critical' ? "bg-rose-100 " :
+                    n.type === 'warning' ? "bg-amber-100 " :
+                    n.type === 'success' ? "bg-emerald-100 " :
+                    "bg-blue-100 "
                   )}>
                     {getIcon(n.type)}
                   </div>
@@ -93,14 +93,14 @@ const DoctorNotifications = () => {
 
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-1">
-                    <h3 className={cn("font-bold text-base", n.read ? "text-slate-700 dark:text-slate-300" : "text-slate-900 dark:text-white")}>{n.title}</h3>
+                    <h3 className={cn("font-bold text-base", n.read ? "text-slate-700 " : "text-[#0a1a0f] ")}>{n.title}</h3>
                     <span className="text-xs font-semibold text-slate-400">{n.time}</span>
                   </div>
-                  <p className={cn("text-sm", n.read ? "text-slate-500 dark:text-slate-400" : "text-slate-700 dark:text-slate-300 font-medium")}>{n.message}</p>
+                  <p className={cn("text-sm", n.read ? "text-slate-500 " : "text-slate-700 font-medium")}>{n.message}</p>
                 </div>
 
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center">
-                  <button onClick={() => removeNotification(n.id)} className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/20 rounded-lg transition-colors tooltip-trigger" title="Delete">
+                  <button onClick={() => removeNotification(n.id)} className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 :bg-rose-500/20 rounded-lg transition-colors tooltip-trigger" title="Delete">
                     <Trash2 size={18} />
                   </button>
                 </div>

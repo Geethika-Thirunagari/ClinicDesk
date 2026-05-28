@@ -11,29 +11,29 @@ const logs = [
 
 const AuditLogs = () => {
   return (
-    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 rounded-2xl p-6 h-full shadow-sm flex flex-col">
+    <div className="bg-white border border-[#e2e8e2] rounded-[24px] p-6 h-full shadow-sm flex flex-col">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+        <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
           <History className="text-slate-500" />
           Audit Logs
         </h2>
-        <button className="text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-300">Export</button>
+        <button className="text-xs font-semibold text-slate-500 hover:text-[#0a1a0f] :text-slate-300">Export</button>
       </div>
 
       <div className="flex-1 overflow-auto pr-2 -mr-2 relative">
-        <div className="absolute left-4 top-2 bottom-0 w-px bg-slate-200 dark:bg-slate-800 z-0" />
+        <div className="absolute left-4 top-2 bottom-0 w-px bg-slate-200 z-0" />
         <div className="space-y-4 relative z-10">
           {logs.map((log) => (
             <div key={log.id} className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 z-10 mt-1 shadow-sm">
+              <div className="w-8 h-8 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center shrink-0 z-10 mt-1 shadow-sm">
                 <log.icon size={14} className={log.color} />
               </div>
               <div className="flex-1 pb-4">
-                <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                <p className="text-sm font-semibold text-[#0a1a0f] ">
                   {log.action} <span className="text-slate-500 font-normal">on {log.target}</span>
                 </p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs font-medium text-slate-500 dark:text-slate-400">by {log.user}</span>
+                  <span className="text-xs font-medium text-slate-500 ">by {log.user}</span>
                   <span className="text-xs text-slate-400">•</span>
                   <span className="text-xs text-slate-400">{log.time}</span>
                 </div>

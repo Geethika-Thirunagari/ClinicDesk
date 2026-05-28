@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-<<<<<<< HEAD
-import {
-  Users, Calendar, Clock, Activity, Star, ChevronRight,
-  Video, FileText, CheckCircle, Quote
-=======
 import { 
   Users, Calendar, Clock, Activity, Star, ChevronRight, 
   Video, FileText, CheckCircle, Quote, Moon, Sun 
->>>>>>> 822c505efce474b36751a959a31f2aca31330464
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import AIDiagnosisWidget from '../../components/doctor/AIDiagnosisWidget';
@@ -29,14 +23,14 @@ const schedule = [
 
 const StatCard = ({ title, value, subtext, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-5 group hover:shadow-md transition-all">
+    className="finai-card p-5 group hover:shadow-md transition-all">
     <div className="flex items-center justify-between mb-4">
       <div className={cn("p-3 rounded-xl", color)}><Icon size={22} className="text-white" /></div>
-      <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-full">{subtext}</span>
+      <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">{subtext}</span>
     </div>
     <div>
-      <h3 className="text-3xl font-extrabold text-slate-800 dark:text-white">{value}</h3>
-      <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">{title}</p>
+      <h3 className="text-3xl font-extrabold text-[#0a1a0f] ">{value}</h3>
+      <p className="text-sm font-semibold text-slate-500 mt-1">{title}</p>
     </div>
   </motion.div>
 );
@@ -69,20 +63,20 @@ const DoctorDashboard = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Doctor Workspace</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Here is your summary for today, Dr. Smith.</p>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Doctor Workspace</h1>
+          <p className="text-sm text-slate-500 mt-1">Here is your summary for today, Dr. Smith.</p>
         </div>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => setIsDarkMode((prev) => !prev)}
-            className="p-2 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:shadow-md transition-all"
+            className="p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-600 shadow-sm hover:shadow-md transition-all"
             aria-label="Toggle dark mode"
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 dark:bg-slate-700 text-white rounded-xl font-semibold text-sm shadow-md transition-all">
+            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-xl font-semibold text-sm shadow-md transition-all">
             <Video size={18} /> Start Teleconsult
           </motion.button>
         </div>
@@ -100,9 +94,9 @@ const DoctorDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Today's Schedule (Takes up 2 columns) */}
-        <div className="lg:col-span-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
+        <div className="lg:col-span-2 finai-card p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+            <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
               <Calendar size={20} className="text-blue-500" />
               Today's Schedule
             </h2>
@@ -114,32 +108,32 @@ const DoctorDashboard = () => {
               <motion.div key={apt.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
                 className={cn(
                   "flex items-center justify-between p-4 rounded-xl border transition-all",
-                  apt.status === 'In Progress' ? "bg-blue-50 border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/20 shadow-sm" :
-                    "bg-slate-50/50 border-slate-100 dark:bg-slate-800/50 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  apt.status === 'In Progress' ? "bg-blue-50 border-blue-200 shadow-sm" :
+                    "bg-slate-50/50 border-slate-100 hover:bg-slate-50 :bg-slate-800"
                 )}
               >
                 <div className="flex items-center gap-4">
                   <div className="w-16 text-center">
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">{apt.time.split(' ')[0]}</p>
+                    <p className="text-sm font-bold text-[#0a1a0f] ">{apt.time.split(' ')[0]}</p>
                     <p className="text-xs font-semibold text-slate-500">{apt.time.split(' ')[1]}</p>
                   </div>
-                  <div className="w-px h-8 bg-slate-200 dark:bg-slate-700"></div>
+                  <div className="w-px h-8 bg-slate-200 "></div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-800 dark:text-white">{apt.patient}</h4>
-                    <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{apt.type}</p>
+                    <h4 className="text-sm font-bold text-[#0a1a0f] ">{apt.patient}</h4>
+                    <p className="text-xs font-medium text-slate-500 ">{apt.type}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
                   <span className={cn(
                     "text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider",
-                    apt.status === 'Completed' ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400" :
-                      apt.status === 'In Progress' ? "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 animate-pulse" :
-                        "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300"
+                    apt.status === 'Completed' ? "bg-emerald-100 text-emerald-700 " :
+                      apt.status === 'In Progress' ? "bg-blue-100 text-blue-700 animate-pulse" :
+                        "bg-slate-100 text-slate-600 "
                   )}>
                     {apt.status}
                   </span>
-                  <button className="p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-400 hover:text-blue-600 transition-colors">
+                  <button className="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-blue-600 transition-colors">
                     <ChevronRight size={16} />
                   </button>
                 </div>
@@ -152,7 +146,7 @@ const DoctorDashboard = () => {
         <div className="space-y-6">
 
           {/* 🌟 Innovative Feature: Patient Voices Widget */}
-          <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-[24px] p-6 text-white shadow-lg relative overflow-hidden group">
             <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
 
             <h2 className="text-sm font-bold uppercase tracking-wider mb-6 flex items-center gap-2 opacity-90">
@@ -195,8 +189,8 @@ const DoctorDashboard = () => {
           <AIDiagnosisWidget />
 
           {/* Quick Tasks */}
-          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-            <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className="finai-card p-6">
+            <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
               <CheckCircle size={16} className="text-emerald-500" />
               Action Items
             </h2>
@@ -204,21 +198,21 @@ const DoctorDashboard = () => {
               <li className="flex items-start gap-3">
                 <input type="checkbox" className="mt-1 accent-emerald-500 w-4 h-4" />
                 <div>
-                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Review MRI results for D. Lee</p>
+                  <p className="text-sm font-semibold text-slate-700 ">Review MRI results for D. Lee</p>
                   <p className="text-xs text-slate-500">Urgent • 2 hours ago</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <input type="checkbox" className="mt-1 accent-emerald-500 w-4 h-4" />
                 <div>
-                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Sign off on 3 prescriptions</p>
+                  <p className="text-sm font-semibold text-slate-700 ">Sign off on 3 prescriptions</p>
                   <p className="text-xs text-slate-500">Pharmacy request</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <input type="checkbox" className="mt-1 accent-emerald-500 w-4 h-4" />
                 <div>
-                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Update availability for next week</p>
+                  <p className="text-sm font-semibold text-slate-700 ">Update availability for next week</p>
                   <p className="text-xs text-slate-500">Admin request</p>
                 </div>
               </li>

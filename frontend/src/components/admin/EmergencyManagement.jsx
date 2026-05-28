@@ -7,11 +7,11 @@ const EmergencyCase = ({ id, priority, type, waitTime, status }) => (
     <div className="flex items-center gap-3">
       <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
       <div>
-        <p className="text-sm font-bold text-slate-800 dark:text-white">{id} - {type}</p>
+        <p className="text-sm font-bold text-[#0a1a0f] ">{id} - {type}</p>
         <p className="text-xs text-slate-500 font-medium">Wait time: <span className="text-rose-500">{waitTime}</span></p>
       </div>
     </div>
-    <span className="text-xs font-bold px-2 py-1 rounded bg-rose-500/20 text-rose-700 dark:text-rose-400 uppercase tracking-wider">
+    <span className="text-xs font-bold px-2 py-1 rounded bg-rose-500/20 text-rose-700 uppercase tracking-wider">
       {status}
     </span>
   </div>
@@ -19,12 +19,12 @@ const EmergencyCase = ({ id, priority, type, waitTime, status }) => (
 
 const EmergencyManagement = () => {
   return (
-    <div className="bg-rose-50 dark:bg-[#1a0f14] backdrop-blur-xl border border-rose-200 dark:border-rose-900/50 rounded-2xl p-6 h-full shadow-sm flex flex-col relative overflow-hidden">
+    <div className="bg-rose-50 #1a0f14] backdrop-blur-xl border border-rose-200 rounded-[24px] p-6 h-full shadow-sm flex flex-col relative overflow-hidden">
       {/* Decorative background pulse */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
       <div className="flex items-center justify-between mb-6 relative z-10">
-        <h2 className="text-lg font-bold text-rose-700 dark:text-rose-400 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-rose-700 flex items-center gap-2">
           <AlertOctagon className="text-rose-500 animate-pulse" />
           Emergency Control
         </h2>
@@ -34,14 +34,14 @@ const EmergencyManagement = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-6 relative z-10">
-        <div className="p-3 rounded-xl bg-white/60 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900/50 flex flex-col justify-center items-center text-center">
+        <div className="p-3 rounded-xl bg-white/60 border border-rose-100 flex flex-col justify-center items-center text-center">
           <Ambulance size={20} className="text-rose-500 mb-1" />
-          <span className="text-xl font-bold text-slate-800 dark:text-white">2</span>
+          <span className="text-xl font-bold text-[#0a1a0f] ">2</span>
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Inbound</span>
         </div>
-        <div className="p-3 rounded-xl bg-white/60 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900/50 flex flex-col justify-center items-center text-center">
+        <div className="p-3 rounded-xl bg-white/60 border border-rose-100 flex flex-col justify-center items-center text-center">
           <Users size={20} className="text-rose-500 mb-1" />
-          <span className="text-xl font-bold text-slate-800 dark:text-white">1</span>
+          <span className="text-xl font-bold text-[#0a1a0f] ">1</span>
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Queue</span>
         </div>
       </div>

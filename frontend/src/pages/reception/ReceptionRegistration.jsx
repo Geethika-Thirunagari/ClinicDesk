@@ -122,15 +122,15 @@ const ReceptionRegistration = () => {
         animate={{ opacity: 1, scale: 1 }} 
         className="flex items-center justify-center p-4 min-h-[75vh]"
       >
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-xl rounded-3xl p-8 md:p-12 text-center max-w-lg w-full">
-          <div className="w-20 h-20 mx-auto bg-emerald-100 dark:bg-emerald-500/10 rounded-full flex items-center justify-center mb-6">
-            <CheckCircle size={36} className="text-emerald-600 dark:text-emerald-400" />
+        <div className="bg-white border-[#e2e8e2] shadow-xl rounded-3xl p-8 md:p-12 text-center max-w-lg w-full">
+          <div className="w-20 h-20 mx-auto bg-emerald-100 rounded-full flex items-center justify-center mb-6">
+            <CheckCircle size={36} className="text-emerald-600 " />
           </div>
-          <h2 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white mb-2">Registration Successful!</h2>
-          <p className="text-slate-500 dark:text-slate-400 mb-8">
+          <h2 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] mb-2">Registration Successful!</h2>
+          <p className="text-slate-500 mb-8">
             Patient <strong>{registeredName}</strong> has been successfully registered in the ClinicDesk system.
             {formData.immediateCheckIn && (
-              <span className="block mt-2 font-semibold text-blue-600 dark:text-blue-400">
+              <span className="block mt-2 font-semibold text-blue-600 ">
                 Added to the live queue for {doctorsList.find(d => d.id === parseInt(formData.selectedDoctor))?.name}.
               </span>
             )}
@@ -139,7 +139,7 @@ const ReceptionRegistration = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <button 
               onClick={handleReset}
-              className="flex-1 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl font-bold transition-all"
+              className="flex-1 py-3 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 :bg-slate-700 rounded-xl font-bold transition-all"
             >
               Register Another
             </button>
@@ -166,8 +166,8 @@ const ReceptionRegistration = () => {
     >
       {/* Header */}
       <div>
-        <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Patient Registration</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Register walk-ins and verify basic patient details.</p>
+        <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Patient Registration</h1>
+        <p className="text-sm text-slate-500 mt-1">Register walk-ins and verify basic patient details.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -176,8 +176,8 @@ const ReceptionRegistration = () => {
           <div className="lg:col-span-2 space-y-6">
             
             {/* Section 1: Personal Details */}
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 space-y-4">
-              <h2 className="text-md font-bold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="finai-card p-6 space-y-4">
+              <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <User size={18} className="text-blue-500" /> Personal Details
               </h2>
               
@@ -191,8 +191,8 @@ const ReceptionRegistration = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     className={cn(
-                      "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                      errors.fullName ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 dark:border-slate-800"
+                      "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                      errors.fullName ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 "
                     )}
                     placeholder="E.g. David Beckham"
                   />
@@ -209,8 +209,8 @@ const ReceptionRegistration = () => {
                       value={formData.dob}
                       onChange={handleChange}
                       className={cn(
-                        "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                        errors.dob ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 dark:border-slate-800"
+                        "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                        errors.dob ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 "
                       )}
                     />
                   </div>
@@ -225,8 +225,8 @@ const ReceptionRegistration = () => {
                     value={formData.gender}
                     onChange={handleChange}
                     className={cn(
-                      "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                      errors.gender ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 dark:border-slate-800"
+                      "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                      errors.gender ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 "
                     )}
                   >
                     <option value="">Select Gender</option>
@@ -245,7 +245,7 @@ const ReceptionRegistration = () => {
                     name="bloodGroup"
                     value={formData.bloodGroup}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all"
+                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   >
                     <option value="">Unknown</option>
                     {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(bg => (
@@ -257,8 +257,8 @@ const ReceptionRegistration = () => {
             </div>
 
             {/* Section 2: Contact Info */}
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 space-y-4">
-              <h2 className="text-md font-bold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="finai-card p-6 space-y-4">
+              <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <Phone size={18} className="text-blue-500" /> Contact Information
               </h2>
 
@@ -272,8 +272,8 @@ const ReceptionRegistration = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className={cn(
-                      "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                      errors.phone ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 dark:border-slate-800"
+                      "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                      errors.phone ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 "
                     )}
                     placeholder="E.g. +1 555-0100"
                   />
@@ -289,8 +289,8 @@ const ReceptionRegistration = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className={cn(
-                      "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                      errors.email ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 dark:border-slate-800"
+                      "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                      errors.email ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 "
                     )}
                     placeholder="E.g. david@example.com"
                   />
@@ -305,7 +305,7 @@ const ReceptionRegistration = () => {
                     value={formData.address}
                     onChange={handleChange}
                     rows="2"
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all"
+                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                     placeholder="Full residential address details..."
                   />
                 </div>
@@ -313,8 +313,8 @@ const ReceptionRegistration = () => {
             </div>
 
             {/* Section 3: Emergency Contact */}
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 space-y-4">
-              <h2 className="text-md font-bold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="finai-card p-6 space-y-4">
+              <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <Heart size={18} className="text-blue-500" /> Emergency Contact
               </h2>
 
@@ -328,8 +328,8 @@ const ReceptionRegistration = () => {
                     value={formData.emergencyName}
                     onChange={handleChange}
                     className={cn(
-                      "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                      errors.emergencyName ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 dark:border-slate-800"
+                      "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                      errors.emergencyName ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 "
                     )}
                     placeholder="E.g. Victoria Beckham"
                   />
@@ -343,7 +343,7 @@ const ReceptionRegistration = () => {
                     name="emergencyRelation"
                     value={formData.emergencyRelation}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all"
+                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   >
                     <option value="">Select Relation</option>
                     <option value="Spouse">Spouse</option>
@@ -364,8 +364,8 @@ const ReceptionRegistration = () => {
                     value={formData.emergencyPhone}
                     onChange={handleChange}
                     className={cn(
-                      "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                      errors.emergencyPhone ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 dark:border-slate-800"
+                      "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                      errors.emergencyPhone ? "border-rose-500 ring-2 ring-rose-500/10" : "border-slate-200 "
                     )}
                     placeholder="E.g. +1 555-0102"
                   />
@@ -379,8 +379,8 @@ const ReceptionRegistration = () => {
           <div className="space-y-6">
             
             {/* Medical Background */}
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 space-y-4">
-              <h2 className="text-md font-bold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="finai-card p-6 space-y-4">
+              <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <ShieldAlert size={18} className="text-blue-500" /> Medical Background
               </h2>
 
@@ -392,7 +392,7 @@ const ReceptionRegistration = () => {
                   value={formData.allergies}
                   onChange={handleChange}
                   rows="2"
-                  className="w-full px-4 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all"
+                  className="w-full px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   placeholder="E.g. Penicillin, Peanuts (or leave empty)"
                 />
               </div>
@@ -405,15 +405,15 @@ const ReceptionRegistration = () => {
                   value={formData.chronicConditions}
                   onChange={handleChange}
                   rows="2"
-                  className="w-full px-4 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all"
+                  className="w-full px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   placeholder="E.g. Asthma, Diabetes (or leave empty)"
                 />
               </div>
             </div>
 
             {/* Check-in / Queue Integration */}
-            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-md rounded-2xl p-6 space-y-4">
-              <h2 className="text-md font-bold text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="bg-white border-[#e2e8e2] shadow-md rounded-[24px] p-6 space-y-4">
+              <h2 className="text-md font-bold text-[#0a1a0f] border-b border-slate-100 pb-3">
                 Queue Management
               </h2>
 
@@ -424,10 +424,10 @@ const ReceptionRegistration = () => {
                   name="immediateCheckIn"
                   checked={formData.immediateCheckIn}
                   onChange={handleChange}
-                  className="mt-1 w-4.5 h-4.5 accent-blue-600 dark:bg-slate-950" 
+                  className="mt-1 w-4.5 h-4.5 accent-blue-600 " 
                 />
                 <div>
-                  <span className="text-sm font-bold text-slate-700 dark:text-slate-200 block">Check In Immediately</span>
+                  <span className="text-sm font-bold text-slate-700 block">Check In Immediately</span>
                   <span className="text-xs text-slate-400 block mt-0.5">Directly check patient into today's queue after registration.</span>
                 </div>
               </label>
@@ -439,7 +439,7 @@ const ReceptionRegistration = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800 overflow-hidden"
+                    className="space-y-2 pt-2 border-t border-slate-100 overflow-hidden"
                   >
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Assign Doctor *</label>
                     <select 
@@ -447,8 +447,8 @@ const ReceptionRegistration = () => {
                       value={formData.selectedDoctor}
                       onChange={handleChange}
                       className={cn(
-                        "w-full px-4 py-2.5 bg-white dark:bg-slate-950 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all",
-                        errors.selectedDoctor ? "border-rose-500" : "border-slate-200 dark:border-slate-800"
+                        "w-full px-4 py-2.5 bg-white border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all",
+                        errors.selectedDoctor ? "border-rose-500" : "border-slate-200 "
                       )}
                     >
                       <option value="">Select Doctor</option>

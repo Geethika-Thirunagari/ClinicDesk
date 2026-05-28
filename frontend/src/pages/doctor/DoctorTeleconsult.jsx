@@ -130,20 +130,20 @@ const DoctorTeleconsult = () => {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
-        className="p-4 lg:p-6 min-h-[calc(100vh-80px)] flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors"
+        className="p-4 lg:p-6 min-h-[calc(100vh-80px)] flex items-center justify-center bg-slate-50 transition-colors"
       >
-        <div className="w-full max-w-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-2xl rounded-3xl p-6 lg:p-8 relative overflow-hidden">
+        <div className="w-full max-w-2xl bg-white/70 backdrop-blur-xl border border-slate-200 shadow-2xl rounded-3xl p-6 lg:p-8 relative overflow-hidden">
           {/* Glowing Background Art */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl -z-10" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl -z-10" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -z-10" />
 
           <div className="text-center mb-6">
-            <div className="inline-flex p-3.5 bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-500 rounded-full mb-3 shadow-inner">
+            <div className="inline-flex p-3.5 bg-emerald-500/10 text-emerald-500 rounded-full mb-3 shadow-inner">
               <ShieldCheck size={36} />
             </div>
-            <h2 className="text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">Teleconsultation Completed</h2>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1.5">
-              Session with <span className="font-bold text-slate-700 dark:text-slate-300">Alice Johnson</span> concluded at {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            <h2 className="text-2xl font-extrabold text-[#0a1a0f] tracking-tight">Teleconsultation Completed</h2>
+            <p className="text-sm font-medium text-slate-500 mt-1.5">
+              Session with <span className="font-bold text-slate-700 ">Alice Johnson</span> concluded at {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </p>
           </div>
 
@@ -151,19 +151,19 @@ const DoctorTeleconsult = () => {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-2xl text-center"
+              className="bg-emerald-500/5 border border-emerald-500/20 p-6 rounded-[24px] text-center"
             >
               <div className="inline-flex p-2.5 bg-emerald-500 text-white rounded-full mb-3">
                 <Check size={20} />
               </div>
-              <h4 className="font-extrabold text-emerald-800 dark:text-emerald-400">EMR Updated Successfully</h4>
-              <p className="text-xs text-emerald-600 dark:text-emerald-500/80 mt-1.5 max-w-md mx-auto leading-relaxed">
+              <h4 className="font-extrabold text-emerald-800 ">EMR Updated Successfully</h4>
+              <p className="text-xs text-emerald-600 mt-1.5 max-w-md mx-auto leading-relaxed">
                 Consultation logs, patient biometrics, prescription lists, and diagnosis updates have been successfully written to the electronic database.
               </p>
               <div className="mt-6 flex justify-center gap-3">
                 <button
                   onClick={() => window.location.href = '/doctor/dashboard'}
-                  className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 text-sm font-bold rounded-xl hover:opacity-95 transition-all shadow-md"
+                  className="px-6 py-2.5 bg-[#0a1a0f] hover:bg-slate-800 text-white text-sm font-bold rounded-xl hover:opacity-95 transition-all shadow-md"
                 >
                   Return to Dashboard
                 </button>
@@ -173,11 +173,11 @@ const DoctorTeleconsult = () => {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Final Diagnosis</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Final Diagnosis</label>
                   <select
                     value={diagnosis}
                     onChange={(e) => setDiagnosis(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold outline-none focus:border-blue-500 dark:text-white transition-colors"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold outline-none focus:border-blue-500 transition-colors"
                   >
                     <option value="Essential Hypertension">Essential Hypertension</option>
                     <option value="Acute Bronchitis">Acute Bronchitis</option>
@@ -188,11 +188,11 @@ const DoctorTeleconsult = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Follow-up Routine</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Follow-up Routine</label>
                   <select
                     value={followUpDate}
                     onChange={(e) => setFollowUpDate(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold outline-none focus:border-blue-500 dark:text-white transition-colors"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold outline-none focus:border-blue-500 transition-colors"
                   >
                     <option value="No follow-up needed">No follow-up needed</option>
                     <option value="3 days">3 days (Review symptoms)</option>
@@ -204,22 +204,22 @@ const DoctorTeleconsult = () => {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Consultation Notes (Clinical History)</label>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Consultation Notes (Clinical History)</label>
                 <textarea
                   rows={3}
                   value={clinicalNotes}
                   onChange={(e) => setClinicalNotes(e.target.value)}
                   placeholder="Record summary clinical observations..."
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:border-blue-500 dark:text-white transition-colors leading-relaxed"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-colors leading-relaxed"
                 />
               </div>
 
               {prescriptions.length > 0 && (
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Active Prescribed Medications</label>
-                  <div className="flex flex-wrap gap-2 bg-slate-50 dark:bg-slate-950/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Active Prescribed Medications</label>
+                  <div className="flex flex-wrap gap-2 bg-slate-50 p-3 rounded-xl border border-slate-100 ">
                     {prescriptions.map((med, idx) => (
-                      <div key={idx} className="px-2.5 py-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-500/20 text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm">
+                      <div key={idx} className="px-2.5 py-1.5 bg-blue-50 text-blue-600 border border-blue-100 text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm">
                         <span>{med.name} ({med.dosage})</span>
                         <span className="text-[10px] text-slate-400 font-medium">| {med.frequency}</span>
                       </div>
@@ -231,7 +231,7 @@ const DoctorTeleconsult = () => {
               <div className="pt-4 flex gap-3">
                 <button
                   onClick={() => setIsCallEnded(false)}
-                  className="flex-1 py-3 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm rounded-xl transition-all"
+                  className="flex-1 py-3 border border-slate-200 hover:bg-slate-50 :bg-slate-800 text-slate-700 font-bold text-sm rounded-xl transition-all"
                 >
                   Resume Live Call
                 </button>
@@ -259,26 +259,26 @@ const DoctorTeleconsult = () => {
       {/* Upper Action Bar */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-5">
         <div>
-          <h1 className="text-xl lg:text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-xl lg:text-2xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" /> Live Teleconsult
           </h1>
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5">
-            Connected: <span className="font-bold text-slate-700 dark:text-slate-200">Alice Johnson (PT-1024)</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700" />
+          <p className="text-sm font-medium text-slate-500 mt-1 flex items-center gap-1.5">
+            Connected: <span className="font-bold text-slate-700 ">Alice Johnson (PT-1024)</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-300 " />
             <Clock size={14} className="text-slate-400" />
-            <span className="font-semibold text-blue-600 dark:text-blue-400">{formatTime(elapsedTime)}</span>
+            <span className="font-semibold text-blue-600 ">{formatTime(elapsedTime)}</span>
           </p>
         </div>
         
         {/* Toggle Sidebar buttons */}
-        <div className="flex bg-slate-100/80 dark:bg-slate-900 p-1 rounded-xl self-start sm:self-auto border border-slate-200/40 dark:border-slate-800">
+        <div className="flex bg-slate-100/80 p-1 rounded-xl self-start sm:self-auto border border-slate-200/40 ">
           <button 
             onClick={() => { setShowRecords(!showRecords); if (showChat) setShowChat(false); }} 
             className={cn(
               "px-3.5 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5", 
               showRecords 
-                ? "bg-white dark:bg-slate-700 shadow-sm text-blue-600 dark:text-blue-400" 
-                : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
+                ? "bg-white shadow-sm text-blue-600 " 
+                : "text-slate-500 hover:text-[#0a1a0f] :text-white"
             )}
           >
             <FileText size={14} /> EMR Panel
@@ -288,8 +288,8 @@ const DoctorTeleconsult = () => {
             className={cn(
               "px-3.5 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5", 
               showChat 
-                ? "bg-white dark:bg-slate-700 shadow-sm text-blue-600 dark:text-blue-400" 
-                : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
+                ? "bg-white shadow-sm text-blue-600 " 
+                : "text-slate-500 hover:text-[#0a1a0f] :text-white"
             )}
           >
             <MessageSquare size={14} /> Live Chat
@@ -301,7 +301,7 @@ const DoctorTeleconsult = () => {
       <div className="flex-1 flex flex-col lg:flex-row gap-5 h-full min-h-[500px]">
         
         {/* Left Hand Video Container */}
-        <div className="flex-1 bg-slate-950 rounded-2xl overflow-hidden relative shadow-2xl flex flex-col group border border-slate-900">
+        <div className="flex-1 bg-slate-950 rounded-[24px] overflow-hidden relative shadow-2xl flex flex-col group border border-slate-900">
           
           {/* Simulated Webcam stream */}
           <div className="flex-1 relative bg-slate-950 flex items-center justify-center overflow-hidden">
@@ -348,7 +348,7 @@ const DoctorTeleconsult = () => {
           </div>
 
           {/* Picture-in-Picture (Doctor) Container */}
-          <div className="absolute bottom-24 right-4 w-44 h-32 bg-slate-900 rounded-xl border border-white/10 shadow-2xl overflow-hidden z-20 transition-all">
+          <div className="absolute bottom-24 right-4 w-44 h-32 bg-[#0a1a0f] rounded-xl border border-white/10 shadow-2xl overflow-hidden z-20 transition-all">
             {isVideoOn ? (
               <div className="relative w-full h-full bg-slate-950 flex flex-col items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 to-slate-950" />
@@ -441,15 +441,15 @@ const DoctorTeleconsult = () => {
               
               {/* EMR Panel Screen */}
               {showRecords && (
-                <div className="flex-1 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-xl rounded-2xl p-5 flex flex-col min-h-[450px]">
-                  <h3 className="font-extrabold text-slate-800 dark:text-white mb-3.5 flex items-center gap-2 border-b border-slate-200/50 dark:border-slate-700/50 pb-3 text-base">
+                <div className="flex-1 bg-white border-[#e2e8e2] shadow-xl rounded-[24px] p-5 flex flex-col min-h-[450px]">
+                  <h3 className="font-extrabold text-[#0a1a0f] mb-3.5 flex items-center gap-2 border-b border-slate-200/50 pb-3 text-base">
                     <FileText size={18} className="text-blue-500" /> Patient Chart & EMR
                   </h3>
                   
-                  <div className="flex-1 overflow-y-auto space-y-4 pr-1.5 text-slate-700 dark:text-slate-300">
+                  <div className="flex-1 overflow-y-auto space-y-4 pr-1.5 text-slate-700 ">
                     <div>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Chief Complaint</p>
-                      <p className="text-sm font-semibold bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-100 dark:border-slate-900">
+                      <p className="text-sm font-semibold bg-slate-50 p-2.5 rounded-xl border border-slate-100 ">
                         Persistent chest pain on climbing steps, intermittent breathlessness.
                       </p>
                     </div>
@@ -457,13 +457,13 @@ const DoctorTeleconsult = () => {
                     <div>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Pre-Call Patient Vitals</p>
                       <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-100 dark:border-slate-900">
+                        <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 ">
                           <span className="text-[10px] text-slate-400 block font-medium">Blood Pressure</span> 
-                          <span className="font-bold text-sm text-slate-800 dark:text-white">132 / 84 mmHg</span>
+                          <span className="font-bold text-sm text-[#0a1a0f] ">132 / 84 mmHg</span>
                         </div>
-                        <div className="bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-100 dark:border-slate-900">
+                        <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 ">
                           <span className="text-[10px] text-slate-400 block font-medium">Pulse Rate</span> 
-                          <span className="font-bold text-sm text-slate-800 dark:text-white">82 bpm</span>
+                          <span className="font-bold text-sm text-[#0a1a0f] ">82 bpm</span>
                         </div>
                       </div>
                     </div>
@@ -474,7 +474,7 @@ const DoctorTeleconsult = () => {
                         rows={2}
                         value={clinicalNotes}
                         onChange={(e) => setClinicalNotes(e.target.value)}
-                        className="w-full text-xs p-2 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-100 dark:border-slate-900 text-slate-600 dark:text-slate-300 outline-none focus:border-blue-500"
+                        className="w-full text-xs p-2 bg-slate-50 rounded-xl border border-slate-100 text-slate-600 outline-none focus:border-blue-500"
                         placeholder="Type observation details..."
                       />
                     </div>
@@ -485,7 +485,7 @@ const DoctorTeleconsult = () => {
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Session Prescriptions</p>
                         <button 
                           onClick={() => setShowPrescriptionForm(!showPrescriptionForm)}
-                          className="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-0.5"
+                          className="text-[11px] font-bold text-blue-600 hover:underline flex items-center gap-0.5"
                         >
                           <Plus size={12} /> Add
                         </button>
@@ -496,7 +496,7 @@ const DoctorTeleconsult = () => {
                           initial={{ opacity: 0, y: -5 }} 
                           animate={{ opacity: 1, y: 0 }} 
                           onSubmit={addPrescription}
-                          className="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-900 mb-3 space-y-2 text-xs"
+                          className="bg-slate-50 p-3 rounded-xl border border-slate-200 mb-3 space-y-2 text-xs"
                         >
                           <div>
                             <input 
@@ -505,7 +505,7 @@ const DoctorTeleconsult = () => {
                               placeholder="Medication Name (e.g. Metoprolol)" 
                               value={newMedName} 
                               onChange={(e) => setNewMedName(e.target.value)} 
-                              className="w-full px-2.5 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg outline-none text-slate-800 dark:text-white"
+                              className="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg outline-none text-[#0a1a0f] "
                             />
                           </div>
                           <div className="grid grid-cols-3 gap-1">
@@ -514,21 +514,21 @@ const DoctorTeleconsult = () => {
                               placeholder="Dosage" 
                               value={newMedDosage} 
                               onChange={(e) => setNewMedDosage(e.target.value)} 
-                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-800 dark:text-white"
+                              className="px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] text-[#0a1a0f] "
                             />
                             <input 
                               type="text" 
                               placeholder="Frequency" 
                               value={newMedFrequency} 
                               onChange={(e) => setNewMedFrequency(e.target.value)} 
-                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-800 dark:text-white"
+                              className="px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] text-[#0a1a0f] "
                             />
                             <input 
                               type="text" 
                               placeholder="Duration" 
                               value={newMedDuration} 
                               onChange={(e) => setNewMedDuration(e.target.value)} 
-                              className="px-2 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[11px] text-slate-800 dark:text-white"
+                              className="px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] text-[#0a1a0f] "
                             />
                           </div>
                           <div className="flex gap-2 justify-end pt-1">
@@ -543,9 +543,9 @@ const DoctorTeleconsult = () => {
                       ) : (
                         <div className="space-y-1.5 max-h-[140px] overflow-y-auto pr-1">
                           {prescriptions.map((med, idx) => (
-                            <div key={idx} className="flex justify-between items-center bg-slate-50 dark:bg-slate-950/40 p-2 rounded-xl border border-slate-100 dark:border-slate-900">
+                            <div key={idx} className="flex justify-between items-center bg-slate-50 p-2 rounded-xl border border-slate-100 ">
                               <div>
-                                <h5 className="text-xs font-bold text-slate-800 dark:text-white">{med.name}</h5>
+                                <h5 className="text-xs font-bold text-[#0a1a0f] ">{med.name}</h5>
                                 <p className="text-[10px] text-slate-400 mt-0.5">{med.dosage} • {med.frequency} • {med.duration}</p>
                               </div>
                               <button 
@@ -572,8 +572,8 @@ const DoctorTeleconsult = () => {
 
               {/* Chat Panel Screen */}
               {showChat && (
-                <div className="flex-1 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-xl rounded-2xl p-4 flex flex-col h-full min-h-[450px]">
-                  <h3 className="font-extrabold text-slate-800 dark:text-white mb-2.5 flex items-center gap-2 border-b border-slate-200/50 dark:border-slate-700/50 pb-2 text-sm">
+                <div className="flex-1 bg-white border-[#e2e8e2] shadow-xl rounded-[24px] p-4 flex flex-col h-full min-h-[450px]">
+                  <h3 className="font-extrabold text-[#0a1a0f] mb-2.5 flex items-center gap-2 border-b border-slate-200/50 pb-2 text-sm">
                     <MessageSquare size={16} className="text-indigo-500" /> Consult Session Chat
                   </h3>
                   
@@ -583,10 +583,10 @@ const DoctorTeleconsult = () => {
                       <div 
                         key={index} 
                         className={cn(
-                          "flex flex-col max-w-[85%] rounded-2xl p-2.5 text-xs shadow-sm",
+                          "flex flex-col max-w-[85%] rounded-[24px] p-2.5 text-xs shadow-sm",
                           msg.sender === 'doctor' 
                             ? "bg-blue-600 text-white rounded-br-none ml-auto" 
-                            : "bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 rounded-bl-none mr-auto border border-slate-200/20 dark:border-slate-800/40"
+                            : "bg-slate-100 text-slate-700 rounded-bl-none mr-auto border border-slate-200/20 "
                         )}
                       >
                         <p className="leading-relaxed">{msg.text}</p>
@@ -605,7 +605,7 @@ const DoctorTeleconsult = () => {
                       placeholder="Ask Alice a question..." 
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
-                      className="flex-1 pl-3.5 pr-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl text-xs outline-none focus:border-blue-500 dark:text-white"
+                      className="flex-1 pl-3.5 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs outline-none focus:border-blue-500 "
                     />
                     <button 
                       type="submit" 

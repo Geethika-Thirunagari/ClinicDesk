@@ -1,11 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
-
-@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --animate-shimmer: shimmer 1.5s infinite linear;
+
   @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(200%); }
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(200%);
+    }
   }
+}
+
+/* ── Light Sage "FINAI" Theme ────────────────────────── */
+:root {
+  --finai-bg: #f4f7f4;
+  --finai-sidebar: #ffffff;
+  --finai-card: #ffffff;
+  --finai-primary: #0a1a0f;
+  /* High contrast black/green */
+  --finai-accent: #10b981;
+  --finai-border: #e2e8e2;
+  --finai-text-main: #1a1d1a;
+  --finai-text-muted: #64748b;
+  --finai-green-soft: #ecfdf5;
+  --finai-red-soft: #fef2f2;
+}
+
+/* ── Global resets ───────────────────────────────────── */
+html,
+body,
+#root {
+  background-color: var(--finai-bg);
+  color: var(--finai-text-main);
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* ── Custom scrollbar ────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 99px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ── FINAI Style Cards ───────────────────────────────── */
+.finai-card {
+  background: white;
+  border-radius: 24px;
+  border: 1px solid var(--finai-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.finai-card-primary {
+  background: var(--finai-primary);
+  border-radius: 24px;
+  color: white;
+}
+
+/* ── Recharts Tooltip Override ──────────────────────── */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: white !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
 }

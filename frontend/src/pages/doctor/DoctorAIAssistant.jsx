@@ -158,11 +158,11 @@ export default function DoctorAIAssistant() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-2">
             <Bot className="text-blue-500" size={32} />
             AI Clinical Workspace Assistant
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             Real-time diagnostic support, drug interaction checks, and EMR note summarization tools.
           </p>
         </div>
@@ -170,21 +170,21 @@ export default function DoctorAIAssistant() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Diagnostic Helper Chat - Columns 1 & 2 */}
-        <div className="lg:col-span-2 flex flex-col bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 min-h-[600px] justify-between">
+        <div className="lg:col-span-2 flex flex-col finai-card p-6 min-h-[600px] justify-between">
           <div>
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
               <Sparkles size={18} className="text-blue-500" />
               Symptom Analyzer & Assistant
             </h2>
 
             {/* Suggestions prompt */}
             {messages.length === 1 && (
-              <div className="mb-4 p-4 bg-blue-50/50 dark:bg-blue-950/20 rounded-xl border border-blue-100/30">
-                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Try quick-testing clinical profiles:</span>
+              <div className="mb-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100/30">
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Try quick-testing clinical profiles:</span>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
                   {initialSuggestions.map((s, idx) => (
-                    <button key={idx} onClick={() => handleSend(s.text)} className="p-3 text-left bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-lg text-xs font-medium transition-all text-slate-700 dark:text-slate-300">
-                      <span className="block font-bold text-blue-600 dark:text-blue-400 mb-0.5">{s.category}</span>
+                    <button key={idx} onClick={() => handleSend(s.text)} className="p-3 text-left bg-white hover:bg-blue-50 :bg-slate-800 border border-slate-200 rounded-lg text-xs font-medium transition-all text-slate-700 ">
+                      <span className="block font-bold text-blue-600 mb-0.5">{s.category}</span>
                       {s.text}
                     </button>
                   ))}
@@ -195,10 +195,10 @@ export default function DoctorAIAssistant() {
             {/* Chat Messages */}
             <div className="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
               {messages.map((m, i) => (
-                <div key={i} className={cn("flex flex-col max-w-[85%] rounded-2xl p-4 text-sm font-medium", 
+                <div key={i} className={cn("flex flex-col max-w-[85%] rounded-[24px] p-4 text-sm font-medium", 
                   m.role === 'user' 
                     ? "bg-blue-600 text-white ml-auto rounded-tr-none shadow-md shadow-blue-500/10" 
-                    : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 mr-auto rounded-tl-none"
+                    : "bg-slate-100 text-[#0a1a0f] mr-auto rounded-tl-none"
                 )}>
                   <p className="leading-relaxed">{m.text}</p>
                   <span className={cn("text-[9px] mt-1.5 text-right font-semibold block opacity-75", m.role === 'user' ? "text-blue-100" : "text-slate-500")}>{m.time}</span>
@@ -206,7 +206,7 @@ export default function DoctorAIAssistant() {
               ))}
               
               {isGenerating && (
-                <div className="bg-slate-100 dark:bg-slate-900 text-slate-500 mr-auto rounded-2xl rounded-tl-none p-4 max-w-[85%] flex items-center gap-2">
+                <div className="bg-slate-100 text-slate-500 mr-auto rounded-[24px] rounded-tl-none p-4 max-w-[85%] flex items-center gap-2">
                   <RefreshCw className="animate-spin text-blue-500" size={16} />
                   <span className="text-xs font-semibold">Running diagnostic logic models...</span>
                 </div>
@@ -215,14 +215,14 @@ export default function DoctorAIAssistant() {
           </div>
 
           {/* Chat Input */}
-          <div className="flex gap-2 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex gap-2 mt-4 pt-3 border-t border-slate-100 ">
             <input 
               type="text" 
               placeholder="Describe symptoms, vital anomalies (e.g. child 8 sudden high fever rash)..."
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white"
+              className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all "
             />
             <button onClick={() => handleSend()} className="px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl flex items-center justify-center transition-all shadow-md shadow-blue-500/10">
               <Send size={16} />
@@ -233,8 +233,8 @@ export default function DoctorAIAssistant() {
         {/* Diagnostic Workspace sidepanel - Column 3 */}
         <div className="space-y-6">
           {/* Differential Diagnosis Workspace */}
-          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-            <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className="finai-card p-6">
+            <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
               <Sparkles size={16} className="text-amber-500" />
               Differential Workspace
             </h2>
@@ -243,22 +243,22 @@ export default function DoctorAIAssistant() {
                 {differential.map((d, idx) => (
                   <div key={idx} className={cn("p-4 rounded-xl border transition-all text-xs font-semibold", 
                     d.critical 
-                      ? "bg-rose-50/50 border-rose-200 dark:bg-rose-950/20 dark:border-rose-900/50" 
-                      : "bg-slate-50 border-slate-100 dark:bg-slate-900 dark:border-slate-800"
+                      ? "bg-rose-50/50 border-rose-200 " 
+                      : "bg-slate-50 border-slate-100 "
                   )}>
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-extrabold text-slate-800 dark:text-white leading-tight pr-2">{d.diagnosis}</h4>
+                      <h4 className="font-extrabold text-[#0a1a0f] leading-tight pr-2">{d.diagnosis}</h4>
                       <span className={cn("text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0", 
                         d.critical 
-                          ? "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400" 
-                          : "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400"
+                          ? "bg-rose-100 text-rose-700 " 
+                          : "bg-blue-100 text-blue-700 "
                       )}>
                         {d.probability}% Prob
                       </span>
                     </div>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-2">{d.notes}</p>
+                    <p className="text-slate-500 font-medium leading-relaxed mb-2">{d.notes}</p>
                     {d.critical && (
-                      <span className="flex items-center gap-1 text-[10px] text-rose-600 dark:text-rose-400 font-bold uppercase tracking-wider">
+                      <span className="flex items-center gap-1 text-[10px] text-rose-600 font-bold uppercase tracking-wider">
                         <AlertTriangle size={12} /> Critical Warning Indicator
                       </span>
                     )}
@@ -266,7 +266,7 @@ export default function DoctorAIAssistant() {
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium">
+              <div className="p-8 text-center text-slate-400 border border-dashed border-slate-200 rounded-xl text-xs font-medium">
                 No active differential load. Enter symptoms in the analyzer chat to compile differential probabilities.
               </div>
             )}
@@ -277,18 +277,18 @@ export default function DoctorAIAssistant() {
       {/* Row 2: Drug interaction checker & Clinical Note Summarizer */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Drug Interaction Matrix */}
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4">
+        <div className="finai-card p-6">
+          <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4">
             <AlertCircle size={20} className="text-rose-500" />
             Drug-Drug Interaction Checker
           </h2>
-          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-4">
+          <p className="text-xs font-medium text-slate-500 mb-4">
             Input two clinical substances to analyze mutual drug compatibility matrix. e.g. <strong className="text-blue-500">Sildenafil</strong> & <strong className="text-blue-500">Nitroglycerin</strong> or <strong className="text-blue-500">Warfarin</strong> & <strong className="text-blue-500">Aspirin</strong>.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Drug substance A</label>
+              <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Drug substance A</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                 <input 
@@ -296,12 +296,12 @@ export default function DoctorAIAssistant() {
                   placeholder="e.g. Sildenafil"
                   value={drugA}
                   onChange={(e) => setDrugA(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white"
+                  className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all "
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Drug substance B</label>
+              <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Drug substance B</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                 <input 
@@ -309,7 +309,7 @@ export default function DoctorAIAssistant() {
                   placeholder="e.g. Nitroglycerin"
                   value={drugB}
                   onChange={(e) => setDrugB(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white"
+                  className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all "
                 />
               </div>
             </div>
@@ -321,10 +321,10 @@ export default function DoctorAIAssistant() {
 
           {interactionResult && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={cn("mt-4 p-4 rounded-xl border flex gap-3 text-xs font-semibold", 
-              interactionResult.severity === 'severe' ? "bg-rose-50/70 border-rose-200 text-rose-800 dark:bg-rose-950/20 dark:border-rose-900/50 dark:text-rose-300" :
-              interactionResult.severity === 'moderate' ? "bg-amber-50/70 border-amber-200 text-amber-800 dark:bg-amber-950/10 dark:border-amber-900/40 dark:text-amber-300" :
-              interactionResult.severity === 'mild' ? "bg-blue-50/70 border-blue-200 text-blue-800 dark:bg-blue-950/10 dark:border-blue-900/40 dark:text-blue-300" :
-              "bg-emerald-50/70 border-emerald-200 text-emerald-800 dark:bg-emerald-950/10 dark:border-emerald-900/40 dark:text-emerald-300"
+              interactionResult.severity === 'severe' ? "bg-rose-50/70 border-rose-200 text-rose-800 " :
+              interactionResult.severity === 'moderate' ? "bg-amber-50/70 border-amber-200 text-amber-800 " :
+              interactionResult.severity === 'mild' ? "bg-blue-50/70 border-blue-200 text-blue-800 " :
+              "bg-emerald-50/70 border-emerald-200 text-emerald-800 "
             )}>
               <div className="mt-0.5">
                 {interactionResult.severity === 'severe' ? <AlertTriangle className="text-rose-500" size={18} /> :
@@ -341,9 +341,9 @@ export default function DoctorAIAssistant() {
         </div>
 
         {/* EMR AI Summarizer */}
-        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 flex flex-col justify-between">
+        <div className="finai-card p-6 flex flex-col justify-between">
           <div>
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4">
+            <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4">
               <FileText size={20} className="text-blue-500" />
               AI Clinical Note Builder
             </h2>
@@ -352,10 +352,10 @@ export default function DoctorAIAssistant() {
               placeholder="Type raw clinical observations, e.g. Patient presents with sore throat, mild productive cough, fatigue for 3 days. No fever, normal chest sounds. Strep swab negative..."
               value={rawNotes}
               onChange={(e) => setRawNotes(e.target.value)}
-              className="w-full p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all dark:text-white font-medium placeholder:text-slate-400"
+              className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium placeholder:text-slate-400"
             />
             
-            <button onClick={handleSummarize} className="mt-3 w-full py-3 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+            <button onClick={handleSummarize} className="mt-3 w-full py-3 bg-slate-800 hover:bg-[#0a1a0f] text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
               {isSummarizing ? <RefreshCw className="animate-spin" size={14} /> : <Sparkles size={14} />}
               Draft EMR Visit Summary
             </button>
@@ -363,7 +363,7 @@ export default function DoctorAIAssistant() {
 
           <AnimatePresence>
             {generatedSummary && (
-              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="mt-4 p-4 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 rounded-xl text-xs text-slate-700 dark:text-slate-300 font-mono overflow-x-auto whitespace-pre-wrap">
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="mt-4 p-4 bg-slate-100 border border-slate-200 rounded-xl text-xs text-slate-700 font-mono overflow-x-auto whitespace-pre-wrap">
                 {generatedSummary}
               </motion.div>
             )}

@@ -12,17 +12,17 @@ const reviewsData = [
 
 const StatCard = ({ title, value, subtitle, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-all">
+    className="finai-card p-5 relative overflow-hidden group hover:shadow-md transition-all">
     <div className="flex items-center justify-between mb-4">
       <div className={cn("p-3 rounded-xl", color)}><Icon size={22} className="text-white" /></div>
       <TrendingUp size={20} className="text-emerald-500 opacity-50" />
     </div>
     <div>
-      <h3 className="text-3xl font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+      <h3 className="text-3xl font-extrabold text-[#0a1a0f] flex items-center gap-2">
         {value} {title === 'Overall Rating' && <Star size={20} className="text-amber-400 fill-amber-400" />}
       </h3>
-      <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">{title}</p>
-      <p className="text-xs text-slate-400 mt-2 bg-white/50 dark:bg-slate-800/50 inline-block px-2 py-1 rounded-md">{subtitle}</p>
+      <p className="text-sm font-semibold text-slate-500 mt-1">{title}</p>
+      <p className="text-xs text-slate-400 mt-2 bg-white/50 inline-block px-2 py-1 rounded-md">{subtitle}</p>
     </div>
   </motion.div>
 );
@@ -41,8 +41,8 @@ const DoctorReviews = () => {
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">Reputation & Feedback</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Monitor patient satisfaction and respond to reviews.</p>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Reputation & Feedback</h1>
+          <p className="text-sm text-slate-500 mt-1">Monitor patient satisfaction and respond to reviews.</p>
         </div>
       </div>
 
@@ -55,10 +55,10 @@ const DoctorReviews = () => {
       </div>
 
       {/* Reviews List */}
-      <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
+      <div className="finai-card p-6">
         
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-slate-200 dark:border-slate-800 pb-4 gap-4">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-slate-200 pb-4 gap-4">
+          <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
             Patient Reviews
           </h2>
           <div className="flex gap-2">
@@ -67,8 +67,8 @@ const DoctorReviews = () => {
                 className={cn(
                   "px-4 py-1.5 rounded-full text-sm font-semibold transition-all border",
                   filter === f 
-                    ? "bg-slate-800 text-white border-slate-800 dark:bg-slate-700 dark:border-slate-600" 
-                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700"
+                    ? "bg-slate-800 text-white border-slate-800 " 
+                    : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 :bg-slate-700"
                 )}>
                 {f}
               </button>
@@ -80,42 +80,42 @@ const DoctorReviews = () => {
           <AnimatePresence>
             {filtered.map((review, i) => (
               <motion.div key={review.id} layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
-                className="p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/50 hover:shadow-md transition-all group">
+                className="p-6 rounded-[24px] bg-slate-50/80 border border-slate-100 hover:shadow-md transition-all group">
                 
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-100 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center font-bold text-lg text-blue-600 dark:text-blue-300">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-100 flex items-center justify-center font-bold text-lg text-blue-600 ">
                       {review.patient.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-800 dark:text-white">{review.patient}</h4>
+                      <h4 className="font-bold text-[#0a1a0f] ">{review.patient}</h4>
                       <p className="text-xs text-slate-500 font-medium">{review.date}</p>
                     </div>
                   </div>
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, index) => (
-                      <Star key={index} size={16} className={cn(index < review.rating ? "fill-amber-400 text-amber-400" : "fill-slate-200 text-slate-200 dark:fill-slate-700 dark:text-slate-700")} />
+                      <Star key={index} size={16} className={cn(index < review.rating ? "fill-amber-400 text-amber-400" : "fill-slate-200 text-slate-200 ")} />
                     ))}
                   </div>
                 </div>
 
-                <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4">"{review.text}"</p>
+                <p className="text-slate-700 text-sm leading-relaxed mb-4">"{review.text}"</p>
                 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {review.tags.map(tag => (
-                    <span key={tag} className="px-2.5 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                    <span key={tag} className="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="pt-4 border-t border-slate-200 dark:border-slate-700/50 flex justify-between items-center">
+                <div className="pt-4 border-t border-slate-200 flex justify-between items-center">
                   {review.replied ? (
-                    <div className="flex items-center gap-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                    <div className="flex items-center gap-2 text-sm font-semibold text-emerald-600 ">
                       <CheckCircle2 size={16} /> Replied publicly
                     </div>
                   ) : (
-                    <button className="flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors">
+                    <button className="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors">
                       <MessageSquareReply size={16} /> Reply to Patient
                     </button>
                   )}

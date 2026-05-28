@@ -108,9 +108,9 @@ const router = createBrowserRouter([
         ),
         children: [
           // Index route handles redirect in ProtectedRoute, or falls back here
-          { 
-            path: '/', 
-            element: <Navigate to={ROUTES.LOGIN} replace /> 
+          {
+            path: '/',
+            element: <Navigate to={ROUTES.LOGIN} replace />
           },
 
           // ── Admin Routes ───────────────────────────────────────────────────
@@ -134,6 +134,7 @@ const router = createBrowserRouter([
               { path: 'settings', element: <AdminSettings /> },
               { path: 'audit', element: <AdminAudit /> },
               { path: 'inventory', element: <AdminInventory /> },
+              { path: '*', element: <NotFound /> },
             ],
           },
 
@@ -157,6 +158,7 @@ const router = createBrowserRouter([
               { path: 'teleconsult', element: <DoctorTeleconsult /> },
               { path: 'ai-assistant', element: <DoctorAIAssistant /> },
               { path: 'analytics', element: <DoctorAnalytics /> },
+              { path: '*', element: <NotFound /> },
             ],
           },
 
@@ -177,6 +179,7 @@ const router = createBrowserRouter([
               { path: 'registration', element: <ReceptionRegistration /> },
               { path: 'checkin', element: <ReceptionCheckin /> },
               { path: 'feedback', element: <ReceptionFeedback /> },
+              { path: '*', element: <NotFound /> },
             ],
           },
 
@@ -199,6 +202,7 @@ const router = createBrowserRouter([
               { path: 'profile', element: <PatientProfile /> },
               { path: 'health-tracker', element: <PatientHealthTracker /> },
               { path: 'symptom-checker', element: <PatientSymptomChecker /> },
+              { path: '*', element: <NotFound /> },
             ],
           },
         ],

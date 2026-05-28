@@ -12,19 +12,19 @@ const staff = [
 
 const StaffManagementOverview = () => {
   return (
-    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 rounded-2xl p-6 h-full shadow-sm flex flex-col">
+    <div className="bg-white border border-[#e2e8e2] rounded-[24px] p-6 h-full shadow-sm flex flex-col">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+        <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
           <Users className="text-blue-500" />
           Staff Overview
         </h2>
-        <Link to="/admin/staff" className="text-xs font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400">View All</Link>
+        <Link to="/admin/staff" className="text-xs font-semibold text-blue-600 hover:text-blue-700 ">View All</Link>
       </div>
 
       <div className="flex-1 overflow-auto pr-2 -mr-2">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-200 dark:border-slate-800 text-[10px] uppercase font-bold text-slate-400">
+            <tr className="border-b border-slate-200 text-[10px] uppercase font-bold text-slate-400">
               <th className="pb-3 font-bold">Staff Member</th>
               <th className="pb-3 font-bold">Role</th>
               <th className="pb-3 font-bold">Status</th>
@@ -33,24 +33,24 @@ const StaffManagementOverview = () => {
           </thead>
           <tbody>
             {staff.map((s) => (
-              <tr key={s.id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+              <tr key={s.id} className="border-b border-slate-100 hover:bg-slate-50 :bg-slate-800/50 transition-colors group">
                 <td className="py-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-100 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center font-bold text-xs text-blue-600 dark:text-blue-200 shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-100 flex items-center justify-center font-bold text-xs text-blue-600 shrink-0">
                       {s.name.charAt(0)}{s.name.includes(' ') ? s.name.split(' ')[1].charAt(0) : ''}
                     </div>
-                    <span className="font-semibold text-sm text-slate-700 dark:text-slate-200 truncate">{s.name}</span>
+                    <span className="font-semibold text-sm text-slate-700 truncate">{s.name}</span>
                   </div>
                 </td>
-                <td className="py-3 text-xs text-slate-500 dark:text-slate-400">{s.role}</td>
+                <td className="py-3 text-xs text-slate-500 ">{s.role}</td>
                 <td className="py-3">
                   <div className="flex items-center gap-1.5">
                     <div className={cn("w-2 h-2 rounded-full", s.color)} />
-                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{s.status}</span>
+                    <span className="text-xs font-medium text-slate-600 ">{s.status}</span>
                   </div>
                 </td>
                 <td className="py-3 text-right">
-                  <button className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  <button className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 :bg-slate-800 transition-colors">
                     <MoreVertical size={16} />
                   </button>
                 </td>
