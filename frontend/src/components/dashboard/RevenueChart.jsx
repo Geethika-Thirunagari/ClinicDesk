@@ -51,7 +51,7 @@ const RevenueChart = ({ delay = 0 }) => {
       </div>
 
       <div className="flex-1 w-full -ml-4">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="99%" height="99%">
           <AreaChart
             data={data}
             margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
@@ -67,35 +67,35 @@ const RevenueChart = ({ delay = 0 }) => {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-            <XAxis 
-              dataKey="name" 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: '#64748b', fontSize: 12 }} 
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: '#64748b', fontSize: 12 }}
               dy={10}
             />
-            <YAxis 
-              axisLine={false} 
-              tickLine={false} 
-              tick={{ fill: '#64748b', fontSize: 12 }} 
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: '#64748b', fontSize: 12 }}
               tickFormatter={(value) => `$${value}`}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Area 
-              type="monotone" 
-              dataKey="expected" 
-              stroke="#8b5cf6" 
+            <Area
+              type="monotone"
+              dataKey="expected"
+              stroke="#8b5cf6"
               strokeWidth={2}
-              fillOpacity={1} 
-              fill="url(#colorExpected)" 
+              fillOpacity={1}
+              fill="url(#colorExpected)"
             />
-            <Area 
-              type="monotone" 
-              dataKey="revenue" 
-              stroke="#3b82f6" 
+            <Area
+              type="monotone"
+              dataKey="revenue"
+              stroke="#3b82f6"
               strokeWidth={3}
-              fillOpacity={1} 
-              fill="url(#colorRevenue)" 
+              fillOpacity={1}
+              fill="url(#colorRevenue)"
             />
           </AreaChart>
         </ResponsiveContainer>

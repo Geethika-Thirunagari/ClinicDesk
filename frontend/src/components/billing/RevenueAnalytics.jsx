@@ -51,10 +51,10 @@ const RevenueAnalytics = ({ delay = 0 }) => {
     <div className="space-y-5">
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={DollarSign}    label="Total Billed"   value={`$${totalRevenue.toLocaleString()}`} sub="All invoices"         iconBg="bg-blue-50"    iconColor="text-blue-600"    delay={delay}         />
-        <StatCard icon={CheckCircle2}  label="Collected"      value={`$${collected.toLocaleString()}`}    sub="Paid invoices"          iconBg="bg-emerald-50" iconColor="text-emerald-600" delay={delay + 0.07}  />
-        <StatCard icon={Clock}         label="Pending"        value={`$${pending.toLocaleString()}`}      sub="Awaiting payment"       iconBg="bg-amber-50"   iconColor="text-amber-600"   delay={delay + 0.14} />
-        <StatCard icon={TrendingUp}    label="Overdue"        value={`$${overdue.toLocaleString()}`}      sub="Past due date"          iconBg="bg-rose-50"    iconColor="text-rose-600"    delay={delay + 0.21} />
+        <StatCard icon={DollarSign} label="Total Billed" value={`$${totalRevenue.toLocaleString()}`} sub="All invoices" iconBg="bg-blue-50" iconColor="text-blue-600" delay={delay} />
+        <StatCard icon={CheckCircle2} label="Collected" value={`$${collected.toLocaleString()}`} sub="Paid invoices" iconBg="bg-emerald-50" iconColor="text-emerald-600" delay={delay + 0.07} />
+        <StatCard icon={Clock} label="Pending" value={`$${pending.toLocaleString()}`} sub="Awaiting payment" iconBg="bg-amber-50" iconColor="text-amber-600" delay={delay + 0.14} />
+        <StatCard icon={TrendingUp} label="Overdue" value={`$${overdue.toLocaleString()}`} sub="Past due date" iconBg="bg-rose-50" iconColor="text-rose-600" delay={delay + 0.21} />
       </div>
 
       {/* Revenue Area Chart */}
@@ -66,15 +66,15 @@ const RevenueAnalytics = ({ delay = 0 }) => {
         <h3 className="font-semibold text-slate-800 mb-1">Revenue vs Collections</h3>
         <p className="text-sm text-slate-500 mb-5">Last 6 months overview</p>
         <div className="h-56 -ml-4">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="99%" height="99%">
             <AreaChart data={REVENUE_CHART_DATA} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="gRevenue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%"  stopColor="#3b82f6" stopOpacity={0.25} />
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.25} />
                   <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="gCollected" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%"  stopColor="#10b981" stopOpacity={0.25} />
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
                   <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                 </linearGradient>
               </defs>
@@ -83,7 +83,7 @@ const RevenueAnalytics = ({ delay = 0 }) => {
               <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
               <Tooltip content={<CustomTooltip />} />
               <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 12, paddingTop: 12 }} />
-              <Area type="monotone" dataKey="revenue"   name="Billed"    stroke="#3b82f6" strokeWidth={2.5} fill="url(#gRevenue)"   />
+              <Area type="monotone" dataKey="revenue" name="Billed" stroke="#3b82f6" strokeWidth={2.5} fill="url(#gRevenue)" />
               <Area type="monotone" dataKey="collected" name="Collected" stroke="#10b981" strokeWidth={2.5} fill="url(#gCollected)" />
             </AreaChart>
           </ResponsiveContainer>
@@ -99,13 +99,13 @@ const RevenueAnalytics = ({ delay = 0 }) => {
         <h3 className="font-semibold text-slate-800 mb-1">Monthly Collection Rate</h3>
         <p className="text-sm text-slate-500 mb-5">Billed vs collected per month</p>
         <div className="h-48 -ml-4">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="99%" height="99%">
             <BarChart data={REVENUE_CHART_DATA} margin={{ top: 5, right: 10, left: 0, bottom: 0 }} barGap={4}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
               <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={8} />
               <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="revenue"   name="Billed"    fill="#bfdbfe" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="revenue" name="Billed" fill="#bfdbfe" radius={[4, 4, 0, 0]} />
               <Bar dataKey="collected" name="Collected" fill="#6ee7b7" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>

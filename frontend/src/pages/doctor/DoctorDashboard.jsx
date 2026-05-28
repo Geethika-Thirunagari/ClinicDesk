@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Users, Calendar, Clock, Activity, Star, ChevronRight, 
-  Video, FileText, CheckCircle, Quote 
+import {
+  Users, Calendar, Clock, Activity, Star, ChevronRight,
+  Video, FileText, CheckCircle, Quote
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import AIDiagnosisWidget from '../../components/doctor/AIDiagnosisWidget';
 
 const patientVoices = [
   { id: 1, patient: 'Alice J.', rating: 5, text: 'Dr. Smith was incredibly attentive and explained my diagnosis clearly. Best cardiologist in town!', date: 'Today' },
@@ -47,7 +48,7 @@ const DoctorDashboard = () => {
 
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
-      
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -72,7 +73,7 @@ const DoctorDashboard = () => {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Today's Schedule (Takes up 2 columns) */}
         <div className="lg:col-span-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
@@ -82,14 +83,14 @@ const DoctorDashboard = () => {
             </h2>
             <button className="text-sm font-semibold text-blue-600 hover:text-blue-700">View Full Schedule</button>
           </div>
-          
+
           <div className="space-y-4">
             {schedule.map((apt, i) => (
               <motion.div key={apt.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
                 className={cn(
                   "flex items-center justify-between p-4 rounded-xl border transition-all",
-                  apt.status === 'In Progress' ? "bg-blue-50 border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/20 shadow-sm" : 
-                  "bg-slate-50/50 border-slate-100 dark:bg-slate-800/50 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  apt.status === 'In Progress' ? "bg-blue-50 border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/20 shadow-sm" :
+                    "bg-slate-50/50 border-slate-100 dark:bg-slate-800/50 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
                 )}
               >
                 <div className="flex items-center gap-4">
@@ -103,13 +104,13 @@ const DoctorDashboard = () => {
                     <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{apt.type}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                   <span className={cn(
                     "text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider",
                     apt.status === 'Completed' ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400" :
-                    apt.status === 'In Progress' ? "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 animate-pulse" :
-                    "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300"
+                      apt.status === 'In Progress' ? "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 animate-pulse" :
+                        "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300"
                   )}>
                     {apt.status}
                   </span>
@@ -124,16 +125,16 @@ const DoctorDashboard = () => {
 
         {/* Sidebar Widgets (Takes up 1 column) */}
         <div className="space-y-6">
-          
+
           {/* 🌟 Innovative Feature: Patient Voices Widget */}
           <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
             <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-            
+
             <h2 className="text-sm font-bold uppercase tracking-wider mb-6 flex items-center gap-2 opacity-90">
               <Quote size={16} />
               Patient Voices
             </h2>
-            
+
             <div className="relative h-40">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -157,13 +158,16 @@ const DoctorDashboard = () => {
                 </motion.div>
               </AnimatePresence>
             </div>
-            
+
             <div className="flex gap-1 mt-2">
               {patientVoices.map((_, i) => (
                 <div key={i} className={cn("h-1 rounded-full transition-all duration-300", i === activeVoice ? "w-4 bg-white" : "w-1.5 bg-white/30")} />
               ))}
             </div>
           </div>
+
+          {/* AI Symptom Analyzer */}
+          <AIDiagnosisWidget />
 
           {/* Quick Tasks */}
           <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
@@ -195,7 +199,7 @@ const DoctorDashboard = () => {
               </li>
             </ul>
           </div>
-          
+
         </div>
       </div>
     </motion.div>

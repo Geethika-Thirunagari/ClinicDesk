@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, UserRound, Users, Stethoscope, Eye, EyeOff, Check } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import { cn } from '../utils/cn';
+import { authService } from '../services/auth.service';
 
 // Minimal Floating Label Input for the Premium Feel
 const FloatingInput = ({ label, icon: Icon, type, error, isDarkMode, rightElement, ...props }) => {
@@ -19,20 +20,20 @@ const FloatingInput = ({ label, icon: Icon, type, error, isDarkMode, rightElemen
     <div className="relative w-full">
       <div className={cn(
         "relative flex items-center w-full rounded-xl border transition-all duration-300 overflow-hidden group",
-        isDarkMode 
-          ? "bg-slate-900/50 border-slate-700/50 hover:border-slate-600" 
+        isDarkMode
+          ? "bg-slate-900/50 border-slate-700/50 hover:border-slate-600"
           : "bg-slate-50 border-slate-200 hover:border-slate-300",
-        focused && (isDarkMode 
-          ? "border-blue-500/80 bg-slate-900 ring-4 ring-blue-500/10" 
+        focused && (isDarkMode
+          ? "border-blue-500/80 bg-slate-900 ring-4 ring-blue-500/10"
           : "border-blue-500 bg-white ring-4 ring-blue-500/10"),
-        error && (isDarkMode 
-          ? "border-rose-500/80 ring-4 ring-rose-500/10" 
+        error && (isDarkMode
+          ? "border-rose-500/80 ring-4 ring-rose-500/10"
           : "border-rose-500 ring-4 ring-rose-500/10")
       )}>
         <div className="pl-4 pr-3 flex items-center justify-center text-slate-400 z-10 transition-colors">
           <Icon className={cn(
             "w-5 h-5 transition-colors duration-300",
-            focused && "text-blue-500", 
+            focused && "text-blue-500",
             error && "text-rose-500",
             !focused && !error && (isDarkMode ? "group-hover:text-slate-300" : "group-hover:text-slate-500")
           )} />
@@ -60,7 +61,7 @@ const FloatingInput = ({ label, icon: Icon, type, error, isDarkMode, rightElemen
         <label
           className={cn(
             "absolute left-[3.25rem] transition-all duration-300 pointer-events-none z-0",
-            (focused || hasValue) 
+            (focused || hasValue)
               ? "text-[11px] top-2 font-semibold tracking-wide uppercase " + (error ? "text-rose-500" : "text-blue-500")
               : "text-[15px] top-1/2 -translate-y-1/2 text-slate-400"
           )}
@@ -96,7 +97,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
   const { isDarkMode } = useOutletContext() || { isDarkMode: false };
-  
+
   const [activeRole, setActiveRole] = useState(ROLES_TABS[0]);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({ email: ROLES_TABS[0].email, password: 'password' });
@@ -122,33 +123,21 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    
+
     setIsLoading(true);
     setErrors({});
-    
-    try {
-      // Mocking network delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      let user = null;
-      if (formData.email.includes('admin')) {
-        user = { id: 1, name: 'Admin User', role: 'admin' };
-      } else if (formData.email.includes('doctor')) {
-        user = { id: 2, name: 'Dr. Sarah Smith', role: 'doctor' };
-      } else if (formData.email.includes('desk')) {
-        user = { id: 4, name: 'Receptionist Jane', role: 'receptionist' }; 
-      } else if (formData.email.includes('patient')) {
-        user = { id: 3, name: 'John Doe', role: 'patient' };
-      }
 
-      if (user && formData.password === 'password') {
-         login(user, `mock-jwt-token-${user.role}-${Date.now()}`);
-         navigate(useAuthStore.getState().getHome(), { replace: true });
+    try {
+      const response = await authService.login(formData);
+
+      if (response.user && response.token) {
+        login(response.user, response.token);
+        navigate(useAuthStore.getState().getHome(), { replace: true });
       } else {
-         setErrors({ form: 'Invalid credentials. Password is "password"' });
+        setErrors({ form: 'Invalid response from server.' });
       }
     } catch (error) {
-      setErrors({ form: 'Authentication failed. Please try again.' });
+      setErrors({ form: error.response?.data?.error || 'Authentication failed. Please check your credentials.' });
     } finally {
       setIsLoading(false);
     }
@@ -166,13 +155,13 @@ const Login = () => {
       </div>
 
       {/* Role Tabs */}
-      <div 
+      <div
         role="tablist"
         aria-label="Login roles"
         className={cn(
-        "flex p-1.5 rounded-2xl mb-8 relative border shadow-sm",
-        isDarkMode ? "bg-slate-900/60 border-slate-700/50" : "bg-slate-100/80 border-slate-200"
-      )}>
+          "flex p-1.5 rounded-2xl mb-8 relative border shadow-sm",
+          isDarkMode ? "bg-slate-900/60 border-slate-700/50" : "bg-slate-100/80 border-slate-200"
+        )}>
         {ROLES_TABS.map((role) => {
           const isActive = activeRole.id === role.id;
           return (
@@ -190,8 +179,8 @@ const Login = () => {
               }}
               className={cn(
                 "flex-1 flex flex-col items-center gap-1.5 py-3.5 xl:py-4 rounded-xl text-xs xl:text-sm font-semibold transition-all duration-300 relative z-10 outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                isActive 
-                  ? "text-white" 
+                isActive
+                  ? "text-white"
                   : (isDarkMode ? "text-slate-400 hover:text-slate-300" : "text-slate-500 hover:text-slate-700")
               )}
             >
@@ -216,9 +205,9 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <AnimatePresence>
           {errors.form && (
-            <motion.div 
-              initial={{ opacity: 0, height: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, height: 'auto', scale: 1 }} 
+            <motion.div
+              initial={{ opacity: 0, height: 0, scale: 0.95 }}
+              animate={{ opacity: 1, height: 'auto', scale: 1 }}
               exit={{ opacity: 0, height: 0, scale: 0.95 }}
               className="overflow-hidden"
             >
@@ -274,13 +263,13 @@ const Login = () => {
               </button>
             }
           />
-          
+
           <div className="flex items-center justify-between mt-3">
             <label className="flex items-center gap-3 cursor-pointer group">
               <div className={cn(
                 "w-5 h-5 rounded-md flex items-center justify-center border transition-all duration-300 relative",
-                rememberMe 
-                  ? "bg-blue-500 border-blue-500 shadow-md shadow-blue-500/20" 
+                rememberMe
+                  ? "bg-blue-500 border-blue-500 shadow-md shadow-blue-500/20"
                   : (isDarkMode ? "bg-slate-900/50 border-slate-600 group-hover:border-blue-500/50" : "bg-slate-50 border-slate-300 group-hover:border-blue-400")
               )}>
                 <AnimatePresence>
@@ -296,9 +285,9 @@ const Login = () => {
                   )}
                 </AnimatePresence>
               </div>
-              <input 
-                type="checkbox" 
-                className="hidden" 
+              <input
+                type="checkbox"
+                className="hidden"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
@@ -315,21 +304,21 @@ const Login = () => {
           </div>
         </div>
 
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          type="submit" 
+          type="submit"
           disabled={isLoading}
           className={cn(
             "w-full flex items-center justify-center py-4 rounded-xl text-white font-bold text-base transition-all overflow-hidden relative group mt-8",
-            isLoading 
-              ? "bg-blue-600/80 cursor-not-allowed shadow-none" 
+            isLoading
+              ? "bg-blue-600/80 cursor-not-allowed shadow-none"
               : "bg-gradient-to-r from-blue-600 to-indigo-600 shadow-xl shadow-blue-600/30 hover:shadow-blue-600/40"
           )}
         >
           {/* Shimmer effect */}
           {!isLoading && (
-             <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
+            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
           )}
 
           <AnimatePresence mode="wait">

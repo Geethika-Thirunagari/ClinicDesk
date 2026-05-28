@@ -58,7 +58,7 @@ const AdminRevenue = () => {
 
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8">
-      
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -90,26 +90,26 @@ const AdminRevenue = () => {
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Revenue Trend */}
         <div className="lg:col-span-2 bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm rounded-2xl p-6">
           <h2 className="text-lg font-bold text-slate-800 mb-6">Revenue & Expenses Trend</h2>
           <div className="h-72 w-full">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="99%" height="99%">
               <AreaChart data={revenueData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorExp" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#f43f5e" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(val) => `$${val/1000}k`} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(val) => `$${val / 1000}k`} />
                 <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
                 <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
                 <Area type="monotone" dataKey="expenses" stroke="#f43f5e" strokeWidth={3} fillOpacity={1} fill="url(#colorExp)" />
@@ -122,7 +122,7 @@ const AdminRevenue = () => {
         <div className="bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm rounded-2xl p-6">
           <h2 className="text-lg font-bold text-slate-800 mb-6">Revenue by Department</h2>
           <div className="h-72 w-full">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="99%" height="99%">
               <BarChart data={departmentData} layout="vertical" margin={{ top: 0, right: 0, left: 10, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
                 <XAxis type="number" hide />
@@ -161,11 +161,10 @@ const AdminRevenue = () => {
                   <td className="py-4 text-sm text-slate-500">{tx.method}</td>
                   <td className="py-4 text-sm font-bold text-slate-800">${tx.amount}</td>
                   <td className="py-4">
-                    <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${
-                      tx.status === 'Completed' ? 'bg-emerald-100 text-emerald-700' :
+                    <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${tx.status === 'Completed' ? 'bg-emerald-100 text-emerald-700' :
                       tx.status === 'Pending' ? 'bg-amber-100 text-amber-700' :
-                      'bg-rose-100 text-rose-700'
-                    }`}>
+                        'bg-rose-100 text-rose-700'
+                      }`}>
                       {tx.status}
                     </span>
                   </td>

@@ -34,7 +34,7 @@ export default function ReceptionFeedback() {
   const [comments, setComments] = useState(mockRecentComments);
   const [surveyList, setSurveyList] = useState(recentVisitsToSurvey);
   const [successMsg, setSuccessMsg] = useState("");
-  
+
   // Custom feedback generator
   const [selectedPatientId, setSelectedPatientId] = useState("");
   const [surveyType, setSurveyType] = useState("Standard Post-Consultation");
@@ -42,7 +42,7 @@ export default function ReceptionFeedback() {
   const handleSendSurvey = (patientId, patientName) => {
     setSurveyList(prev => prev.map(s => s.id === patientId ? { ...s, status: "Sent" } : s));
     setSuccessMsg(`Survey dispatch request sent to ${patientName} via email/SMS.`);
-    
+
     setTimeout(() => {
       setSuccessMsg("");
     }, 2800);
@@ -57,7 +57,7 @@ export default function ReceptionFeedback() {
 
     // Dispatch survey
     handleSendSurvey(patientObj.id, patientObj.name);
-    
+
     // Simulate auto receiving a rating in the comments log 1 second later
     setTimeout(() => {
       const newComment = {
@@ -113,7 +113,7 @@ export default function ReceptionFeedback() {
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Clinic Rating Distribution</h2>
           <div className="h-[220px] w-full font-medium text-xs">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="99%" height="99%">
               <BarChart data={ratingDistribution} layout="vertical" margin={{ top: 0, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="rgba(148, 163, 184, 0.08)" />
                 <XAxis type="number" stroke="#94a3b8" />
@@ -132,10 +132,10 @@ export default function ReceptionFeedback() {
         {/* Sentiment breakdown Donut */}
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6 flex flex-col justify-between">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">NPS Sentiment Classification</h2>
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="h-[140px] w-[140px] shrink-0">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="99%" height="99%">
                 <PieChart>
                   <Pie data={sentimentBreakdown} cx="50%" cy="50%" innerRadius={40} outerRadius={55} paddingAngle={4} dataKey="value">
                     {sentimentBreakdown.map((entry, index) => (
@@ -146,7 +146,7 @@ export default function ReceptionFeedback() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            
+
             <div className="space-y-2.5 flex-1 w-full text-xs font-semibold text-slate-650 dark:text-slate-350">
               {sentimentBreakdown.map((s, idx) => (
                 <div key={idx} className="flex justify-between items-center">
@@ -170,11 +170,11 @@ export default function ReceptionFeedback() {
             <Send size={16} className="text-blue-500" />
             Dispatch Clinic Survey
           </h2>
-          
+
           <form onSubmit={handleCreateMockFeedback} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Select Recent Visitor</label>
-              <select 
+              <select
                 value={selectedPatientId}
                 onChange={(e) => setSelectedPatientId(e.target.value)}
                 className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"
@@ -185,10 +185,10 @@ export default function ReceptionFeedback() {
                 ))}
               </select>
             </div>
-            
+
             <div>
               <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Survey Template</label>
-              <select 
+              <select
                 value={surveyType}
                 onChange={(e) => setSurveyType(e.target.value)}
                 className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-blue-500"

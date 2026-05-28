@@ -33,7 +33,7 @@ export default function PatientHealthTracker() {
   const [sugar, setSugar] = useState("95");
   const [weight, setWeight] = useState("74.0");
   const [selectedMood, setSelectedMood] = useState(1); // Default to 'Good'
-  
+
   const [history, setHistory] = useState(initialHistory);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -83,8 +83,8 @@ export default function PatientHealthTracker() {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Systolic BP (mmHg)</label>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   value={systolic}
                   onChange={(e) => setSystolic(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all dark:text-white font-mono"
@@ -92,8 +92,8 @@ export default function PatientHealthTracker() {
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Diastolic BP (mmHg)</label>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   value={diastolic}
                   onChange={(e) => setDiastolic(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all dark:text-white font-mono"
@@ -105,8 +105,8 @@ export default function PatientHealthTracker() {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Blood Sugar (mg/dL)</label>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   value={sugar}
                   onChange={(e) => setSugar(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm outline-none focus:ring-2 focus:ring-rose-500 transition-all dark:text-white font-mono"
@@ -114,8 +114,8 @@ export default function PatientHealthTracker() {
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-450 uppercase mb-2">Body Weight (kg)</label>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   step="0.1"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
@@ -129,13 +129,13 @@ export default function PatientHealthTracker() {
               <label className="block text-xs font-bold text-slate-450 uppercase mb-2.5">How are you feeling today?</label>
               <div className="grid grid-cols-5 gap-2">
                 {moodEmojis.map((m, idx) => (
-                  <button 
+                  <button
                     key={idx}
                     type="button"
                     onClick={() => setSelectedMood(idx)}
-                    className={cn("p-2.5 rounded-xl border flex flex-col items-center justify-center transition-all", 
-                      selectedMood === idx 
-                        ? m.color + " ring-2 ring-rose-500/20 scale-105" 
+                    className={cn("p-2.5 rounded-xl border flex flex-col items-center justify-center transition-all",
+                      selectedMood === idx
+                        ? m.color + " ring-2 ring-rose-500/20 scale-105"
                         : "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-850 hover:bg-slate-100"
                     )}
                   >
@@ -168,7 +168,7 @@ export default function PatientHealthTracker() {
               <span>My Physiological Vitals Trends</span>
               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-100 dark:bg-slate-950 px-3 py-1.5 rounded-full">Last 7 Logs</span>
             </h2>
-            
+
             {/* charts grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* BP Area Chart */}
@@ -178,12 +178,12 @@ export default function PatientHealthTracker() {
                   <span className="text-[10px] font-extrabold text-slate-500 bg-rose-500/10 text-rose-500 px-2 py-0.5 rounded-md">Systolic / Diastolic</span>
                 </div>
                 <div className="h-[180px] w-full font-medium text-xs">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="99%" height="99%">
                     <AreaChart data={history} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
                       <defs>
                         <linearGradient id="colorBP" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ec4899" stopOpacity={0.2}/>
-                          <stop offset="95%" stopColor="#ec4899" stopOpacity={0}/>
+                          <stop offset="5%" stopColor="#ec4899" stopOpacity={0.2} />
+                          <stop offset="95%" stopColor="#ec4899" stopOpacity={0} />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148, 163, 184, 0.08)" />
@@ -204,12 +204,12 @@ export default function PatientHealthTracker() {
                   <span className="text-[10px] font-extrabold text-slate-500 bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-md">Fasting Target: &lt;100</span>
                 </div>
                 <div className="h-[180px] w-full font-medium text-xs">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="99%" height="99%">
                     <AreaChart data={history} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
                       <defs>
                         <linearGradient id="colorSugar" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2}/>
-                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
+                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148, 163, 184, 0.08)" />

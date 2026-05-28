@@ -64,16 +64,16 @@ export default function DoctorAnalytics() {
             Overview of clinic diagnostics trends, recovery scores, and demographic analytics.
           </p>
         </div>
-        
+
         {/* Controls */}
         <div className="flex items-center gap-2 shrink-0">
           <button onClick={triggerRefresh} className="p-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 rounded-xl transition-all shadow-sm">
             <RefreshCw className={isRefreshing ? "animate-spin" : ""} size={16} />
           </button>
-          
+
           <div className="relative">
-            <select 
-              value={timeRange} 
+            <select
+              value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
               className="appearance-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-350 rounded-xl py-2.5 pl-4 pr-10 text-xs font-bold shadow-sm cursor-pointer focus:ring-2 focus:ring-blue-500 outline-none"
             >
@@ -117,16 +117,16 @@ export default function DoctorAnalytics() {
             Consultation Activity Volume
           </h2>
           <div className="h-[300px] w-full font-medium text-xs">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="99%" height="99%">
               <AreaChart data={visitData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorTele" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148, 163, 184, 0.1)" />
@@ -145,15 +145,15 @@ export default function DoctorAnalytics() {
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Diagnosis Breakdown</h2>
           <div className="h-[220px] w-full flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="99%" height="99%">
               <PieChart>
-                <Pie 
-                  data={diagnosisData} 
-                  cx="50%" 
-                  cy="50%" 
-                  innerRadius={60} 
-                  outerRadius={85} 
-                  paddingAngle={5} 
+                <Pie
+                  data={diagnosisData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={85}
+                  paddingAngle={5}
                   dataKey="value"
                 >
                   {diagnosisData.map((entry, index) => (
@@ -164,7 +164,7 @@ export default function DoctorAnalytics() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          
+
           <div className="space-y-2 mt-4 text-xs font-semibold text-slate-650 dark:text-slate-350">
             {diagnosisData.map((d, i) => (
               <div key={i} className="flex justify-between items-center">
@@ -185,7 +185,7 @@ export default function DoctorAnalytics() {
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Patient Recovery Outcomes</h2>
           <div className="h-[260px] w-full font-medium text-xs">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="99%" height="99%">
               <BarChart data={outcomeData}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148, 163, 184, 0.1)" />
                 <XAxis dataKey="name" stroke="#94a3b8" />
@@ -203,7 +203,7 @@ export default function DoctorAnalytics() {
         {/* Demographics Matrix */}
         <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/40 dark:border-slate-800 shadow-sm rounded-2xl p-6">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6 font-sans">Patient Cohort Demographics</h2>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
             {/* Age cohort breakdown */}
             <div className="space-y-4">
@@ -227,7 +227,7 @@ export default function DoctorAnalytics() {
             <div className="space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Gender Cohort Breakdown</h3>
               <div className="h-[120px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="99%" height="99%">
                   <PieChart>
                     <Pie data={demographicsData.gender} cx="50%" cy="50%" innerRadius={35} outerRadius={50} dataKey="value">
                       {demographicsData.gender.map((entry, index) => (
