@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Users, Calendar, Clock, Activity, Star, ChevronRight, 
-  Video, FileText, CheckCircle, Quote, Moon, Sun 
+import {
+  Users, Calendar, Clock, Activity, Star, ChevronRight,
+  Video, FileText, CheckCircle, Quote, Sparkles, BarChart3, ClipboardList
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import AIDiagnosisWidget from '../../components/doctor/AIDiagnosisWidget';
@@ -23,34 +23,23 @@ const schedule = [
 
 const StatCard = ({ title, value, subtext, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="finai-card p-5 group hover:shadow-md transition-all">
+    className="finai-card p-6 group hover:shadow-md transition-all">
     <div className="flex items-center justify-between mb-4">
-      <div className={cn("p-3 rounded-xl", color)}><Icon size={22} className="text-white" /></div>
-      <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">{subtext}</span>
+      <div className={cn("p-3 rounded-xl", color)}><Icon size={20} className="text-white" /></div>
+      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100 uppercase tracking-wider">{subtext}</span>
     </div>
     <div>
-      <h3 className="text-3xl font-extrabold text-[#0a1a0f] ">{value}</h3>
-      <p className="text-sm font-semibold text-slate-500 mt-1">{title}</p>
+      <h3 className="text-3xl font-black text-[#0a1a0f] tracking-tight">{value}</h3>
+      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">{title}</p>
     </div>
   </motion.div>
 );
 
 const DoctorDashboard = () => {
   const [activeVoice, setActiveVoice] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('clinicdesk-theme') === 'dark');
 
+  // Auto-rotate for voices widget
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('clinicdesk-theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('clinicdesk-theme', 'light');
-    }
-  }, [isDarkMode]);
-
-  // Simple auto-rotate for voices widget
-  React.useEffect(() => {
     const timer = setInterval(() => {
       setActiveVoice((prev) => (prev + 1) % patientVoices.length);
     }, 5000);
@@ -58,103 +47,94 @@ const DoctorDashboard = () => {
   }, []);
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 font-['Outfit']">
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Doctor Workspace</h1>
-          <p className="text-sm text-slate-500 mt-1">Here is your summary for today, Dr. Smith.</p>
+          <h1 className="text-2xl font-black text-[#0a1a0f] tracking-tight text-shadow-sm">Doctor Workspace</h1>
+          <p className="text-sm font-medium text-slate-400 mt-0.5">Welcome back, Dr. Smith. Here is your overview for today.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setIsDarkMode((prev) => !prev)}
-            className="p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-600 shadow-sm hover:shadow-md transition-all"
-            aria-label="Toggle dark mode"
-          >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-xl font-semibold text-sm shadow-md transition-all">
-            <Video size={18} /> Start Teleconsult
+          <motion.button whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#0a1a0f] text-white rounded-xl font-bold text-xs shadow-lg shadow-emerald-900/10 transition-all uppercase tracking-widest">
+            <Video size={16} /> Start Teleconsult
           </motion.button>
         </div>
       </div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Today's Patients" value="12" subtext="4 remaining" icon={Users} color="bg-blue-500" delay={0.1} />
-        <StatCard title="Upcoming Teleconsults" value="3" subtext="Next in 1hr" icon={Video} color="bg-indigo-500" delay={0.15} />
-        <StatCard title="Pending Reports" value="5" subtext="2 critical" icon={FileText} color="bg-amber-500" delay={0.2} />
-        <StatCard title="Patient Satisfaction" value="4.9" subtext="+0.2 this week" icon={Star} color="bg-emerald-500" delay={0.25} />
+        <StatCard title="Patients Today" value="12" subtext="4 remaining" icon={Users} color="bg-blue-600" delay={0.1} />
+        <StatCard title="Teleconsults" value="03" subtext="In 1 hr" icon={Video} color="bg-indigo-600" delay={0.15} />
+        <StatCard title="Pending Reports" value="05" subtext="2 critical" icon={FileText} color="bg-rose-600" delay={0.2} />
+        <StatCard title="Satisfaction" value="4.9" subtext="+0.2 wk" icon={Star} color="bg-emerald-600" delay={0.25} />
       </div>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {/* Today's Schedule (Takes up 2 columns) */}
-        <div className="lg:col-span-2 finai-card p-6">
+        {/* Schedule */}
+        <div className="lg:col-span-2 finai-card p-6 flex flex-col">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">
-              <Calendar size={20} className="text-blue-500" />
+            <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-widest flex items-center gap-2">
+              <Calendar size={18} className="text-blue-600" />
               Today's Schedule
             </h2>
-            <button className="text-sm font-semibold text-blue-600 hover:text-blue-700">View Full Schedule</button>
+            <button className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-[#0a1a0f] transition-colors">View All</button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 flex-1">
             {schedule.map((apt, i) => (
-              <motion.div key={apt.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
+              <motion.div key={apt.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 * i }}
                 className={cn(
-                  "flex items-center justify-between p-4 rounded-xl border transition-all",
-                  apt.status === 'In Progress' ? "bg-blue-50 border-blue-200 shadow-sm" :
-                    "bg-slate-50/50 border-slate-100 hover:bg-slate-50 :bg-slate-800"
+                  "flex items-center justify-between p-4 rounded-xl border transition-all group cursor-pointer",
+                  apt.status === 'In Progress'
+                    ? "bg-blue-50 border-blue-100 shadow-sm"
+                    : "bg-white border-[#e2e8e2] hover:border-emerald-200"
                 )}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-16 text-center">
-                    <p className="text-sm font-bold text-[#0a1a0f] ">{apt.time.split(' ')[0]}</p>
-                    <p className="text-xs font-semibold text-slate-500">{apt.time.split(' ')[1]}</p>
+                  <div className="w-14 text-center">
+                    <p className="text-xs font-black text-[#0a1a0f]">{apt.time.split(' ')[0]}</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">{apt.time.split(' ')[1]}</p>
                   </div>
-                  <div className="w-px h-8 bg-slate-200 "></div>
+                  <div className="w-px h-8 bg-slate-100 group-hover:bg-emerald-100 transition-colors"></div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#0a1a0f] ">{apt.patient}</h4>
-                    <p className="text-xs font-medium text-slate-500 ">{apt.type}</p>
+                    <h4 className="text-sm font-bold text-[#0a1a0f] group-hover:text-emerald-700 transition-colors">{apt.patient}</h4>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{apt.type}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <span className={cn(
-                    "text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider",
-                    apt.status === 'Completed' ? "bg-emerald-100 text-emerald-700 " :
-                      apt.status === 'In Progress' ? "bg-blue-100 text-blue-700 animate-pulse" :
-                        "bg-slate-100 text-slate-600 "
+                    "text-[9px] font-black px-2 py-1 rounded-lg uppercase tracking-widest border",
+                    apt.status === 'Completed' ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
+                      apt.status === 'In Progress' ? "bg-blue-600 text-white border-blue-600 animate-pulse" :
+                        "bg-slate-50 text-slate-400 border-slate-100"
                   )}>
                     {apt.status}
                   </span>
-                  <button className="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-blue-600 transition-colors">
-                    <ChevronRight size={16} />
-                  </button>
+                  <ChevronRight size={14} className="text-slate-300 group-hover:text-emerald-500 transition-colors" />
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Sidebar Widgets (Takes up 1 column) */}
+        {/* Sidebar Widgets */}
         <div className="space-y-6">
 
-          {/* 🌟 Innovative Feature: Patient Voices Widget */}
-          <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-[24px] p-6 text-white shadow-lg relative overflow-hidden group">
-            <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+          {/* Patient Voices */}
+          <div className="bg-[#0a1a0f] rounded-[24px] p-6 text-white shadow-xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
 
-            <h2 className="text-sm font-bold uppercase tracking-wider mb-6 flex items-center gap-2 opacity-90">
-              <Quote size={16} />
-              Patient Voices
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2 text-emerald-400">
+              <Quote size={14} />
+              Voices
             </h2>
 
-            <div className="relative h-40">
+            <div className="relative h-32">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeVoice}
@@ -164,23 +144,22 @@ const DoctorDashboard = () => {
                   transition={{ duration: 0.5 }}
                   className="absolute inset-0"
                 >
-                  <div className="flex gap-1 mb-3">
-                    {[...Array(patientVoices[activeVoice].rating)].map((_, i) => (
-                      <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-lg font-medium leading-snug mb-4">"{patientVoices[activeVoice].text}"</p>
-                  <div className="flex items-center justify-between text-xs opacity-80 font-medium">
+                  <p className="text-sm font-bold leading-relaxed mb-4 text-slate-200">"{patientVoices[activeVoice].text}"</p>
+                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-wider text-emerald-500">
                     <span>— {patientVoices[activeVoice].patient}</span>
-                    <span>{patientVoices[activeVoice].date}</span>
+                    <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={10} className="fill-emerald-500 text-emerald-500" />
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            <div className="flex gap-1 mt-2">
+            <div className="flex gap-1.5 mt-2">
               {patientVoices.map((_, i) => (
-                <div key={i} className={cn("h-1 rounded-full transition-all duration-300", i === activeVoice ? "w-4 bg-white" : "w-1.5 bg-white/30")} />
+                <div key={i} className={cn("h-1 rounded-full transition-all duration-300", i === activeVoice ? "w-4 bg-emerald-500" : "w-1 bg-white/10")} />
               ))}
             </div>
           </div>
@@ -188,34 +167,28 @@ const DoctorDashboard = () => {
           {/* AI Symptom Analyzer */}
           <AIDiagnosisWidget />
 
-          {/* Quick Tasks */}
+          {/* Action Items */}
           <div className="finai-card p-6">
-            <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
-              <CheckCircle size={16} className="text-emerald-500" />
-              Action Items
+            <h2 className="text-[10px] font-bold text-[#0a1a0f] uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
+              <CheckCircle size={14} className="text-emerald-500" />
+              Tasks
             </h2>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3">
-                <input type="checkbox" className="mt-1 accent-emerald-500 w-4 h-4" />
-                <div>
-                  <p className="text-sm font-semibold text-slate-700 ">Review MRI results for D. Lee</p>
-                  <p className="text-xs text-slate-500">Urgent • 2 hours ago</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <input type="checkbox" className="mt-1 accent-emerald-500 w-4 h-4" />
-                <div>
-                  <p className="text-sm font-semibold text-slate-700 ">Sign off on 3 prescriptions</p>
-                  <p className="text-xs text-slate-500">Pharmacy request</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <input type="checkbox" className="mt-1 accent-emerald-500 w-4 h-4" />
-                <div>
-                  <p className="text-sm font-semibold text-slate-700 ">Update availability for next week</p>
-                  <p className="text-xs text-slate-500">Admin request</p>
-                </div>
-              </li>
+            <ul className="space-y-4">
+              {[
+                { label: 'Review MRI - D. Lee', sub: 'Urgent • 2h ago' },
+                { label: 'Prescription Sign-off', sub: '3 requests' },
+                { label: 'Update Availability', sub: 'Admin request' }
+              ].map((task, idx) => (
+                <li key={idx} className="flex items-start gap-3 group cursor-pointer">
+                  <div className="w-4 h-4 rounded border border-slate-200 mt-0.5 group-hover:border-emerald-500 transition-colors flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-sm bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-[#0a1a0f] group-hover:text-emerald-700 transition-colors">{task.label}</p>
+                    <p className="text-[10px] font-bold text-slate-400 mt-0.5">{task.sub}</p>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
 

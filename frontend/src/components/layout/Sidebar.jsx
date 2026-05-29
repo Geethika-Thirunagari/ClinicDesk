@@ -50,6 +50,112 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
     </NavLink>
   );
 
+  const getNavGroups = () => {
+    switch (currentRole) {
+      case ROLES.ADMIN:
+        return [
+          {
+            title: 'Main',
+            items: [
+              { icon: LayoutDashboard, label: 'Overview', path: '/admin/dashboard' },
+              { icon: Activity, label: 'Revenue', path: '/admin/revenue' },
+              { icon: FileText, label: 'Reports', path: '/admin/reports' },
+            ]
+          },
+          {
+            title: 'Management',
+            items: [
+              { icon: Users, label: 'Patients', path: '/admin/patients' },
+              { icon: Stethoscope, label: 'Doctors', path: '/admin/doctors' },
+              { icon: Contact, label: 'Staff', path: '/admin/staff' },
+              { icon: Pill, label: 'Pharmacy', path: '/admin/pharmacy' },
+            ]
+          },
+          {
+            title: 'Utilities',
+            items: [
+              { icon: Settings, label: 'Settings', path: '/admin/settings' },
+              { icon: ShieldCheck, label: 'Audit Trail', path: '/admin/audit' },
+            ]
+          }
+        ];
+      case ROLES.DOCTOR:
+        return [
+          {
+            title: 'Clinical',
+            items: [
+              { icon: LayoutDashboard, label: 'Dashboard', path: '/doctor/dashboard' },
+              { icon: Calendar, label: 'Appointments', path: '/doctor/appointments' },
+              { icon: ClipboardList, label: 'EMR Records', path: '/doctor/records' },
+              { icon: Pill, label: 'Prescriptions', path: '/doctor/prescriptions' },
+            ]
+          },
+          {
+            title: 'Planning',
+            items: [
+              { icon: Clock, label: 'Schedule', path: '/doctor/schedule' },
+              { icon: BarChart3, label: 'Analytics', path: '/doctor/analytics' },
+              { icon: Video, label: 'Teleconsult', path: '/doctor/teleconsult' },
+            ]
+          },
+          {
+            title: 'Intelligence',
+            items: [
+              { icon: Sparkles, label: 'AI Assistant', path: '/doctor/ai-assistant' },
+            ]
+          }
+        ];
+      case ROLES.RECEPTIONIST:
+        return [
+          {
+            title: 'Front Office',
+            items: [
+              { icon: LayoutDashboard, label: 'Desk Overview', path: '/reception/dashboard' },
+              { icon: Calendar, label: 'Booking', path: '/reception/booking' },
+              { icon: Users, label: 'Registration', path: '/reception/registration' },
+              { icon: Clock, label: 'Queue', path: '/reception/queue' },
+            ]
+          },
+          {
+            title: 'Admin Desk',
+            items: [
+              { icon: Wallet, label: 'Billing', path: '/reception/billing' },
+              { icon: ScanLine, label: 'Check-in', path: '/reception/checkin' },
+              { icon: MessageSquareHeart, label: 'Feedback', path: '/reception/feedback' },
+            ]
+          }
+        ];
+      case ROLES.PATIENT:
+        return [
+          {
+            title: 'My Health',
+            items: [
+              { icon: LayoutDashboard, label: 'Health Hub', path: '/patient/dashboard' },
+              { icon: HeartPulse, label: 'Health Tracker', path: '/patient/health-tracker' },
+              { icon: SearchCheck, label: 'Symptom Checker', path: '/patient/symptom-checker' },
+            ]
+          },
+          {
+            title: 'Care',
+            items: [
+              { icon: Calendar, label: 'Book Appointment', path: '/patient/book' },
+              { icon: ClipboardList, label: 'Medical History', path: '/patient/history' },
+              { icon: Pill, label: 'Prescriptions', path: '/patient/prescriptions' },
+            ]
+          },
+          {
+            title: 'Account',
+            items: [
+              { icon: CreditCard, label: 'Payments', path: '/patient/payments' },
+              { icon: UserCircle, label: 'My Profile', path: '/patient/profile' },
+            ]
+          }
+        ];
+      default:
+        return [];
+    }
+  };
+
   return (
     <>
       <AnimatePresence>
@@ -74,33 +180,21 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 h-20 px-6 mb-4">
-          <div className="w-7 h-7 rounded bg-[#0a1a0f] flex items-center justify-center text-white font-bold">
-            C
+          <div className="w-7 h-7 rounded bg-[#0a1a0f] flex items-center justify-center text-white font-bold text-xs">
+            F
           </div>
           {!isCollapsed && (
-            <span className="font-bold text-lg tracking-tight text-[#0a1a0f]">FINAI CLINC</span>
+            <span className="font-bold text-lg tracking-tight text-[#0a1a0f]">FINAI CLINIC</span>
           )}
         </div>
 
         {/* Navigation Content */}
         <div className="flex-1 overflow-y-auto px-2 custom-scrollbar">
-          <SidebarSection title="Main" isCollapsed={isCollapsed}>
-            {navItem(LayoutDashboard, 'Overview', '/admin/dashboard')}
-            {navItem(Activity, 'Revenue', '/admin/revenue')}
-            {navItem(FileText, 'Reports', '/admin/reports')}
-          </SidebarSection>
-
-          <SidebarSection title="Management" isCollapsed={isCollapsed}>
-            {navItem(Users, 'Patients', '/admin/patients')}
-            {navItem(Stethoscope, 'Doctors', '/admin/doctors')}
-            {navItem(Contact, 'Staff', '/admin/staff')}
-            {navItem(Pill, 'Pharmacy', '/admin/pharmacy')}
-          </SidebarSection>
-
-          <SidebarSection title="Utilities" isCollapsed={isCollapsed}>
-            {navItem(Settings, 'Settings', '/admin/settings')}
-            {navItem(ShieldCheck, 'Audit Trail', '/admin/audit')}
-          </SidebarSection>
+          {getNavGroups().map((group, idx) => (
+            <SidebarSection key={idx} title={group.title} isCollapsed={isCollapsed}>
+              {group.items.map(item => navItem(item.icon, item.label, item.path))}
+            </SidebarSection>
+          ))}
         </div>
 
         {/* AI Assistant Widget (FINAI specialized) */}

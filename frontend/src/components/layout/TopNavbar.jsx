@@ -1,62 +1,56 @@
-import React, { useState } from 'react';
-import { Menu, Search, Bell, Settings, SearchIcon } from 'lucide-react';
+import React from 'react';
+import { Menu, Search, Bell, Settings, Plus } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 
 const TopNavbar = ({ onMenuClick }) => {
   const { user } = useAuthStore();
 
   return (
-    <header className="h-20 px-8 flex items-center justify-between bg-white border-b border-slate-50 sticky top-0 z-30">
+    <header className="h-20 px-8 flex items-center justify-between bg-white border-b border-[#e2e8e2] sticky top-0 z-30 font-['Outfit']">
 
-      {/* Welcome Message */}
+      {/* User Section */}
       <div className="flex items-center gap-4">
-        <button onClick={onMenuClick} className="md:hidden p-2 -ml-2 text-slate-500">
+        <button onClick={onMenuClick} className="md:hidden p-2 -ml-2 text-slate-400">
           <Menu size={20} />
         </button>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-slate-100 shadow-sm">
+          <div className="w-10 h-10 rounded-xl overflow-hidden border-2 border-slate-100 shadow-sm">
             <img src={user?.avatar || "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop"} alt="User" className="w-full h-full object-cover" />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-slate-900 leading-none flex items-center gap-1.5">
-              Welcome, {user?.name?.split(' ')[0] || 'Divine'} <span className="text-base">👋</span>
+            <h1 className="text-sm font-black text-[#0a1a0f] leading-none flex items-center gap-1.5 uppercase tracking-tight">
+              {user?.name?.split(' ')[0] || 'User'} <span className="text-base normal-case">👋</span>
             </h1>
-            <p className="text-[11px] font-medium text-slate-400 mt-0.5">Here is your clinical overview for today</p>
+            <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">Medical Ops Active</p>
           </div>
         </div>
       </div>
 
-      {/* Global Actions */}
+      {/* Action Section */}
       <div className="flex items-center gap-3">
-        {/* Compact Search */}
-        <div className="sm:flex items-center bg-slate-50 rounded-full h-9 px-3 border border-slate-100 hover:border-slate-200 transition-all cursor-pointer hidden">
-          <Search size={16} className="text-slate-400" />
+        {/* Search */}
+        <div className="hidden sm:flex items-center bg-slate-50 rounded-xl h-10 px-4 border border-[#e2e8e2] hover:border-emerald-200 transition-all cursor-pointer group">
+          <Search size={16} className="text-slate-400 group-hover:text-emerald-600 transition-colors" />
         </div>
 
-        <button className="p-2 rounded-full hover:bg-slate-50 text-slate-500 relative">
-          <Bell size={20} />
-          <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-emerald-500 rounded-full border-2 border-white" />
+        <button className="p-2.5 rounded-xl bg-white border border-[#e2e8e2] text-slate-400 hover:text-emerald-500 hover:border-emerald-200 transition-all relative">
+          <Bell size={18} />
+          <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-emerald-500 rounded-full border-2 border-white" />
         </button>
 
-        <button className="p-2 rounded-full hover:bg-slate-50 text-slate-500">
-          <Settings size={20} />
+        <button className="p-2.5 rounded-xl bg-white border border-[#e2e8e2] text-slate-400 hover:text-emerald-500 hover:border-emerald-200 transition-all">
+          <Settings size={18} />
         </button>
 
-        <div className="md:hidden h-8 w-px bg-slate-100 ml-2" />
+        <div className="hidden sm:block h-8 w-px bg-slate-100 mx-2" />
 
-        <button className="hidden sm:flex items-center gap-2 bg-[#0a1a0f] text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-slate-900/10 hover:scale-105 transition-all">
-          <Plus size={14} />
-          <span>Quick Entry</span>
+        <button className="hidden sm:flex items-center gap-2 bg-[#0a1a0f] text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.1em] shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_20px_rgba(16,185,129,0.2)] hover:scale-[1.02] active:scale-95 transition-all">
+          <Plus size={14} strokeWidth={3} />
+          <span>Quick Note</span>
         </button>
       </div>
     </header>
   );
 };
-
-const Plus = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-  </svg>
-);
 
 export default TopNavbar;

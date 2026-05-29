@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Settings as SettingsIcon, Bell, Shield, CreditCard, Layers, 
-  Save, Smartphone, Mail, Globe, Lock, Key, Check 
+import {
+  Settings as SettingsIcon, Bell, Shield, CreditCard, Layers,
+  Save, Smartphone, Mail, Globe, Lock, Key, Check, Clock,
+  Percent, Wallet, Zap, MessageCircle, Database
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
@@ -15,7 +16,7 @@ const tabs = [
 ];
 
 const Toggle = ({ enabled, onChange }) => (
-  <button 
+  <button
     onClick={onChange}
     className={cn(
       "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none",
@@ -32,7 +33,7 @@ const Toggle = ({ enabled, onChange }) => (
 const AdminSettings = () => {
   const [activeTab, setActiveTab] = useState('general');
   const [isSaving, setIsSaving] = useState(false);
-  
+
   // Mock State for Toggles
   const [toggles, setToggles] = useState({
     emailNotif: true,
@@ -53,7 +54,7 @@ const AdminSettings = () => {
   };
 
   const renderContent = () => {
-    switch(activeTab) {
+    switch (activeTab) {
       case 'general':
         return (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
@@ -154,12 +155,84 @@ const AdminSettings = () => {
           </motion.div>
         );
       case 'billing':
+        return (
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+            <h2 className="text-lg font-bold text-[#0a1a0f] border-b border-slate-100 pb-4">Billing & Financials</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Default Currency</label>
+                <select className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-semibold text-[#0a1a0f] outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                  <option>USD ($)</option>
+                  <option>EUR (€)</option>
+                  <option>INR (₹)</option>
+                  <option>GBP (£)</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Tax Rate (%)</label>
+                <input type="number" defaultValue="15" className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-semibold text-[#0a1a0f] outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+              </div>
+              <div className="md:col-span-2 space-y-4">
+                <div className="flex items-center justify-between p-4 bg-slate-50/50 border border-slate-100 rounded-xl">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 bg-rose-100 text-rose-600 rounded-lg"><Percent size={20} /></div>
+                    <div>
+                      <h4 className="font-bold text-[#0a1a0f] text-sm">Automatic Tax Calculation</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Apply regional taxes automatically to all invoices.</p>
+                    </div>
+                  </div>
+                  <Toggle enabled={toggles.autoInvoice} onChange={() => handleToggle('autoInvoice')} />
+                </div>
+                <div className="flex items-center justify-between p-4 bg-slate-50/50 border border-slate-100 rounded-xl">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 bg-emerald-100 text-emerald-600 rounded-lg"><Wallet size={20} /></div>
+                    <div>
+                      <h4 className="font-bold text-[#0a1a0f] text-sm">Online Payments</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Allow patients to pay via Credit Card/PayPal.</p>
+                    </div>
+                  </div>
+                  <Toggle enabled={true} onChange={() => { }} />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        );
       case 'integrations':
         return (
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="py-12 flex flex-col items-center justify-center text-slate-400 ">
-            <Layers size={48} className="mb-4 opacity-20" />
-            <h3 className="text-lg font-bold text-slate-600 mb-1">Coming Soon</h3>
-            <p className="text-sm">Advanced configuration for this module is under development.</p>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+            <h2 className="text-lg font-bold text-[#0a1a0f] border-b border-slate-100 pb-4">Connected Modules</h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl hover:border-emerald-200 transition-all group">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:scale-110 transition-transform"><MessageCircle size={22} /></div>
+                  <div>
+                    <h4 className="font-bold text-[#0a1a0f] text-sm">WhatsApp Business API</h4>
+                    <p className="text-xs text-slate-500 mt-0.5">Automated appointment scheduling via WhatsApp.</p>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">Connected</span>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl hover:border-blue-200 transition-all group">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition-transform"><Database size={22} /></div>
+                  <div>
+                    <h4 className="font-bold text-[#0a1a0f] text-sm">Local EMR Backup</h4>
+                    <p className="text-xs text-slate-500 mt-0.5">Synchronize with local hospital storage servers.</p>
+                  </div>
+                </div>
+                <button className="text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-all">Configure</button>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl hover:border-amber-200 transition-all group">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-amber-50 text-amber-600 rounded-xl group-hover:scale-110 transition-transform"><Zap size={22} /></div>
+                  <div>
+                    <h4 className="font-bold text-[#0a1a0f] text-sm">Zapier Automation</h4>
+                    <p className="text-xs text-slate-500 mt-0.5">Connect ClinicDesk to 5000+ external applications.</p>
+                  </div>
+                </div>
+                <button className="text-[10px] font-bold text-white bg-amber-600 px-3 py-1.5 rounded-lg hover:bg-amber-700 transition-all">Enable</button>
+              </div>
+            </div>
           </motion.div>
         );
       default: return null;
@@ -167,8 +240,8 @@ const AdminSettings = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8">
-      
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 font-['Outfit']">
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -182,7 +255,7 @@ const AdminSettings = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
-        
+
         {/* Sidebar Nav */}
         <div className="w-full lg:w-64 shrink-0 finai-card p-3 h-fit">
           <nav className="space-y-1">
@@ -192,8 +265,8 @@ const AdminSettings = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
                   "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200",
-                  activeTab === tab.id 
-                    ? "bg-blue-50 text-blue-700 " 
+                  activeTab === tab.id
+                    ? "bg-blue-50 text-blue-700 "
                     : "text-slate-600 hover:bg-slate-50 hover:text-[#0a1a0f] :bg-slate-800/70 :text-white"
                 )}
               >
