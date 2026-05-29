@@ -22,7 +22,7 @@ const SidebarSection = ({ title, children, isCollapsed }) => (
   </div>
 );
 
-const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
+const Sidebar = ({ isMobileOpen, setIsMobileOpen, onAIClick }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { getRole, user, logout } = useAuthStore();
   const currentRole = getRole();
@@ -197,15 +197,18 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
           ))}
         </div>
 
-        {/* AI Assistant Widget (ClinicDesk specialized) */}
-        {!isCollapsed && (
-          <div className="p-4 mx-4 mb-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+        {/* AI Assistant Widget — Admin only */}
+        {!isCollapsed && currentRole === ROLES.ADMIN && (
+          <div
+            onClick={onAIClick}
+            className="p-4 mx-4 mb-4 bg-emerald-50 rounded-2xl border border-emerald-100 cursor-pointer transition-all hover:bg-emerald-100/50 group"
+          >
             <div className="flex items-center gap-2 mb-2">
-              <Bot size={16} className="text-emerald-600" />
-              <span className="text-xs font-bold text-emerald-900">AI Assistant</span>
+              <Bot size={16} className="text-emerald-600 transition-transform group-hover:scale-110" />
+              <span className="text-xs font-bold text-emerald-900 uppercase tracking-tighter">AI Assistant</span>
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             </div>
-            <div className="bg-white rounded-lg p-2 text-[10px] text-emerald-800 border border-emerald-100/50">
+            <div className="bg-white rounded-lg p-2 text-[10px] text-emerald-800 border border-emerald-100/50 group-hover:border-emerald-200">
               Ask me anything about clinic stats...
             </div>
           </div>

@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import TopNavbar from '../components/layout/TopNavbar';
+import AIChatOverlay from '../components/layout/AIChatOverlay';
 
 const MainLayout = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isAIOpen, setIsAIOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-[var(--cd-bg)] font-['Outfit']">
       {/* Sidebar - fixed on the background */}
-      <Sidebar isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
+      <Sidebar
+        isMobileOpen={isMobileOpen}
+        setIsMobileOpen={setIsMobileOpen}
+        onAIClick={() => setIsAIOpen(true)}
+      />
 
       {/* Content wrapper */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
@@ -21,6 +27,8 @@ const MainLayout = () => {
           </div>
         </main>
       </div>
+
+      <AIChatOverlay isOpen={isAIOpen} onClose={() => setIsAIOpen(false)} />
     </div>
   );
 };
