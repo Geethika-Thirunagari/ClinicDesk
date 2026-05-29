@@ -36,7 +36,7 @@ const AdminReports = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -70,7 +70,7 @@ const AdminReports = () => {
       </div>
 
       {/* Recent Reports Table */}
-      <div className="finai-card p-6">
+      <div className="cd-card p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-bold text-[#0a1a0f] ">Recent Reports</h2>
           <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 :bg-slate-700 rounded-lg transition-colors">

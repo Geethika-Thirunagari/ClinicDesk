@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const upcomingAppointments = [
   { id: 1, doctor: 'Dr. Sarah Smith', specialty: 'Cardiology', date: 'May 21, 2026', time: '10:00 AM', mode: 'In-Person' },
@@ -25,6 +26,7 @@ const vitals = [
 
 const PatientDashboard = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 font-['Outfit']">
@@ -32,7 +34,7 @@ const PatientDashboard = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-[#0a1a0f] tracking-tight text-shadow-sm">Health Hub</h1>
+          <h1 className="text-2xl font-black text-[#0a1a0f] tracking-tight text-shadow-sm">Welcome back, {user?.name?.split(' ')[0] || 'Patient'} 👋</h1>
           <p className="text-sm font-medium text-slate-400 mt-0.5">Your personal clinical overview and wellness metrics.</p>
         </div>
         <motion.button
@@ -54,7 +56,7 @@ const PatientDashboard = () => {
           <motion.button key={action.label}
             initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 * i }}
             onClick={() => navigate(action.path)}
-            className="finai-card p-6 flex flex-col items-start gap-4 hover:shadow-md transition-all group">
+            className="cd-card p-6 flex flex-col items-start gap-4 hover:shadow-md transition-all group">
             <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-900/5 transition-transform group-hover:scale-110", action.color)}>
               <action.icon size={22} className="text-white" />
             </div>
@@ -66,7 +68,7 @@ const PatientDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Appointments Section */}
-        <div className="lg:col-span-2 finai-card p-6 flex flex-col">
+        <div className="lg:col-span-2 cd-card p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-[10px] font-bold text-[#0a1a0f] uppercase tracking-[0.2em] flex items-center gap-2">
               <Calendar size={14} className="text-blue-600" />
@@ -98,7 +100,7 @@ const PatientDashboard = () => {
         </div>
 
         {/* Vital KPIs */}
-        <div className="finai-card p-6">
+        <div className="cd-card p-6">
           <h2 className="text-[10px] font-bold text-[#0a1a0f] uppercase tracking-[0.2em] mb-8">Vital Metrics</h2>
           <div className="space-y-6">
             {vitals.map((v, i) => (
@@ -120,7 +122,7 @@ const PatientDashboard = () => {
       </div>
 
       {/* Script Section: Medications */}
-      <div className="finai-card p-6">
+      <div className="cd-card p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-[10px] font-bold text-[#0a1a0f] uppercase tracking-[0.2em] flex items-center gap-2">
             <Pill size={14} className="text-emerald-500" />

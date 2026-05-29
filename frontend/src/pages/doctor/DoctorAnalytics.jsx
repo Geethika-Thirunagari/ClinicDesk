@@ -97,7 +97,7 @@ export default function DoctorAnalytics() {
             { label: "Clinical Consult Duration", value: "18.4 mins", change: "Optimal scheduling efficiency", trendIcon: Calendar, trendColor: "text-indigo-500" }
           ].map((stat, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}
-              className="finai-card p-5 hover:shadow-md transition-all">
+              className="cd-card p-5 hover:shadow-md transition-all">
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
               <h3 className="text-3xl font-extrabold text-[#0a1a0f] mt-2 leading-none">{stat.value}</h3>
               <div className="flex items-center gap-1.5 mt-3 text-xs font-semibold text-slate-500 ">
@@ -112,7 +112,7 @@ export default function DoctorAnalytics() {
       {/* Row 2: Visit Trends Area Chart & Diagnoses Donut */}
       < div className="grid grid-cols-1 lg:grid-cols-3 gap-6" >
         {/* Visit trends chart - takes up 2 cols */}
-        < div className="lg:col-span-2 finai-card p-6" >
+        < div className="lg:col-span-2 cd-card p-6" >
           <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-6">
             Consultation Activity Volume
           </h2>
@@ -142,7 +142,7 @@ export default function DoctorAnalytics() {
         </div >
 
         {/* Diagnosis Distribution Donut */}
-        < div className="finai-card p-6" >
+        < div className="cd-card p-6" >
           <h2 className="text-lg font-bold text-[#0a1a0f] mb-6">Diagnosis Breakdown</h2>
           <div className="h-[220px] w-full flex items-center justify-center">
             <ResponsiveContainer width="99%" height="99%">
@@ -182,7 +182,7 @@ export default function DoctorAnalytics() {
       {/* Row 3: Outcomes Analysis Bar Chart & Demographics Overview */}
       < div className="grid grid-cols-1 lg:grid-cols-2 gap-6" >
         {/* Recovery Outcomes Chart */}
-        < div className="finai-card p-6" >
+        < div className="cd-card p-6" >
           <h2 className="text-lg font-bold text-[#0a1a0f] mb-6">Patient Recovery Outcomes</h2>
           <div className="h-[260px] w-full font-medium text-xs">
             <ResponsiveContainer width="99%" height="99%">
@@ -201,7 +201,7 @@ export default function DoctorAnalytics() {
         </div >
 
         {/* Demographics Matrix */}
-        < div className="finai-card p-6" >
+        < div className="cd-card p-6" >
           <h2 className="text-lg font-bold text-[#0a1a0f] mb-6 font-sans">Patient Cohort Demographics</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">

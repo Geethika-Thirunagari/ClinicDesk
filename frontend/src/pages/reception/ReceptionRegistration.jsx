@@ -162,7 +162,7 @@ const ReceptionRegistration = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-4 lg:p-8 min-h-screen"
+      className="space-y-6 font-['Outfit']"
     >
       {/* Header */}
       <div>
@@ -176,7 +176,7 @@ const ReceptionRegistration = () => {
           <div className="lg:col-span-2 space-y-6">
             
             {/* Section 1: Personal Details */}
-            <div className="finai-card p-6 space-y-4">
+            <div className="cd-card p-6 space-y-4">
               <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <User size={18} className="text-blue-500" /> Personal Details
               </h2>
@@ -257,7 +257,7 @@ const ReceptionRegistration = () => {
             </div>
 
             {/* Section 2: Contact Info */}
-            <div className="finai-card p-6 space-y-4">
+            <div className="cd-card p-6 space-y-4">
               <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <Phone size={18} className="text-blue-500" /> Contact Information
               </h2>
@@ -313,7 +313,7 @@ const ReceptionRegistration = () => {
             </div>
 
             {/* Section 3: Emergency Contact */}
-            <div className="finai-card p-6 space-y-4">
+            <div className="cd-card p-6 space-y-4">
               <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <Heart size={18} className="text-blue-500" /> Emergency Contact
               </h2>
@@ -379,7 +379,7 @@ const ReceptionRegistration = () => {
           <div className="space-y-6">
             
             {/* Medical Background */}
-            <div className="finai-card p-6 space-y-4">
+            <div className="cd-card p-6 space-y-4">
               <h2 className="text-md font-bold text-[#0a1a0f] flex items-center gap-2 border-b border-slate-100 pb-3">
                 <ShieldAlert size={18} className="text-blue-500" /> Medical Background
               </h2>

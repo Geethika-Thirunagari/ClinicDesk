@@ -24,7 +24,7 @@ const DoctorPrescriptions = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -41,7 +41,7 @@ const DoctorPrescriptions = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* E-Prescription Pad (Takes up 2 columns) */}
-        <div className="lg:col-span-2 finai-card p-6 relative">
+        <div className="lg:col-span-2 cd-card p-6 relative">
           {/* Pad Header */}
           <div className="border-b border-slate-200 pb-6 mb-6 flex justify-between items-start">
             <div>
@@ -127,7 +127,7 @@ const DoctorPrescriptions = () => {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          <div className="finai-card p-6">
+          <div className="cd-card p-6">
             <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
               <Pill size={16} className="text-blue-500" />
               Drug Templates
@@ -144,7 +144,7 @@ const DoctorPrescriptions = () => {
             </div>
           </div>
 
-          <div className="finai-card p-6">
+          <div className="cd-card p-6">
             <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
               <History size={16} className="text-indigo-500" />
               Recent Issues

@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     navigate("/login");
   };
   return (
-    <div className="w-full min-h-screen p-4 lg:p-8 overflow-y-auto font-['Outfit']">
+    <div className="w-full space-y-8 font-['Outfit']">
       {" "}
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         {" "}

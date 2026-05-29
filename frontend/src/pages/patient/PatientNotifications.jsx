@@ -18,7 +18,7 @@ const PatientNotifications = () => {
   const unread = notifs.filter(n => !n.read).length;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 font-['Outfit']">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight flex items-center gap-3">
@@ -33,7 +33,7 @@ const PatientNotifications = () => {
           </button>
         )}
       </div>
-      <div className="finai-card divide-y divide-slate-100 overflow-hidden">
+      <div className="cd-card divide-y divide-slate-100 overflow-hidden">
         <AnimatePresence>
           {notifs.map(n => {
             const Icon = iconMap[n.type];

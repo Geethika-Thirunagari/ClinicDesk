@@ -35,7 +35,7 @@ const DoctorAppointments = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -46,7 +46,7 @@ const DoctorAppointments = () => {
       </div>
 
       {/* Toolbar */}
-      <div className="finai-card p-4 flex flex-col md:flex-row justify-between gap-4">
+      <div className="cd-card p-4 flex flex-col md:flex-row justify-between gap-4">
         <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -73,7 +73,7 @@ const DoctorAppointments = () => {
       <AnimatePresence mode="wait">
         {view === 'list' ? (
           <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
-            className="finai-card overflow-hidden">
+            className="cd-card overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
@@ -147,7 +147,7 @@ const DoctorAppointments = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((apt, i) => (
               <motion.div key={apt.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                className="finai-card p-5 hover:shadow-md transition-all flex flex-col">
+                className="cd-card p-5 hover:shadow-md transition-all flex flex-col">
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-lg font-bold text-[#0a1a0f] ">{apt.patient}</h3>

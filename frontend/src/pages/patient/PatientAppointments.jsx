@@ -43,7 +43,7 @@ const PatientAppointments = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-4 lg:p-8 min-h-screen"
+      className="space-y-6 font-['Outfit']"
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -103,7 +103,7 @@ const PatientAppointments = () => {
                 initial={{ opacity: 0, y: 12 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: i * 0.05 }}
-                className="finai-card p-5 hover:shadow-md transition-all flex flex-col md:flex-row justify-between md:items-center gap-4"
+                className="cd-card p-5 hover:shadow-md transition-all flex flex-col md:flex-row justify-between md:items-center gap-4"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 ">

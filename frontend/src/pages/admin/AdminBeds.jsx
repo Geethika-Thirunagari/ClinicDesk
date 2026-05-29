@@ -21,7 +21,7 @@ const beds = [
 
 const StatCard = ({ title, value, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="finai-card p-5 relative overflow-hidden group hover:shadow-md transition-all">
+    className="cd-card p-5 relative overflow-hidden group hover:shadow-md transition-all">
     <div className="flex items-center justify-between">
       <div>
         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{title}</p>
@@ -49,7 +49,7 @@ const AdminBeds = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -78,7 +78,7 @@ const AdminBeds = () => {
             const occPercent = Math.round((ward.occupied / ward.total) * 100);
             return (
               <motion.div key={ward.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
-                className="finai-card p-5">
+                className="cd-card p-5">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="font-bold text-[#0a1a0f] ">{ward.name}</h3>
                   <span className={cn("text-xs font-bold px-2 py-1 rounded-lg", occPercent > 85 ? "bg-rose-100 text-rose-700 " : "bg-emerald-100 text-emerald-700 ")}>
@@ -98,7 +98,7 @@ const AdminBeds = () => {
         </div>
 
         {/* Beds Table */}
-        <div className="lg:col-span-2 finai-card p-6">
+        <div className="lg:col-span-2 cd-card p-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
             <h2 className="text-lg font-bold text-[#0a1a0f] ">Bed Status Details</h2>
             <div className="relative w-full md:w-64">

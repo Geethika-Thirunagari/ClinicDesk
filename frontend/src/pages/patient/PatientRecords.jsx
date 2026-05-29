@@ -43,7 +43,7 @@ const PatientRecords = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-4 lg:p-8 min-h-screen"
+      className="space-y-6 font-['Outfit']"
     >
       {/* Header */}
       <div>
@@ -52,7 +52,7 @@ const PatientRecords = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="finai-card p-4 flex flex-col md:flex-row justify-between gap-4">
+      <div className="cd-card p-4 flex flex-col md:flex-row justify-between gap-4">
         {/* Search */}
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />

@@ -257,7 +257,7 @@ const AdminSettings = () => {
       <div className="flex flex-col lg:flex-row gap-6">
 
         {/* Sidebar Nav */}
-        <div className="w-full lg:w-64 shrink-0 finai-card p-3 h-fit">
+        <div className="w-full lg:w-64 shrink-0 cd-card p-3 h-fit">
           <nav className="space-y-1">
             {tabs.map((tab) => (
               <button
@@ -278,7 +278,7 @@ const AdminSettings = () => {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 finai-card p-6 min-h-[500px] overflow-hidden">
+        <div className="flex-1 cd-card p-6 min-h-[500px] overflow-hidden">
           <AnimatePresence mode="wait">
             <React.Fragment key={activeTab}>
               {renderContent()}

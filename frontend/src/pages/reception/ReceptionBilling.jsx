@@ -102,7 +102,7 @@ const ReceptionBilling = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6 p-4 lg:p-8 min-h-screen"
+      className="space-y-6 font-['Outfit']"
     >
       {/* Header */}
       <div>
@@ -114,7 +114,7 @@ const ReceptionBilling = () => {
         {/* Left / Center Panel - Patient and Billing Items */}
         <div className="lg:col-span-2 space-y-6">
           {/* Patient Selector */}
-          <div className="finai-card p-6">
+          <div className="cd-card p-6">
             <h2 className="text-md font-bold text-[#0a1a0f] mb-4 flex items-center gap-2">
               <User size={18} className="text-blue-500" /> Select Patient
             </h2>
@@ -197,7 +197,7 @@ const ReceptionBilling = () => {
           </div>
 
           {/* Preset Services Selector */}
-          <div className="finai-card p-6">
+          <div className="cd-card p-6">
             <h2 className="text-md font-bold text-[#0a1a0f] mb-4">Add Items / Services</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {presetItems.map(item => (
@@ -220,7 +220,7 @@ const ReceptionBilling = () => {
           </div>
 
           {/* Active Invoice Items list */}
-          <div className="finai-card p-6 overflow-hidden">
+          <div className="cd-card p-6 overflow-hidden">
             <h2 className="text-md font-bold text-[#0a1a0f] mb-4 flex items-center gap-2">
               <Receipt size={18} className="text-blue-500" /> Invoice Line Items
             </h2>

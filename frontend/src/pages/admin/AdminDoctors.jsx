@@ -108,7 +108,7 @@ const StatCard = ({ title, value, icon: Icon, delay }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4, delay }}
-    className="finai-card p-5 relative overflow-hidden group hover:border-emerald-200 transition-all"
+    className="cd-card p-5 relative overflow-hidden group hover:border-emerald-200 transition-all"
   >
     {" "}
     <div className="flex items-center justify-between">
@@ -226,7 +226,7 @@ const AdminDoctors = () => {
         />{" "}
       </div>{" "}
       {/* Filters Bar */}{" "}
-      <div className="finai-card p-4">
+      <div className="cd-card p-4">
         {" "}
         <div className="flex flex-col md:flex-row gap-4">
           {" "}
@@ -273,8 +273,8 @@ const AdminDoctors = () => {
           </div>{" "}
         </div>{" "}
       </div>{" "}
-      {/* Doctor Table - The Real FINAI Look */}{" "}
-      <div className="finai-card overflow-hidden">
+      {/* Doctor Table - The Real ClinicDesk Look */}{" "}
+      <div className="cd-card overflow-hidden">
         {" "}
         <div className="overflow-x-auto">
           {" "}

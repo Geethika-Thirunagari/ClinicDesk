@@ -5,6 +5,7 @@ import {
   Video, FileText, CheckCircle, Quote, Sparkles, BarChart3, ClipboardList
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { useAuthStore } from '../../store/useAuthStore';
 import AIDiagnosisWidget from '../../components/doctor/AIDiagnosisWidget';
 
 const patientVoices = [
@@ -23,7 +24,7 @@ const schedule = [
 
 const StatCard = ({ title, value, subtext, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="finai-card p-6 group hover:shadow-md transition-all">
+    className="cd-card p-6 group hover:shadow-md transition-all">
     <div className="flex items-center justify-between mb-4">
       <div className={cn("p-3 rounded-xl", color)}><Icon size={20} className="text-white" /></div>
       <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100 uppercase tracking-wider">{subtext}</span>
@@ -37,6 +38,7 @@ const StatCard = ({ title, value, subtext, icon: Icon, color, delay }) => (
 
 const DoctorDashboard = () => {
   const [activeVoice, setActiveVoice] = useState(0);
+  const { user } = useAuthStore();
 
   // Auto-rotate for voices widget
   useEffect(() => {
@@ -53,7 +55,7 @@ const DoctorDashboard = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-black text-[#0a1a0f] tracking-tight text-shadow-sm">Doctor Workspace</h1>
-          <p className="text-sm font-medium text-slate-400 mt-0.5">Welcome back, Dr. Smith. Here is your overview for today.</p>
+          <p className="text-sm font-medium text-slate-400 mt-0.5">Welcome back, {user?.name || 'Doctor'}. Here is your overview for today.</p>
         </div>
         <div className="flex items-center gap-3">
           <motion.button whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}
@@ -75,7 +77,7 @@ const DoctorDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Schedule */}
-        <div className="lg:col-span-2 finai-card p-6 flex flex-col">
+        <div className="lg:col-span-2 cd-card p-6 flex flex-col">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-widest flex items-center gap-2">
               <Calendar size={18} className="text-blue-600" />
@@ -168,7 +170,7 @@ const DoctorDashboard = () => {
           <AIDiagnosisWidget />
 
           {/* Action Items */}
-          <div className="finai-card p-6">
+          <div className="cd-card p-6">
             <h2 className="text-[10px] font-bold text-[#0a1a0f] uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
               <CheckCircle size={14} className="text-emerald-500" />
               Tasks

@@ -12,7 +12,7 @@ const payments = [
 
 const PatientPayments = () => {
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 font-['Outfit']">
       <div>
         <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Payments & Billing</h1>
         <p className="text-sm text-slate-500 mt-1">Track invoices and outstanding balances.</p>
@@ -22,14 +22,14 @@ const PatientPayments = () => {
           { label: 'Outstanding', val: '$120.00', icon: Clock, c: 'bg-amber-500' },
           { label: 'Invoices', val: '4', icon: CreditCard, c: 'bg-blue-500' }].map((s, i) => (
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}
-            className="finai-card p-5">
+            className="cd-card p-5">
             <div className={cn("p-3 rounded-xl w-fit mb-3", s.c)}><s.icon size={22} className="text-white" /></div>
             <h3 className="text-2xl font-extrabold text-[#0a1a0f] ">{s.val}</h3>
             <p className="text-sm font-semibold text-slate-500 mt-1">{s.label}</p>
           </motion.div>
         ))}
       </div>
-      <div className="finai-card overflow-hidden">
+      <div className="cd-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead><tr className="border-b border-slate-200 bg-slate-50/50 ">

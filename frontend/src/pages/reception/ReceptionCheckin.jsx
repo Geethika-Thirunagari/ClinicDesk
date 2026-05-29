@@ -72,7 +72,7 @@ export default function ReceptionCheckin() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -87,7 +87,7 @@ export default function ReceptionCheckin() {
       </div>
 
       {/* Progress tracking indicator */}
-      <div className="finai-card p-4 flex items-center justify-between gap-4">
+      <div className="cd-card p-4 flex items-center justify-between gap-4">
         {[
           { num: 1, label: "Search Patient" },
           { num: 2, label: "Verify & Routing" },
@@ -108,7 +108,7 @@ export default function ReceptionCheckin() {
       </div>
 
       {/* Core Wizard panel */}
-      <div className="finai-card p-6 min-h-[420px] flex flex-col justify-between relative overflow-hidden">
+      <div className="cd-card p-6 min-h-[420px] flex flex-col justify-between relative overflow-hidden">
         
         {/* Abstract floating blur background */}
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />

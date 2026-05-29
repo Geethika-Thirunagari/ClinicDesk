@@ -73,7 +73,7 @@ export default function ReceptionFeedback() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -94,7 +94,7 @@ export default function ReceptionFeedback() {
           { label: "Net Promoter Score (NPS)", value: "+64", sub: "Classified as Excellent Score", color: "text-blue-500", icon: Smile },
           { label: "Pending Survey Invites", value: "2 Clients", sub: "From recent check-outs", color: "text-indigo-500", icon: ClipboardList }
         ].map((stat, idx) => (
-          <div key={idx} className="finai-card p-5 hover:shadow-md transition-all">
+          <div key={idx} className="cd-card p-5 hover:shadow-md transition-all">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
@@ -110,7 +110,7 @@ export default function ReceptionFeedback() {
       {/* Row 2: Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Rating Breakdown Bar Chart */}
-        <div className="finai-card p-6">
+        <div className="cd-card p-6">
           <h2 className="text-lg font-bold text-[#0a1a0f] mb-6">Clinic Rating Distribution</h2>
           <div className="h-[220px] w-full font-medium text-xs">
             <ResponsiveContainer width="99%" height="99%">
@@ -130,7 +130,7 @@ export default function ReceptionFeedback() {
         </div>
 
         {/* Sentiment breakdown Donut */}
-        <div className="finai-card p-6 flex flex-col justify-between">
+        <div className="cd-card p-6 flex flex-col justify-between">
           <h2 className="text-lg font-bold text-[#0a1a0f] mb-4">NPS Sentiment Classification</h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -165,7 +165,7 @@ export default function ReceptionFeedback() {
       {/* Row 3: Dispatch Surveys & Reviews timeline */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* dispatch wizard panel */}
-        <div className="lg:col-span-1 finai-card p-6">
+        <div className="lg:col-span-1 cd-card p-6">
           <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
             <Send size={16} className="text-blue-500" />
             Dispatch Clinic Survey
@@ -215,7 +215,7 @@ export default function ReceptionFeedback() {
         </div>
 
         {/* Survey List & Patient Voices feed */}
-        <div className="lg:col-span-2 finai-card p-6">
+        <div className="lg:col-span-2 cd-card p-6">
           <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-5 flex items-center gap-2">
             <ClipboardList size={16} className="text-indigo-500" />
             Live Client Feedback Logs

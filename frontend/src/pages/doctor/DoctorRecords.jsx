@@ -31,7 +31,7 @@ const DoctorRecords = () => {
   );
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -40,7 +40,7 @@ const DoctorRecords = () => {
         </div>
       </div>
 
-      <div className="finai-card p-6">
+      <div className="cd-card p-6">
         
         <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
           <div className="relative w-full md:w-96">

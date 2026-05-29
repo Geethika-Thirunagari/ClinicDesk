@@ -46,7 +46,7 @@ export default function AdminAudit() {
   });
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -77,7 +77,7 @@ export default function AdminAudit() {
           { label: "Access Token Cryptography", value: "AES-256", desc: "Digital signature verification active", status: "Secured", color: "text-blue-500" },
           { label: "Threat Mitigation Alarms", value: "1 Warning", desc: "Failed auth challenge recorded", status: "Query Active", color: "text-amber-500" }
         ].map((score, idx) => (
-          <div key={idx} className="finai-card p-5 hover:shadow-md transition-all flex flex-col justify-between">
+          <div key={idx} className="cd-card p-5 hover:shadow-md transition-all flex flex-col justify-between">
             <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{score.label}</p>
               <h3 className="text-3xl font-extrabold text-[#0a1a0f] mt-2 leading-none">{score.value}</h3>
@@ -95,7 +95,7 @@ export default function AdminAudit() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="finai-card p-4 flex flex-col md:flex-row justify-between gap-4">
+      <div className="cd-card p-4 flex flex-col md:flex-row justify-between gap-4">
         {/* Search */}
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
@@ -130,7 +130,7 @@ export default function AdminAudit() {
       </div>
 
       {/* Audit timeline table */}
-      <div className="finai-card p-6 overflow-hidden">
+      <div className="cd-card p-6 overflow-hidden">
         <h2 className="text-lg font-bold text-[#0a1a0f] mb-6">Real-Time Event Stream</h2>
         
         <div className="overflow-x-auto w-full">

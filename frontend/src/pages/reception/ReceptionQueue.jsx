@@ -38,7 +38,7 @@ const ReceptionQueue = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 font-['Outfit']">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Patient Queue</h1>
@@ -56,7 +56,7 @@ const ReceptionQueue = () => {
           { l: 'In Progress', v: queue.filter(q => q.status === 'In Progress').length, c: 'bg-indigo-500', i: Users },
           { l: 'Completed', v: queue.filter(q => q.status === 'Completed').length, c: 'bg-emerald-500', i: CheckCircle }].map((s, i) => (
           <motion.div key={s.l} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}
-            className="finai-card p-5">
+            className="cd-card p-5">
             <div className={cn("p-3 rounded-xl w-fit mb-3", s.c)}><s.i size={22} className="text-white" /></div>
             <h3 className="text-2xl font-extrabold text-[#0a1a0f] ">{s.v}</h3>
             <p className="text-sm font-semibold text-slate-500 mt-1">{s.l}</p>
@@ -64,7 +64,7 @@ const ReceptionQueue = () => {
         ))}
       </div>
 
-      <div className="finai-card overflow-hidden">
+      <div className="cd-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead><tr className="border-b border-slate-200 bg-slate-50/50 ">

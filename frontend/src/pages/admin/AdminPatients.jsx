@@ -14,7 +14,7 @@ const initialPatients = [
 
 const StatCard = ({ title, value, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="finai-card p-5 relative overflow-hidden group hover:shadow-md transition-all">
+    className="cd-card p-5 relative overflow-hidden group hover:shadow-md transition-all">
     <div className="flex items-center justify-between">
       <div>
         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{title}</p>
@@ -74,7 +74,7 @@ const AdminPatients = () => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Patient Management</h1>
@@ -93,7 +93,7 @@ const AdminPatients = () => {
         <StatCard title="Avg Wait Time" value="14m" icon={Clock} color="bg-amber-500" delay={0.25} />
       </div>
 
-      <div className="finai-card p-4">
+      <div className="cd-card p-4">
         <div className="flex flex-col md:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -107,7 +107,7 @@ const AdminPatients = () => {
         </div>
       </div>
 
-      <div className="finai-card overflow-hidden">
+      <div className="cd-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>

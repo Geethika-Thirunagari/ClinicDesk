@@ -32,13 +32,13 @@ const ReceptionBooking = () => {
   }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 font-['Outfit']">
       <div>
         <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Book Appointment</h1>
         <p className="text-sm text-slate-500 mt-1">Schedule a patient visit with an available doctor.</p>
       </div>
 
-      <div className="finai-card p-6 space-y-6">
+      <div className="cd-card p-6 space-y-6">
         {/* Patient Search */}
         <div>
           <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Patient Name or ID</label>

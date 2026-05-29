@@ -154,7 +154,7 @@ export default function DoctorAIAssistant() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
@@ -170,7 +170,7 @@ export default function DoctorAIAssistant() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Diagnostic Helper Chat - Columns 1 & 2 */}
-        <div className="lg:col-span-2 flex flex-col finai-card p-6 min-h-[600px] justify-between">
+        <div className="lg:col-span-2 flex flex-col cd-card p-6 min-h-[600px] justify-between">
           <div>
             <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
               <Sparkles size={18} className="text-blue-500" />
@@ -233,7 +233,7 @@ export default function DoctorAIAssistant() {
         {/* Diagnostic Workspace sidepanel - Column 3 */}
         <div className="space-y-6">
           {/* Differential Diagnosis Workspace */}
-          <div className="finai-card p-6">
+          <div className="cd-card p-6">
             <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
               <Sparkles size={16} className="text-amber-500" />
               Differential Workspace
@@ -277,7 +277,7 @@ export default function DoctorAIAssistant() {
       {/* Row 2: Drug interaction checker & Clinical Note Summarizer */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Drug Interaction Matrix */}
-        <div className="finai-card p-6">
+        <div className="cd-card p-6">
           <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4">
             <AlertCircle size={20} className="text-rose-500" />
             Drug-Drug Interaction Checker
@@ -341,7 +341,7 @@ export default function DoctorAIAssistant() {
         </div>
 
         {/* EMR AI Summarizer */}
-        <div className="finai-card p-6 flex flex-col justify-between">
+        <div className="cd-card p-6 flex flex-col justify-between">
           <div>
             <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4">
               <FileText size={20} className="text-blue-500" />

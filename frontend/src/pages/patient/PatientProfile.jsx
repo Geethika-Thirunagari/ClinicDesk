@@ -12,14 +12,14 @@ const PatientProfile = () => {
   ];
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 font-['Outfit']">
       <div>
         <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">My Profile</h1>
         <p className="text-sm text-slate-500 mt-1">Manage your personal and medical information.</p>
       </div>
 
       {/* Profile Card */}
-      <div className="finai-card p-6 flex flex-col sm:flex-row items-center gap-6">
+      <div className="cd-card p-6 flex flex-col sm:flex-row items-center gap-6">
         <div className="relative">
           <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-200 flex items-center justify-center text-3xl font-bold text-blue-600 ">AJ</div>
           <button className="absolute bottom-0 right-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg"><Camera size={14} /></button>
@@ -35,7 +35,7 @@ const PatientProfile = () => {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-2 finai-card p-2">
+      <div className="flex gap-2 cd-card p-2">
         {tabs.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={cn("flex-1 py-2.5 rounded-xl text-sm font-bold transition-all", tab === t.id ? "bg-blue-600 text-white shadow-md" : "text-slate-500 hover:bg-slate-50 :bg-slate-800")}>
@@ -45,7 +45,7 @@ const PatientProfile = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="finai-card p-6">
+      <div className="cd-card p-6">
         {tab === 'personal' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[{ l: 'Full Name', v: 'Alice Johnson' }, { l: 'Date of Birth', v: '1990-03-15' }, { l: 'Gender', v: 'Female' }, { l: 'Blood Group', v: 'O+' }, { l: 'Phone', v: '+1 555-1021' }, { l: 'Email', v: 'alice.j@email.com' }, { l: 'Address', v: '123 Main St, Brooklyn, NY 10001' }].map(f => (

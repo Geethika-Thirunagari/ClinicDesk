@@ -278,7 +278,7 @@ const AdminRevenue = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {" "}
         {/* Revenue Trend */}{" "}
-        <div className="lg:col-span-2 finai-card p-6 h-[380px] flex flex-col">
+        <div className="lg:col-span-2 cd-card p-6 h-[380px] flex flex-col">
           {" "}
           <div className="flex items-center justify-between mb-6">
             {" "}
@@ -367,7 +367,7 @@ const AdminRevenue = () => {
           </div>{" "}
         </div>{" "}
         {/* Dept Revenue */}{" "}
-        <div className="finai-card p-6 h-[380px] flex flex-col">
+        <div className="cd-card p-6 h-[380px] flex flex-col">
           {" "}
           <div className="flex items-center justify-between mb-8">
             {" "}
@@ -412,7 +412,7 @@ const AdminRevenue = () => {
         </div>{" "}
       </div>{" "}
       {/* Transactions Table */}{" "}
-      <div className="finai-card overflow-hidden">
+      <div className="cd-card overflow-hidden">
         {" "}
         <div className="p-6 border-b border-slate-100 flex items-center justify-between">
           {" "}

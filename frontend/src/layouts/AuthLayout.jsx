@@ -23,13 +23,13 @@ const AuthLayout = () => {
             <div className="w-12 h-12 rounded-xl bg-[#0a1a0f] flex items-center justify-center shadow-lg shadow-emerald-900/10">
               <Stethoscope className="text-emerald-400 w-6 h-6" />
             </div>
-            <span className="text-3xl font-black tracking-tight text-[#0a1a0f]">
-              FINAI<span className="text-emerald-500">CLINIC</span>
+            <span className="text-3xl font-black tracking-tight text-[#0a1a0f] uppercase">
+              Clinic<span className="text-emerald-500">Desk</span>
             </span>
           </div>
 
           {/* Form Container */}
-          <div className="finai-card p-8 sm:p-10 w-full">
+          <div className="cd-card p-8 sm:p-10 w-full">
             <Outlet />
           </div>
         </motion.div>

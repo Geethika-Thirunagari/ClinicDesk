@@ -139,7 +139,7 @@ export default function PatientSymptomChecker() {
   const assessment = step === 4 ? getUrgencyAssessment() : null;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
@@ -154,7 +154,7 @@ export default function PatientSymptomChecker() {
       </div>
 
       {/* Progress Wizard bar */}
-      <div className="finai-card p-4 flex items-center justify-between gap-4 overflow-x-auto">
+      <div className="cd-card p-4 flex items-center justify-between gap-4 overflow-x-auto">
         {[
           { num: 1, label: "Select Region" },
           { num: 2, label: "Identify Symptoms" },
@@ -176,7 +176,7 @@ export default function PatientSymptomChecker() {
       </div>
 
       {/* Wizard steps content */}
-      <div className="finai-card p-6 min-h-[400px] flex flex-col justify-between relative overflow-hidden">
+      <div className="cd-card p-6 min-h-[400px] flex flex-col justify-between relative overflow-hidden">
         
         {/* Decorative corner background */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />

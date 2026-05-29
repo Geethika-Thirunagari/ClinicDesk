@@ -28,7 +28,7 @@ export default function AIDiagnosisWidget() {
     };
 
     return (
-        <div className="finai-card p-6 relative overflow-hidden group">
+        <div className="cd-card p-6 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
                 <Sparkles size={80} />
             </div>

@@ -12,7 +12,7 @@ const reviewsData = [
 
 const StatCard = ({ title, value, subtitle, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay }}
-    className="finai-card p-5 relative overflow-hidden group hover:shadow-md transition-all">
+    className="cd-card p-5 relative overflow-hidden group hover:shadow-md transition-all">
     <div className="flex items-center justify-between mb-4">
       <div className={cn("p-3 rounded-xl", color)}><Icon size={22} className="text-white" /></div>
       <TrendingUp size={20} className="text-emerald-500 opacity-50" />
@@ -37,7 +37,7 @@ const DoctorReviews = () => {
   });
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -55,7 +55,7 @@ const DoctorReviews = () => {
       </div>
 
       {/* Reviews List */}
-      <div className="finai-card p-6">
+      <div className="cd-card p-6">
         
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-slate-200 pb-4 gap-4">
           <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2">

@@ -6,7 +6,7 @@ const TopNavbar = ({ onMenuClick }) => {
   const { user } = useAuthStore();
 
   return (
-    <header className="h-20 px-8 flex items-center justify-between bg-white border-b border-[#e2e8e2] sticky top-0 z-30 font-['Outfit']">
+    <header className="h-20 px-8 flex items-center justify-between bg-transparent border-b border-transparent sticky top-0 z-30 font-['Outfit']">
 
       {/* User Section */}
       <div className="flex items-center gap-4">

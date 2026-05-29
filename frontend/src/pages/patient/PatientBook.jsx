@@ -30,7 +30,7 @@ const PatientBook = () => {
   });
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       
       <div>
         <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Book Appointment</h1>
@@ -38,7 +38,7 @@ const PatientBook = () => {
       </div>
 
       {/* Progress Steps */}
-      <div className="flex items-center gap-2 finai-card p-4">
+      <div className="flex items-center gap-2 cd-card p-4">
         {['Select Doctor', 'Choose Slot', 'Confirm'].map((label, i) => (
           <React.Fragment key={label}>
             <div className={cn("flex items-center gap-2", step > i + 1 ? "text-emerald-600" : step === i + 1 ? "text-blue-600" : "text-slate-400")}>
@@ -56,7 +56,7 @@ const PatientBook = () => {
       {/* Step 1: Select Doctor */}
       {step === 1 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-          <div className="finai-card p-4 flex flex-col md:flex-row gap-4">
+          <div className="cd-card p-4 flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input type="text" placeholder="Search doctor by name..." value={search} onChange={(e) => setSearch(e.target.value)}
@@ -76,7 +76,7 @@ const PatientBook = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredDoctors.map((doc, i) => (
               <motion.div key={doc.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                className="finai-card p-5 hover:shadow-md transition-all">
+                className="cd-card p-5 hover:shadow-md transition-all">
                 <div className="flex gap-4 mb-4">
                   <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-100 flex items-center justify-center font-bold text-xl text-blue-600 shrink-0">
                     {doc.name.charAt(4)}
@@ -115,7 +115,7 @@ const PatientBook = () => {
       {/* Step 2: Choose Slot */}
       {step === 2 && selectedDoctor && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-          <div className="finai-card p-6">
+          <div className="cd-card p-6">
             <button onClick={() => setStep(1)} className="text-sm font-semibold text-blue-600 mb-4">← Back to Doctors</button>
             <h2 className="text-lg font-bold text-[#0a1a0f] mb-1">Booking with {selectedDoctor.name}</h2>
             <p className="text-sm text-slate-500 mb-6">{selectedDoctor.specialty} • {selectedDoctor.fee}/visit</p>

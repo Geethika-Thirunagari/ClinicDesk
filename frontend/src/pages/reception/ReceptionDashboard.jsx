@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Calendar, CreditCard, Clock, UserPlus, ChevronRight, CheckCircle, Wallet, ScanLine, MessageSquareHeart } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const queue = [
   { id: 1, token: 'T-902', patient: 'Alice Johnson', doctor: 'Dr. Smith', time: '09:00 AM', status: 'Active' },
@@ -12,7 +13,7 @@ const queue = [
 
 const StatCard = ({ title, value, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }}
-    className="finai-card p-6 flex flex-col justify-between h-[150px] hover:shadow-md transition-all">
+    className="cd-card p-6 flex flex-col justify-between h-[150px] hover:shadow-md transition-all">
     <div className="flex justify-between items-start">
       <div className={cn("p-2.5 rounded-xl shadow-sm", color)}><Icon size={18} className="text-white" /></div>
       <div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
@@ -26,6 +27,7 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
 
 const ReceptionDashboard = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 font-['Outfit']">
@@ -33,7 +35,7 @@ const ReceptionDashboard = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-black text-[#0a1a0f] tracking-tight">Reception Analytics</h1>
+          <h1 className="text-2xl font-black text-[#0a1a0f] tracking-tight">Front Office • {user?.name || 'Receptionist'}</h1>
           <p className="text-sm font-medium text-slate-400 mt-0.5">Manage the medical flow and front-desk operations.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -58,7 +60,7 @@ const ReceptionDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Live Queue Table */}
-        <div className="lg:col-span-2 finai-card p-6 flex flex-col">
+        <div className="lg:col-span-2 cd-card p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-[10px] font-bold text-[#0a1a0f] uppercase tracking-[0.2em] flex items-center gap-2">
               <Users size={14} className="text-blue-600" />
@@ -91,7 +93,7 @@ const ReceptionDashboard = () => {
         </div>
 
         {/* Action Panel */}
-        <div className="finai-card p-6">
+        <div className="cd-card p-6">
           <h2 className="text-[10px] font-bold text-[#0a1a0f] uppercase tracking-[0.2em] mb-6">Operations</h2>
           <div className="space-y-3">
             {[

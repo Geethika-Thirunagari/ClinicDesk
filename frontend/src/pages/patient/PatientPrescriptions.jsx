@@ -18,7 +18,7 @@ const prescriptions = [
 
 const PatientPrescriptions = () => {
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       <div>
         <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">My Prescriptions</h1>
         <p className="text-sm text-slate-500 mt-1">View all your prescribed medications and dosage instructions.</p>
@@ -27,7 +27,7 @@ const PatientPrescriptions = () => {
       <div className="space-y-6">
         {prescriptions.map((rx, i) => (
           <motion.div key={rx.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
-            className="finai-card overflow-hidden">
+            className="cd-card overflow-hidden">
             {/* Header */}
             <div className="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-100 bg-slate-50/50 ">
               <div className="flex items-center gap-3">

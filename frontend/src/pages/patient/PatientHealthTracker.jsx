@@ -57,7 +57,7 @@ export default function PatientHealthTracker() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
@@ -73,7 +73,7 @@ export default function PatientHealthTracker() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Daily Vitals logger form */}
-        <div className="finai-card p-6 h-fit">
+        <div className="cd-card p-6 h-fit">
           <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-4 pb-2 border-b border-slate-100 ">
             <Activity className="text-rose-500" size={18} />
             Log Vitals Checklist
@@ -163,7 +163,7 @@ export default function PatientHealthTracker() {
         </div>
 
         {/* Vitals Visual Charts - columns 2 & 3 */}
-        <div className="lg:col-span-2 finai-card p-6 flex flex-col justify-between">
+        <div className="lg:col-span-2 cd-card p-6 flex flex-col justify-between">
           <div>
             <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center justify-between mb-6">
               <span>My Physiological Vitals Trends</span>
@@ -245,7 +245,7 @@ export default function PatientHealthTracker() {
       </div>
 
       {/* Row 2: AI Health Recommendations & Insights */}
-      <div className="finai-card p-6">
+      <div className="cd-card p-6">
         <h2 className="text-lg font-bold text-[#0a1a0f] flex items-center gap-2 mb-5">
           <Sparkles size={20} className="text-amber-500" />
           Wellness Co-Pilot AI Recommendations

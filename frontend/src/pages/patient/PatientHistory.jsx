@@ -21,13 +21,13 @@ const PatientHistory = () => {
   );
 
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 p-4 lg:p-8 min-h-screen">
+    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
       <div>
         <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Medical History</h1>
         <p className="text-sm text-slate-500 mt-1">Review your past visits, diagnoses, and treatment records.</p>
       </div>
 
-      <div className="finai-card p-4">
+      <div className="cd-card p-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input type="text" placeholder="Search by doctor, diagnosis, or department..." value={search} onChange={(e) => setSearch(e.target.value)}
@@ -38,7 +38,7 @@ const PatientHistory = () => {
       <div className="space-y-4">
         {filtered.map((visit, i) => (
           <motion.div key={visit.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-            className="finai-card overflow-hidden hover:shadow-md transition-all">
+            className="cd-card overflow-hidden hover:shadow-md transition-all">
             <button onClick={() => setExpandedId(expandedId === visit.id ? null : visit.id)} className="w-full p-5 flex items-center justify-between text-left">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">

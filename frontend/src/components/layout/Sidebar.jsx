@@ -174,17 +174,17 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
         animate={{ width: isCollapsed ? 80 : 260 }}
         className={cn(
           "fixed inset-y-0 left-0 z-50 flex-shrink-0 md:static flex flex-col transition-all",
-          "bg-white border-r border-transparent",
+          "bg-transparent border-r border-transparent",
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >
         {/* Logo */}
         <div className="flex items-center gap-3 h-20 px-6 mb-4">
-          <div className="w-7 h-7 rounded bg-[#0a1a0f] flex items-center justify-center text-white font-bold text-xs">
-            F
+          <div className="w-8 h-8 rounded-xl bg-[#0a1a0f] flex items-center justify-center text-emerald-400 shadow-lg shadow-emerald-900/10">
+            <Stethoscope size={18} />
           </div>
           {!isCollapsed && (
-            <span className="font-bold text-lg tracking-tight text-[#0a1a0f]">FINAI CLINIC</span>
+            <span className="font-black text-lg tracking-tight text-[#0a1a0f] uppercase">ClinicDesk</span>
           )}
         </div>
 
@@ -197,7 +197,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen }) => {
           ))}
         </div>
 
-        {/* AI Assistant Widget (FINAI specialized) */}
+        {/* AI Assistant Widget (ClinicDesk specialized) */}
         {!isCollapsed && (
           <div className="p-4 mx-4 mb-4 bg-emerald-50 rounded-2xl border border-emerald-100">
             <div className="flex items-center gap-2 mb-2">
