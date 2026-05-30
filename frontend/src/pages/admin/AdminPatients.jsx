@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Search, Plus, MoreVertical, Calendar, Activity, Clock, Heart, X, Phone, Mail, Fingerprint, Edit2, Trash2 } from 'lucide-react';
 import { cn } from '../../utils/cn';
@@ -26,6 +27,7 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
 );
 
 const AdminPatients = () => {
+  const location = useLocation();
   const [patientsList, setPatientsList] = useState(() => {
     const saved = localStorage.getItem('clinicdesk_patients');
     return saved ? JSON.parse(saved) : initialPatients;
@@ -36,6 +38,13 @@ const AdminPatients = () => {
   }, [patientsList]);
 
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (location.state?.search) {
+      setSearch(location.state.search);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
   const [statusFilter, setStatusFilter] = useState('All');
   const [showModal, setShowModal] = useState(false);
 

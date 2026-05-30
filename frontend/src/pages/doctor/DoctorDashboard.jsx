@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 import AIDiagnosisWidget from '../../components/doctor/AIDiagnosisWidget';
 
 const patientVoices = [
@@ -39,6 +40,7 @@ const StatCard = ({ title, value, subtext, icon: Icon, color, delay }) => (
 const DoctorDashboard = () => {
   const [activeVoice, setActiveVoice] = useState(0);
   const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   // Auto-rotate for voices widget
   useEffect(() => {
@@ -58,8 +60,13 @@ const DoctorDashboard = () => {
           <p className="text-sm font-medium text-slate-400 mt-0.5">Welcome back, {user?.name || 'Doctor'}. Here is your overview for today.</p>
         </div>
         <div className="flex items-center gap-3">
-          <motion.button whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#0a1a0f] text-white rounded-xl font-bold text-xs shadow-lg shadow-emerald-900/10 transition-all uppercase tracking-widest">
+          <motion.button
+            type="button"
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => navigate('/doctor/teleconsult')}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#0a1a0f] text-white rounded-xl font-bold text-xs shadow-lg shadow-emerald-900/10 transition-all uppercase tracking-widest"
+          >
             <Video size={16} /> Start Teleconsult
           </motion.button>
         </div>
@@ -83,12 +90,34 @@ const DoctorDashboard = () => {
               <Calendar size={18} className="text-blue-600" />
               Today's Schedule
             </h2>
-            <button className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-[#0a1a0f] transition-colors">View All</button>
+            <button
+              type="button"
+              onClick={() => navigate('/doctor/appointments')}
+              className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-[#0a1a0f] transition-colors"
+            >
+              View All
+            </button>
           </div>
 
           <div className="space-y-3 flex-1">
             {schedule.map((apt, i) => (
-              <motion.div key={apt.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 * i }}
+              <motion.div
+                key={apt.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * i }}
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  if (apt.type === 'Teleconsult') navigate('/doctor/teleconsult');
+                  else navigate('/doctor/appointments');
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    if (apt.type === 'Teleconsult') navigate('/doctor/teleconsult');
+                    else navigate('/doctor/appointments');
+                  }
+                }}
                 className={cn(
                   "flex items-center justify-between p-4 rounded-xl border transition-all group cursor-pointer",
                   apt.status === 'In Progress'

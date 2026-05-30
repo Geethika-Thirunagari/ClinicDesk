@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SearchCheck, HelpCircle, Activity, ChevronRight, AlertTriangle, AlertCircle, ArrowLeft, Calendar, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
+import VoiceHealthAssistant from '../../components/ai/VoiceHealthAssistant';
 
 const bodyRegions = [
   { id: "head", label: "Head & Neck", description: "Headaches, throat, ears, eyes, sinus" },
@@ -152,6 +153,13 @@ export default function PatientSymptomChecker() {
           </p>
         </div>
       </div>
+
+      {step < 4 && (
+        <VoiceHealthAssistant
+          title="Or describe symptoms by voice"
+          autoSpeakSolution
+        />
+      )}
 
       {/* Progress Wizard bar */}
       <div className="cd-card p-4 flex items-center justify-between gap-4 overflow-x-auto">

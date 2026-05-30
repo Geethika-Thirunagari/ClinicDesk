@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Users, Award, Calendar, ChevronDown, Download, RefreshCw } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, Award, Calendar, ChevronDown, Download, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, PieChart, Pie, Cell, BarChart, Bar, Legend } from 'recharts';
+import { downloadCsv } from '../../utils/doctorStorage';
 
 const visitData = [
   { name: 'Jan', visits: 120, teleconsults: 30 },
@@ -45,10 +46,45 @@ const demographicsData = {
 export default function DoctorAnalytics() {
   const [timeRange, setTimeRange] = useState("6 Months");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [downloadMsg, setDownloadMsg] = useState('');
 
   const triggerRefresh = () => {
     setIsRefreshing(true);
     setTimeout(() => setIsRefreshing(false), 800);
+  };
+
+  const downloadMonthReport = (monthRow) => {
+    const total = monthRow.visits + monthRow.teleconsults;
+    const rows = [
+      ['ClinicDesk Doctor Analytics Report'],
+      ['Month', monthRow.name],
+      ['Generated', new Date().toLocaleString()],
+      [],
+      ['Metric', 'Value'],
+      ['In-Person Visits', monthRow.visits],
+      ['Teleconsults', monthRow.teleconsults],
+      ['Total Consultations', total],
+      [],
+      ['Diagnosis Breakdown'],
+      ...diagnosisData.map((d) => [d.name, `${d.value}%`]),
+    ];
+    downloadCsv(`doctor-analytics-${monthRow.name}-2026.csv`, rows);
+    setDownloadMsg(`Downloaded report for ${monthRow.name}.`);
+    setTimeout(() => setDownloadMsg(''), 2500);
+  };
+
+  const downloadFullReport = () => {
+    const rows = [
+      ['ClinicDesk Doctor Analytics — Full Export'],
+      ['Range', timeRange],
+      ['Generated', new Date().toLocaleString()],
+      [],
+      ['Month', 'In-Person Visits', 'Teleconsults', 'Total'],
+      ...visitData.map((m) => [m.name, m.visits, m.teleconsults, m.visits + m.teleconsults]),
+    ];
+    downloadCsv('doctor-analytics-full-export.csv', rows);
+    setDownloadMsg('Full analytics report downloaded.');
+    setTimeout(() => setDownloadMsg(''), 2500);
   };
 
   return (
@@ -82,11 +118,44 @@ export default function DoctorAnalytics() {
             <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
           </div>
 
-          <button className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm shadow-blue-500/10">
+          <button
+            type="button"
+            onClick={downloadFullReport}
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm shadow-blue-500/10"
+          >
             <Download size={14} /> Export Report
           </button>
         </div>
-      </div >
+      </div>
+
+      {downloadMsg && (
+        <div className="flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-100 rounded-xl text-sm font-semibold text-emerald-700">
+          <CheckCircle2 size={18} /> {downloadMsg}
+        </div>
+      )}
+
+      <div className="cd-card p-6">
+        <h2 className="text-sm font-bold text-[#0a1a0f] uppercase tracking-wider mb-4 flex items-center gap-2">
+          <Download size={16} className="text-blue-500" /> Monthly Reports
+        </h2>
+        <p className="text-xs text-slate-500 mb-4">Download a CSV report for each month.</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          {visitData.map((month) => (
+            <button
+              key={month.name}
+              type="button"
+              onClick={() => downloadMonthReport(month)}
+              className="flex flex-col items-center gap-2 p-4 rounded-xl border border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50 transition-all group"
+            >
+              <span className="text-lg font-black text-[#0a1a0f]">{month.name}</span>
+              <span className="text-[10px] text-slate-500 font-semibold">{month.visits + month.teleconsults} visits</span>
+              <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Download size={12} /> CSV
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Row 1: KPI Stats Summary */}
       < div className="grid grid-cols-1 md:grid-cols-3 gap-4" >

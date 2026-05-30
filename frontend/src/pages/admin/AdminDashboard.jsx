@@ -1,8 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Settings, LogOut, Search } from "lucide-react";
+import { Settings, LogOut } from "lucide-react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import AdminGlobalSearch from "../../components/admin/AdminGlobalSearch";
 import TopAnalytics from "../../components/admin/TopAnalytics";
 import QuickActions from "../../components/admin/QuickActions";
 import LiveSystemMonitor from "../../components/admin/LiveSystemMonitor";
@@ -38,18 +39,7 @@ const AdminDashboard = () => {
         </div>
         <div className="flex items-center gap-3">
           
-          <div className="relative hidden md:block group">
-            
-            <Search
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors"
-              size={16}
-            />
-            <input
-              type="text"
-              placeholder="Search patients, staff..."
-              className="pl-11 pr-4 py-3 rounded-xl text-sm outline-none w-64 bg-white border border-[#e2e8e2] placeholder-slate-400 focus:border-emerald-200 transition-all shadow-[0_4px_20px_rgba(0,0,0,0.02)] font-bold text-[#0a1a0f]"
-            />
-          </div>
+          <AdminGlobalSearch className="w-full sm:w-auto" inputClassName="w-full sm:w-64" />
           <button className="p-3 bg-white border border-[#e2e8e2] rounded-xl hover:border-emerald-200 text-slate-400 hover:text-emerald-500 transition-all shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
             
             <Settings size={18} />

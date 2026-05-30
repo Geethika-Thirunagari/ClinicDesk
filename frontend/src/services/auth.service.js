@@ -1,18 +1,17 @@
 import api from '../api/axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const authService = {
   login: async (credentials) => {
     const response = await api.post('auth/login/', credentials);
     const { token, refresh } = response.data;
-    // Store real JWT tokens in localStorage
     if (token) localStorage.setItem('token', token);
     if (refresh) localStorage.setItem('refresh_token', refresh);
     return response.data;
   },
 
   logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refresh_token');
+    useAuthStore.getState().logout();
     return { success: true };
   },
 

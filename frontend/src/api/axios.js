@@ -1,4 +1,9 @@
 import axios from 'axios';
+import { useAuthStore } from '../store/useAuthStore';
+
+const sessionLogout = () => {
+  useAuthStore.getState().logout();
+};
 
 const api = axios.create({
   // Using relative path so Vite's proxy forwards to Django at port 8000
@@ -56,7 +61,7 @@ api.interceptors.response.use(
 
       const refreshToken = localStorage.getItem('refresh_token');
       if (!refreshToken) {
-        localStorage.removeItem('token');
+        sessionLogout();
         window.location.href = '/login';
         return Promise.reject(error);
       }
@@ -71,8 +76,7 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('refresh_token');
+        sessionLogout();
         window.location.href = '/login';
         return Promise.reject(refreshError);
       } finally {

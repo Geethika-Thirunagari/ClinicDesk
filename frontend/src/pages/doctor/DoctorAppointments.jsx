@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Clock, User, Phone, Video, Search, Filter, MoreVertical, CheckCircle, XCircle } from 'lucide-react';
+import { Calendar, Clock, User, Phone, Video, Search, Filter, MoreVertical, Activity } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 const appointments = [
@@ -13,16 +14,29 @@ const appointments = [
   { id: 'APT-907', time: '09:00 AM', date: 'Tomorrow', patient: 'Sophia Martinez', type: 'Consultation', mode: 'In-Person', status: 'Upcoming', contact: '+1 555-1027' },
 ];
 
-const DoctorAppointments = () => {
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('Today');
-  const [view, setView] = useState('list'); // 'list' | 'grid'
+const DATE_FILTERS = ['All', 'Today', 'Tomorrow'];
+const STATUS_FILTERS = ['All', 'Upcoming', 'In Progress', 'Completed', 'Cancelled'];
 
-  const filtered = appointments.filter(a => {
-    const matchSearch = a.patient.toLowerCase().includes(search.toLowerCase()) || a.id.toLowerCase().includes(search.toLowerCase());
-    const matchFilter = filter === 'All' || a.date === filter || a.status === filter;
-    return matchSearch && matchFilter;
+const DoctorAppointments = () => {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+  const [dateFilter, setDateFilter] = useState('Today');
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [showFilters, setShowFilters] = useState(false);
+  const [view, setView] = useState('list');
+
+  const filtered = appointments.filter((a) => {
+    const q = search.toLowerCase();
+    const matchSearch =
+      a.patient.toLowerCase().includes(q) ||
+      a.id.toLowerCase().includes(q) ||
+      a.type.toLowerCase().includes(q);
+    const matchDate = dateFilter === 'All' || a.date === dateFilter;
+    const matchStatus = statusFilter === 'All' || a.status === statusFilter;
+    return matchSearch && matchDate && matchStatus;
   });
+
+  const joinTeleconsult = () => navigate('/doctor/teleconsult');
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -46,27 +60,79 @@ const DoctorAppointments = () => {
       </div>
 
       {/* Toolbar */}
-      <div className="cd-card p-4 flex flex-col md:flex-row justify-between gap-4">
+      <div className="cd-card p-4 flex flex-col gap-4">
+        <div className="flex flex-col md:flex-row justify-between gap-4">
         <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <input type="text" placeholder="Search patients or ID..." value={search} onChange={(e) => setSearch(e.target.value)}
               className="w-full md:w-64 pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all " />
           </div>
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}
-            className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
-            <option>Today</option>
-            <option>Tomorrow</option>
-            <option>Upcoming</option>
-            <option>Completed</option>
-            <option>All</option>
-          </select>
+          <button
+            type="button"
+            onClick={() => setShowFilters(!showFilters)}
+            className={cn(
+              'flex items-center gap-2 px-4 py-2.5 border rounded-xl text-sm font-semibold transition-all',
+              showFilters ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+            )}
+          >
+            <Filter size={16} /> Filter
+          </button>
         </div>
-        
+
         <div className="flex bg-slate-100 p-1 rounded-xl self-start md:self-auto">
-          <button onClick={() => setView('list')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", view === 'list' ? "bg-white text-blue-600 shadow-sm" : "text-slate-500 ")}>List</button>
-          <button onClick={() => setView('grid')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", view === 'grid' ? "bg-white text-blue-600 shadow-sm" : "text-slate-500 ")}>Grid</button>
+          <button type="button" onClick={() => setView('list')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", view === 'list' ? "bg-white text-blue-600 shadow-sm" : "text-slate-500 ")}>List</button>
+          <button type="button" onClick={() => setView('grid')} className={cn("px-4 py-1.5 rounded-lg text-sm font-semibold transition-all", view === 'grid' ? "bg-white text-blue-600 shadow-sm" : "text-slate-500 ")}>Grid</button>
         </div>
+        </div>
+
+        <AnimatePresence>
+          {showFilters && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-4"
+            >
+              <div className="flex-1">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Date</p>
+                <div className="flex flex-wrap gap-2">
+                  {DATE_FILTERS.map((f) => (
+                    <button
+                      key={f}
+                      type="button"
+                      onClick={() => setDateFilter(f)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-xs font-bold border transition-all',
+                        dateFilter === f ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-600'
+                      )}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="flex-1">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status</p>
+                <div className="flex flex-wrap gap-2">
+                  {STATUS_FILTERS.map((f) => (
+                    <button
+                      key={f}
+                      type="button"
+                      onClick={() => setStatusFilter(f)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-xs font-bold border transition-all',
+                        statusFilter === f ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white border-slate-200 text-slate-600'
+                      )}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Content Area */}
@@ -121,8 +187,12 @@ const DoctorAppointments = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right space-x-2">
-                        {apt.mode === 'Video' && apt.status === 'Upcoming' && (
-                          <button className="px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 :bg-indigo-500/20 rounded-lg text-xs font-bold transition-colors inline-flex items-center gap-1.5">
+                        {apt.mode === 'Video' && apt.status !== 'Completed' && apt.status !== 'Cancelled' && (
+                          <button
+                            type="button"
+                            onClick={joinTeleconsult}
+                            className="px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-xs font-bold transition-colors inline-flex items-center gap-1.5"
+                          >
                             <Video size={14} /> Join
                           </button>
                         )}
@@ -176,11 +246,19 @@ const DoctorAppointments = () => {
                     View Chart
                   </button>
                   {apt.mode === 'Video' && apt.status !== 'Completed' && apt.status !== 'Cancelled' ? (
-                    <button className="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-500/30 transition-colors flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={joinTeleconsult}
+                      className="flex-1 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-500/30 transition-colors flex items-center justify-center gap-2"
+                    >
                       <Video size={16} /> Join Call
                     </button>
                   ) : (
-                    <button className="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-500/30 transition-colors">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/doctor/records')}
+                      className="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-500/30 transition-colors"
+                    >
                       Start Visit
                     </button>
                   )}

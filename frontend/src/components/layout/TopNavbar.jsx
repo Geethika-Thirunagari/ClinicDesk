@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Menu, Search, Bell, Settings, Plus } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
+import QuickNoteModal from './QuickNoteModal';
 
 const TopNavbar = ({ onMenuClick }) => {
   const { user } = useAuthStore();
+  const [isQuickNoteOpen, setIsQuickNoteOpen] = useState(false);
 
   return (
     <header className="h-20 px-8 flex items-center justify-between bg-transparent border-b border-transparent sticky top-0 z-30 font-['Outfit']">
@@ -44,11 +46,18 @@ const TopNavbar = ({ onMenuClick }) => {
 
         <div className="hidden sm:block h-8 w-px bg-slate-100 mx-2" />
 
-        <button className="hidden sm:flex items-center gap-2 bg-[#0a1a0f] text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.1em] shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_20px_rgba(16,185,129,0.2)] hover:scale-[1.02] active:scale-95 transition-all">
+        <button
+          type="button"
+          onClick={() => setIsQuickNoteOpen(true)}
+          className="flex items-center gap-2 bg-[#0a1a0f] text-white px-3 sm:px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.1em] shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_20px_rgba(16,185,129,0.2)] hover:scale-[1.02] active:scale-95 transition-all"
+          aria-label="Open quick note"
+        >
           <Plus size={14} strokeWidth={3} />
-          <span>Quick Note</span>
+          <span className="hidden sm:inline">Quick Note</span>
         </button>
       </div>
+
+      <QuickNoteModal isOpen={isQuickNoteOpen} onClose={() => setIsQuickNoteOpen(false)} />
     </header>
   );
 };

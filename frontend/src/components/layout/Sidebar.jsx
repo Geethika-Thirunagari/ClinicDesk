@@ -139,6 +139,7 @@ const Sidebar = ({ isMobileOpen, setIsMobileOpen, onAIClick }) => {
             title: 'Care',
             items: [
               { icon: Calendar, label: 'Book Appointment', path: '/patient/book' },
+              { icon: Video, label: 'Video Visit', path: '/patient/teleconsult' },
               { icon: ClipboardList, label: 'Medical History', path: '/patient/history' },
               { icon: Pill, label: 'Prescriptions', path: '/patient/prescriptions' },
             ]

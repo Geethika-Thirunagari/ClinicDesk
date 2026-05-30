@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Calendar, Activity, FileText, CreditCard, Clock,
-  ChevronRight, Pill, Heart, TrendingUp, SearchCheck, UserCircle
+  ChevronRight, Pill, Heart, TrendingUp, SearchCheck, UserCircle, Video
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useNavigate } from 'react-router-dom';
@@ -79,8 +79,17 @@ const PatientDashboard = () => {
 
           <div className="space-y-3 flex-1">
             {upcomingAppointments.map((apt, i) => (
-              <motion.div key={apt.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
-                className="flex items-center justify-between p-4 rounded-xl border border-[#e2e8e2] hover:border-emerald-200 bg-white group cursor-pointer transition-all">
+              <motion.div
+                key={apt.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * i }}
+                role="button"
+                tabIndex={0}
+                onClick={() => apt.mode === 'Teleconsult' && navigate('/patient/teleconsult')}
+                onKeyDown={(e) => e.key === 'Enter' && apt.mode === 'Teleconsult' && navigate('/patient/teleconsult')}
+                className="flex items-center justify-between p-4 rounded-xl border border-[#e2e8e2] hover:border-emerald-200 bg-white group cursor-pointer transition-all"
+              >
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-slate-50 border border-[#e2e8e2] flex items-center justify-center font-bold text-emerald-600 text-xs">
                     {apt.doctor.split(' ')[1][0]}
@@ -90,9 +99,14 @@ const PatientDashboard = () => {
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{apt.specialty} • {apt.mode}</p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="text-right flex flex-col items-end gap-1">
                   <p className="text-xs font-black text-[#0a1a0f]">{apt.date}</p>
                   <p className="text-[10px] font-bold text-slate-400 uppercase">{apt.time}</p>
+                  {apt.mode === 'Teleconsult' && (
+                    <span className="text-[9px] font-bold text-indigo-600 uppercase flex items-center gap-1">
+                      <Video size={10} /> Join video
+                    </span>
+                  )}
                 </div>
               </motion.div>
             ))}

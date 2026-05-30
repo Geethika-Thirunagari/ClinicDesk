@@ -133,14 +133,25 @@ const PatientAppointments = () => {
                     {apt.status}
                   </span>
                   
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
+                    {apt.type === 'Teleconsult' && apt.status === 'Confirmed' && (
+                      <button
+                        type="button"
+                        onClick={() => navigate('/patient/teleconsult')}
+                        className="px-3.5 py-1.5 bg-indigo-600 text-white hover:bg-indigo-700 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 shadow-md shadow-indigo-500/20"
+                      >
+                        <Video size={14} /> Join Video Call
+                      </button>
+                    )}
                     <button 
+                      type="button"
                       onClick={() => handleCancelClick(apt)}
-                      className="px-3.5 py-1.5 border border-slate-200 hover:bg-rose-50 :bg-rose-500/10 hover:text-rose-600 hover:border-rose-200 :border-rose-500/20 text-slate-500 rounded-xl text-xs font-bold transition-all"
+                      className="px-3.5 py-1.5 border border-slate-200 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 text-slate-500 rounded-xl text-xs font-bold transition-all"
                     >
                       Cancel Visit
                     </button>
                     <button 
+                      type="button"
                       onClick={() => alert(`Requested rescheduling for ${apt.id} (Mock)`)}
                       className="px-3.5 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl text-xs font-bold transition-colors"
                     >

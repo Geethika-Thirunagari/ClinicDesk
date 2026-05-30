@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Contact, Search, Plus, MoreVertical, Briefcase, Clock, Phone, X, Filter, Trash2, Edit2 } from 'lucide-react';
 import { cn } from '../../utils/cn';
@@ -25,6 +26,7 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
 );
 
 const AdminStaff = () => {
+  const location = useLocation();
   const [staff, setStaff] = useState(() => {
     const saved = localStorage.getItem('clinicdesk_staff');
     return saved ? JSON.parse(saved) : initialStaff;
@@ -35,6 +37,13 @@ const AdminStaff = () => {
   }, [staff]);
 
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (location.state?.search) {
+      setSearch(location.state.search);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ id: null, name: '', role: 'Nurse', shift: 'Morning (08:00 - 16:00)', department: 'ICU', phone: '' });
 

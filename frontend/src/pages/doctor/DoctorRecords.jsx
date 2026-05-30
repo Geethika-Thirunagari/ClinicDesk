@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Search, Filter, FileText, Download, Eye, Clock, Activity, FileDigit } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Filter, FileText, Download, Eye, Clock, Activity, FileDigit, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 const records = [
@@ -21,14 +21,26 @@ const TypeIcon = ({ type }) => {
   }
 };
 
+const RECORD_TYPES = ['All', 'Lab Report', 'Imaging', 'Clinical Note', 'Discharge'];
+const STATUS_OPTIONS = ['All', 'Final', 'Draft'];
+
 const DoctorRecords = () => {
   const [search, setSearch] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [typeFilter, setTypeFilter] = useState('All');
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [viewRecord, setViewRecord] = useState(null);
 
-  const filtered = records.filter(r => 
-    r.patient.toLowerCase().includes(search.toLowerCase()) || 
-    r.pid.toLowerCase().includes(search.toLowerCase()) ||
-    r.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = records.filter((r) => {
+    const q = search.toLowerCase();
+    const matchSearch =
+      r.patient.toLowerCase().includes(q) ||
+      r.pid.toLowerCase().includes(q) ||
+      r.name.toLowerCase().includes(q);
+    const matchType = typeFilter === 'All' || r.type === typeFilter;
+    const matchStatus = statusFilter === 'All' || r.status === statusFilter;
+    return matchSearch && matchType && matchStatus;
+  });
 
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
@@ -48,10 +60,65 @@ const DoctorRecords = () => {
             <input type="text" placeholder="Search by patient name, ID, or report name..." value={search} onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all " />
           </div>
-          <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl font-semibold text-sm hover:bg-slate-50 :bg-slate-700 transition-all">
+          <button
+            type="button"
+            onClick={() => setShowFilters(!showFilters)}
+            className={cn(
+              'flex items-center justify-center gap-2 px-5 py-2.5 border rounded-xl font-semibold text-sm transition-all',
+              showFilters ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+            )}
+          >
             <Filter size={18} /> Advanced Filter
           </button>
         </div>
+
+        <AnimatePresence>
+          {showFilters && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 flex flex-col sm:flex-row gap-6"
+            >
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Record type</p>
+                <div className="flex flex-wrap gap-2">
+                  {RECORD_TYPES.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setTypeFilter(t)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-xs font-bold border transition-all',
+                        typeFilter === t ? 'bg-blue-600 text-white border-blue-600' : 'bg-white border-slate-200 text-slate-600'
+                      )}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status</p>
+                <div className="flex flex-wrap gap-2">
+                  {STATUS_OPTIONS.map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setStatusFilter(s)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-xs font-bold border transition-all',
+                        statusFilter === s ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white border-slate-200 text-slate-600'
+                      )}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
@@ -95,10 +162,10 @@ const DoctorRecords = () => {
                     </span>
                   </td>
                   <td className="py-4 text-right space-x-2">
-                    <button className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 :bg-blue-500/10 transition-colors tooltip-trigger" title="View Document">
+                    <button type="button" onClick={() => setViewRecord(record)} className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors" title="View Document">
                       <Eye size={18} />
                     </button>
-                    <button className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 :bg-slate-800 transition-colors tooltip-trigger" title="Download">
+                    <button type="button" onClick={() => alert(`Downloading ${record.file}...`)} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors" title="Download">
                       <Download size={18} />
                     </button>
                   </td>
@@ -107,7 +174,30 @@ const DoctorRecords = () => {
             </tbody>
           </table>
         </div>
+        {filtered.length === 0 && (
+          <p className="text-center py-8 text-slate-400 text-sm">No records match your filters.</p>
+        )}
       </div>
+
+      <AnimatePresence>
+        {viewRecord && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setViewRecord(null)}>
+            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-[24px] shadow-2xl w-full max-w-md p-8">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="text-lg font-bold text-[#0a1a0f]">{viewRecord.name}</h3>
+                <button type="button" onClick={() => setViewRecord(null)} className="p-2 rounded-lg hover:bg-slate-100 text-slate-400"><X size={18} /></button>
+              </div>
+              <p className="text-sm text-slate-600"><strong>Patient:</strong> {viewRecord.patient} ({viewRecord.pid})</p>
+              <p className="text-sm text-slate-600 mt-2"><strong>Type:</strong> {viewRecord.type}</p>
+              <p className="text-sm text-slate-600 mt-2"><strong>Date:</strong> {viewRecord.date}</p>
+              <p className="text-sm text-slate-600 mt-2"><strong>File:</strong> {viewRecord.file}</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

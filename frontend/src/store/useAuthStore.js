@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { stopAllSessionMedia } from '../utils/stopAllMedia';
 
 /**
  * User roles supported by ClinicDesk.
@@ -53,6 +54,11 @@ export const useAuthStore = create(
       },
 
       logout: () => {
+        stopAllSessionMedia();
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('refresh_token');
+        }
         set({ user: null, token: null, isAuthenticated: false, isLoading: false });
       },
 

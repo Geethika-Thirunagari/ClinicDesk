@@ -68,6 +68,7 @@ export const ROUTES = {
     PROFILE:       '/patient/profile',
     HEALTH_TRACKER:  '/patient/health-tracker',
     SYMPTOM_CHECKER: '/patient/symptom-checker',
+    TELECONSULT:     '/patient/teleconsult',
   },
 };
 

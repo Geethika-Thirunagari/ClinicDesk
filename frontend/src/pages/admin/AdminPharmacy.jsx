@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Pill, AlertTriangle, Plus, Search, CheckCircle, PackageSearch, Trash2, Edit2, X } from 'lucide-react';
+import { Pill, AlertTriangle, Plus, Search, CheckCircle, PackageSearch, Trash2, Edit2, X, ShoppingCart, RefreshCw, CheckCircle2, Minus } from 'lucide-react';
 import { cn } from '../../utils/cn';
+
+const ORDERS_STORAGE_KEY = 'clinicdesk_pharmacy_orders';
+
+const computeStatus = (stock, minStock) => {
+  if (stock === 0) return 'Critical';
+  if (stock <= minStock) return 'Low Stock';
+  return 'In Stock';
+};
+
+const parsePrice = (price) => parseFloat(String(price).replace(/[^0-9.]/g, '')) || 0;
 
 const inventory = [
   { id: 'MED-101', name: 'Amoxicillin 500mg', category: 'Antibiotics', stock: 4500, minStock: 1000, price: '$0.25', expiry: '2027-11-20', status: 'In Stock' },
@@ -39,12 +49,18 @@ const AdminPharmacy = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ id: null, name: '', category: 'Antibiotics', stock: '', minStock: '', price: '', expiry: '' });
 
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+  const [purchaseCart, setPurchaseCart] = useState([]);
+  const [selectedMedId, setSelectedMedId] = useState('');
+  const [orderQty, setOrderQty] = useState('');
+  const [supplier, setSupplier] = useState('MedSupply Co.');
+  const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
+  const [orderMessage, setOrderMessage] = useState({ type: '', text: '' });
+
   const handleSaveItem = () => {
-    const stockVal = parseInt(formData.stock) || 0;
-    const minVal = parseInt(formData.minStock) || 0;
-    let status = 'In Stock';
-    if (stockVal === 0) status = 'Critical';
-    else if (stockVal <= minVal) status = 'Low Stock';
+    const stockVal = parseInt(formData.stock, 10) || 0;
+    const minVal = parseInt(formData.minStock, 10) || 0;
+    const status = computeStatus(stockVal, minVal);
 
     if (formData.id) {
       setInventoryList(inventoryList.map(i => i.id === formData.id ? { ...i, ...formData, stock: stockVal, minStock: minVal, status } : i));
@@ -71,11 +87,6 @@ const AdminPharmacy = () => {
     setShowModal(true);
   };
 
-  useEffect(() => {
-    localStorage.setItem('clinicdesk_pharmacy', JSON.stringify(inventoryList));
-  }, [inventoryList]);
-
-
   const handleDeleteItem = (id) => {
     if (window.confirm("Remove this medicine from inventory?")) {
       setInventoryList(inventoryList.filter(i => i.id !== id));
@@ -95,6 +106,114 @@ const AdminPharmacy = () => {
     return 'bg-slate-100 text-slate-500 ';
   };
 
+  const openPurchaseModal = () => {
+    setPurchaseCart([]);
+    setSelectedMedId('');
+    setOrderQty('');
+    setSupplier('MedSupply Co.');
+    setOrderMessage({ type: '', text: '' });
+    setShowPurchaseModal(true);
+  };
+
+  const suggestedQty = (item) => {
+    if (!item) return 100;
+    const deficit = Math.max(0, item.minStock - item.stock);
+    return deficit > 0 ? deficit : Math.ceil(item.minStock * 0.5) || 100;
+  };
+
+  const handleAddToCart = () => {
+    const item = inventoryList.find((i) => i.id === selectedMedId);
+    const qty = parseInt(orderQty, 10);
+    if (!item || !qty || qty < 1) {
+      setOrderMessage({ type: 'error', text: 'Select a medicine and enter a valid quantity.' });
+      return;
+    }
+    setPurchaseCart((prev) => {
+      const existing = prev.find((l) => l.id === item.id);
+      if (existing) {
+        return prev.map((l) =>
+          l.id === item.id ? { ...l, qty: l.qty + qty } : l
+        );
+      }
+      return [
+        ...prev,
+        {
+          id: item.id,
+          name: item.name,
+          qty,
+          unitPrice: parsePrice(item.price),
+          priceLabel: item.price,
+        },
+      ];
+    });
+    setSelectedMedId('');
+    setOrderQty('');
+    setOrderMessage({ type: '', text: '' });
+  };
+
+  const handleRemoveFromCart = (id) => {
+    setPurchaseCart((prev) => prev.filter((l) => l.id !== id));
+  };
+
+  const cartTotal = purchaseCart.reduce((sum, l) => sum + l.qty * l.unitPrice, 0);
+
+  const handleSubmitPurchaseOrder = async () => {
+    if (purchaseCart.length === 0) {
+      setOrderMessage({ type: 'error', text: 'Add at least one item to the order.' });
+      return;
+    }
+    if (!supplier.trim()) {
+      setOrderMessage({ type: 'error', text: 'Supplier name is required.' });
+      return;
+    }
+
+    setIsSubmittingOrder(true);
+    setOrderMessage({ type: '', text: '' });
+
+    await new Promise((r) => setTimeout(r, 900));
+
+    setInventoryList((prev) =>
+      prev.map((item) => {
+        const line = purchaseCart.find((l) => l.id === item.id);
+        if (!line) return item;
+        const newStock = item.stock + line.qty;
+        return {
+          ...item,
+          stock: newStock,
+          status: computeStatus(newStock, item.minStock),
+        };
+      })
+    );
+
+    const orderRecord = {
+      id: `PO-${Date.now()}`,
+      supplier: supplier.trim(),
+      items: purchaseCart,
+      total: cartTotal,
+      status: 'Received',
+      createdAt: new Date().toISOString(),
+    };
+    const existingOrders = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY) || '[]');
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify([orderRecord, ...existingOrders]));
+
+    setIsSubmittingOrder(false);
+    setOrderMessage({
+      type: 'success',
+      text: `Purchase order ${orderRecord.id} completed. Stock updated for ${purchaseCart.length} item(s).`,
+    });
+    setPurchaseCart([]);
+    setTimeout(() => {
+      setShowPurchaseModal(false);
+      setOrderMessage({ type: '', text: '' });
+    }, 2000);
+  };
+
+  const handleSelectMedForOrder = (medId) => {
+    setSelectedMedId(medId);
+    const item = inventoryList.find((i) => i.id === medId);
+    if (item) setOrderQty(String(suggestedQty(item)));
+  };
+
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
 
@@ -104,8 +223,8 @@ const AdminPharmacy = () => {
           <p className="text-sm text-slate-500 mt-1">Manage medicines, stock levels, and supply chain.</p>
         </div>
         <div className="flex gap-3">
-          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-xl font-semibold text-sm shadow-md hover:bg-slate-700 :bg-slate-600 transition-all">
+          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openPurchaseModal}
+            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-xl font-semibold text-sm shadow-md hover:bg-slate-700 transition-all">
             <PackageSearch size={18} /> Purchase Order
           </motion.button>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setFormData({ id: null, name: '', category: 'Antibiotics', stock: '', minStock: '', price: '', expiry: '' }); setShowModal(true); }}
@@ -149,7 +268,7 @@ const AdminPharmacy = () => {
               {filtered.map(item => {
                 const stockPercent = Math.min(100, Math.round((item.stock / item.minStock) * 100));
                 return (
-                  <tr key={item.id} className="border-b border-slate-100 hover:bg-slate-50/50 :bg-slate-800/50 transition-colors">
+                  <tr key={item.id} className="group border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
                     <td className="py-4">
                       <p className="text-sm font-bold text-[#0a1a0f] ">{item.name}</p>
                       <p className="text-xs text-slate-500 font-mono">{item.id}</p>
@@ -183,6 +302,141 @@ const AdminPharmacy = () => {
           </table>
         </div>
       </div>
+      <AnimatePresence>
+        {showPurchaseModal && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => !isSubmittingOrder && setShowPurchaseModal(false)}>
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-[24px] shadow-2xl w-full max-w-2xl p-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-xl font-bold text-[#0a1a0f] flex items-center gap-2">
+                    <ShoppingCart size={22} className="text-slate-700" /> Create Purchase Order
+                  </h2>
+                  <p className="text-sm text-slate-500 mt-1">Restock inventory from your supplier. Stock updates when the order is received.</p>
+                </div>
+                <button type="button" disabled={isSubmittingOrder} onClick={() => setShowPurchaseModal(false)}
+                  className="p-2 rounded-lg hover:bg-slate-100 text-slate-400 disabled:opacity-50">
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Supplier</label>
+                  <input type="text" value={supplier} onChange={(e) => setSupplier(e.target.value)}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-3">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Add line item</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <select value={selectedMedId} onChange={(e) => handleSelectMedForOrder(e.target.value)}
+                      className="sm:col-span-2 px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                      <option value="">Select medicine...</option>
+                      {inventoryList.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name} ({item.stock} in stock{item.status !== 'In Stock' ? ` — ${item.status}` : ''})
+                        </option>
+                      ))}
+                    </select>
+                    <input type="number" min="1" placeholder="Qty" value={orderQty}
+                      onChange={(e) => setOrderQty(e.target.value)}
+                      className="px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                  </div>
+                  <button type="button" onClick={handleAddToCart}
+                    className="w-full py-2.5 border border-dashed border-blue-300 text-blue-600 rounded-xl text-sm font-bold hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+                    <Plus size={16} /> Add to order
+                  </button>
+                </div>
+
+                {inventoryList.filter((i) => i.status !== 'In Stock').length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase w-full">Quick add low stock:</span>
+                    {inventoryList.filter((i) => i.status !== 'In Stock').map((item) => (
+                      <button key={item.id} type="button"
+                        onClick={() => {
+                          setSelectedMedId(item.id);
+                          setOrderQty(String(suggestedQty(item)));
+                        }}
+                        className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-50 text-amber-700 border border-amber-100 hover:bg-amber-100 transition-colors">
+                        {item.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {purchaseCart.length > 0 && (
+                  <div className="border border-slate-200 rounded-xl overflow-hidden">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200">
+                          <th className="text-left py-2 px-4 text-[10px] font-bold text-slate-400 uppercase">Item</th>
+                          <th className="text-right py-2 px-4 text-[10px] font-bold text-slate-400 uppercase">Qty</th>
+                          <th className="text-right py-2 px-4 text-[10px] font-bold text-slate-400 uppercase">Subtotal</th>
+                          <th className="w-10" />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {purchaseCart.map((line) => (
+                          <tr key={line.id} className="border-b border-slate-100 last:border-0">
+                            <td className="py-3 px-4 font-semibold text-[#0a1a0f]">{line.name}</td>
+                            <td className="py-3 px-4 text-right font-mono">{line.qty}</td>
+                            <td className="py-3 px-4 text-right font-semibold">${(line.qty * line.unitPrice).toFixed(2)}</td>
+                            <td className="py-3 pr-2">
+                              <button type="button" onClick={() => handleRemoveFromCart(line.id)}
+                                className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50">
+                                <Minus size={14} />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <div className="flex justify-between items-center px-4 py-3 bg-slate-50 border-t border-slate-200">
+                      <span className="text-xs font-bold text-slate-500 uppercase">Order total</span>
+                      <span className="text-lg font-extrabold text-[#0a1a0f]">${cartTotal.toFixed(2)}</span>
+                    </div>
+                  </div>
+                )}
+
+                <AnimatePresence>
+                  {orderMessage.text && (
+                    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                      className={cn(
+                        'p-3 rounded-xl flex items-center gap-2 text-sm font-semibold',
+                        orderMessage.type === 'success' && 'bg-emerald-50 text-emerald-700 border border-emerald-100',
+                        orderMessage.type === 'error' && 'bg-rose-50 text-rose-700 border border-rose-100'
+                      )}>
+                      {orderMessage.type === 'success' ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
+                      {orderMessage.text}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className="flex gap-3 mt-8">
+                <button type="button" disabled={isSubmittingOrder} onClick={() => setShowPurchaseModal(false)}
+                  className="flex-1 py-3 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50">
+                  Cancel
+                </button>
+                <button type="button" disabled={isSubmittingOrder || purchaseCart.length === 0}
+                  onClick={handleSubmitPurchaseOrder}
+                  className="flex-1 py-3 bg-slate-800 text-white rounded-xl text-sm font-bold shadow-lg hover:bg-slate-700 transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+                  {isSubmittingOrder ? (
+                    <><RefreshCw size={18} className="animate-spin" /> Processing...</>
+                  ) : (
+                    <><PackageSearch size={18} /> Complete purchase</>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {showModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowModal(false)}>

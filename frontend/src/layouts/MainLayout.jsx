@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import TopNavbar from '../components/layout/TopNavbar';
 import AIChatOverlay from '../components/layout/AIChatOverlay';
+import { useAuthStore } from '../store/useAuthStore';
+import { stopAllSessionMedia } from '../utils/stopAllMedia';
 
 const MainLayout = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isAIOpen, setIsAIOpen] = useState(false);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      stopAllSessionMedia();
+      setIsAIOpen(false);
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-[var(--cd-bg)] font-['Outfit']">

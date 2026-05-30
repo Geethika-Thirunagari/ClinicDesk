@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Stethoscope,
@@ -128,6 +129,7 @@ const StatCard = ({ title, value, icon: Icon, delay }) => (
   </motion.div>
 );
 const AdminDoctors = () => {
+  const location = useLocation();
   const [doctorsList, setDoctorsList] = useState(() => {
     const saved = localStorage.getItem("clinicdesk_doctors");
     return saved ? JSON.parse(saved) : initialDoctors;
@@ -138,6 +140,13 @@ const AdminDoctors = () => {
   }, [doctorsList]);
 
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (location.state?.search) {
+      setSearch(location.state.search);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
   const [specialtyFilter, setSpecialtyFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
   const [showModal, setShowModal] = useState(false);

@@ -67,6 +67,7 @@ const PatientNotifications = lazy(() => import('../pages/patient/PatientNotifica
 const PatientProfile = lazy(() => import('../pages/patient/PatientProfile'));
 const PatientHealthTracker = lazy(() => import('../pages/patient/PatientHealthTracker'));
 const PatientSymptomChecker = lazy(() => import('../pages/patient/PatientSymptomChecker'));
+const PatientTeleconsult = lazy(() => import('../pages/patient/PatientTeleconsult'));
 
 // Error Pages
 const Unauthorized = lazy(() => import('../pages/Unauthorized'));
@@ -202,6 +203,7 @@ const router = createBrowserRouter([
               { path: 'profile', element: <PatientProfile /> },
               { path: 'health-tracker', element: <PatientHealthTracker /> },
               { path: 'symptom-checker', element: <PatientSymptomChecker /> },
+              { path: 'teleconsult', element: <PatientTeleconsult /> },
               { path: '*', element: <NotFound /> },
             ],
           },
