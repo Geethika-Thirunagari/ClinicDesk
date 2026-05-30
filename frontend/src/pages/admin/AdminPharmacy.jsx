@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Pill, AlertTriangle, Plus, Search, CheckCircle, PackageSearch } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Pill, AlertTriangle, Plus, Search, CheckCircle, PackageSearch, Trash2, Edit2, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 const inventory = [
@@ -26,10 +26,64 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
 );
 
 const AdminPharmacy = () => {
-  const [search, setSearch] = useState('');
+  const [inventoryList, setInventoryList] = useState(() => {
+    const saved = localStorage.getItem('clinicdesk_pharmacy');
+    return saved ? JSON.parse(saved) : inventory;
+  });
 
-  const filtered = inventory.filter(i => 
-    i.name.toLowerCase().includes(search.toLowerCase()) || 
+  useEffect(() => {
+    localStorage.setItem('clinicdesk_pharmacy', JSON.stringify(inventoryList));
+  }, [inventoryList]);
+
+  const [search, setSearch] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({ id: null, name: '', category: 'Antibiotics', stock: '', minStock: '', price: '', expiry: '' });
+
+  const handleSaveItem = () => {
+    const stockVal = parseInt(formData.stock) || 0;
+    const minVal = parseInt(formData.minStock) || 0;
+    let status = 'In Stock';
+    if (stockVal === 0) status = 'Critical';
+    else if (stockVal <= minVal) status = 'Low Stock';
+
+    if (formData.id) {
+      setInventoryList(inventoryList.map(i => i.id === formData.id ? { ...i, ...formData, stock: stockVal, minStock: minVal, status } : i));
+    } else {
+      const newId = `MED-${100 + inventoryList.length + 1}`;
+      const newItem = {
+        id: newId,
+        name: formData.name || 'Unknown',
+        category: formData.category,
+        stock: stockVal,
+        minStock: minVal,
+        price: formData.price.startsWith('$') ? formData.price : `$${formData.price || '0.00'}`,
+        expiry: formData.expiry || new Date().toISOString().slice(0, 10),
+        status
+      };
+      setInventoryList([newItem, ...inventoryList]);
+    }
+    setFormData({ id: null, name: '', category: 'Antibiotics', stock: '', minStock: '', price: '', expiry: '' });
+    setShowModal(false);
+  };
+
+  const handleEditItem = (item) => {
+    setFormData({ id: item.id, name: item.name, category: item.category, stock: item.stock, minStock: item.minStock, price: item.price.replace('$', ''), expiry: item.expiry });
+    setShowModal(true);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('clinicdesk_pharmacy', JSON.stringify(inventoryList));
+  }, [inventoryList]);
+
+
+  const handleDeleteItem = (id) => {
+    if (window.confirm("Remove this medicine from inventory?")) {
+      setInventoryList(inventoryList.filter(i => i.id !== id));
+    }
+  };
+
+  const filtered = inventoryList.filter(i =>
+    i.name.toLowerCase().includes(search.toLowerCase()) ||
     i.category.toLowerCase().includes(search.toLowerCase()) ||
     i.id.toLowerCase().includes(search.toLowerCase())
   );
@@ -43,7 +97,7 @@ const AdminPharmacy = () => {
 
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-6 font-['Outfit']">
-      
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0a1a0f] tracking-tight">Pharmacy Inventory</h1>
@@ -54,7 +108,7 @@ const AdminPharmacy = () => {
             className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-xl font-semibold text-sm shadow-md hover:bg-slate-700 :bg-slate-600 transition-all">
             <PackageSearch size={18} /> Purchase Order
           </motion.button>
-          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setFormData({ id: null, name: '', category: 'Antibiotics', stock: '', minStock: '', price: '', expiry: '' }); setShowModal(true); }}
             className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-600/40 transition-all">
             <Plus size={18} /> Add Item
           </motion.button>
@@ -62,10 +116,10 @@ const AdminPharmacy = () => {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Items" value="1,248" icon={Pill} color="bg-blue-500" delay={0.1} />
-        <StatCard title="Healthy Stock" value="1,120" icon={CheckCircle} color="bg-emerald-500" delay={0.15} />
-        <StatCard title="Low Stock" value="114" icon={AlertTriangle} color="bg-amber-500" delay={0.2} />
-        <StatCard title="Critical/Out" value="14" icon={AlertTriangle} color="bg-rose-500" delay={0.25} />
+        <StatCard title="Total Items" value={inventoryList.length} icon={Pill} color="bg-blue-500" delay={0.1} />
+        <StatCard title="Healthy Stock" value={inventoryList.filter(i => i.status === 'In Stock').length} icon={CheckCircle} color="bg-emerald-500" delay={0.15} />
+        <StatCard title="Low Stock" value={inventoryList.filter(i => i.status === 'Low Stock').length} icon={AlertTriangle} color="bg-amber-500" delay={0.2} />
+        <StatCard title="Critical/Out" value={inventoryList.filter(i => i.status === 'Critical').length} icon={AlertTriangle} color="bg-rose-500" delay={0.25} />
       </div>
 
       <div className="cd-card p-6">
@@ -88,6 +142,7 @@ const AdminPharmacy = () => {
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Unit Price</th>
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Expiry Date</th>
                 <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status</th>
+                <th className="pb-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -111,6 +166,16 @@ const AdminPharmacy = () => {
                     <td className="py-4 text-sm font-semibold text-slate-700 ">{item.price}</td>
                     <td className="py-4 text-sm text-slate-500 ">{item.expiry}</td>
                     <td className="py-4"><span className={cn("text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider", statusColor(item.status))}>{item.status}</span></td>
+                    <td className="py-4 text-right">
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onClick={(e) => { e.stopPropagation(); handleEditItem(item); }} className="p-2 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-100 transition-all">
+                          <Edit2 size={14} />
+                        </button>
+                        <button onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id); }} className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all">
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 );
               })}
@@ -118,6 +183,63 @@ const AdminPharmacy = () => {
           </table>
         </div>
       </div>
+      <AnimatePresence>
+        {showModal && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowModal(false)}>
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()} className="bg-white rounded-[24px] shadow-2xl w-full max-w-lg p-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-[#0a1a0f] ">{formData.id ? "Edit Medicine" : "Add New Medicine"}</h2>
+                <button onClick={() => setShowModal(false)} className="p-2 rounded-lg hover:bg-slate-100 text-slate-400"><X size={20} /></button>
+              </div>
+
+              <div className="space-y-5">
+                <div>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Item Name</label>
+                  <input type="text" placeholder="Medicine Name" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Category</label>
+                    <input type="text" placeholder="e.g. Antibiotics" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Expiry Date</label>
+                    <input type="date" placeholder="Expiry" value={formData.expiry} onChange={e => setFormData({ ...formData, expiry: e.target.value })}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Stock</label>
+                    <input type="number" placeholder="0" value={formData.stock} onChange={e => setFormData({ ...formData, stock: e.target.value })}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Min Stock</label>
+                    <input type="number" placeholder="500" value={formData.minStock} onChange={e => setFormData({ ...formData, minStock: e.target.value })}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Unit Price</label>
+                    <input type="text" placeholder="0.00" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-8">
+                <button onClick={() => setShowModal(false)} className="flex-1 py-3 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors">Cancel</button>
+                <button onClick={handleSaveItem} className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2">
+                  <Plus size={18} /> {formData.id ? "Save Changes" : "Save Item"}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

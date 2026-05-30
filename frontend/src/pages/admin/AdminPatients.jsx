@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Search, Plus, MoreVertical, Calendar, Activity, Clock, Heart, X, Phone, Mail, Fingerprint } from 'lucide-react';
+import { Users, Search, Plus, MoreVertical, Calendar, Activity, Clock, Heart, X, Phone, Mail, Fingerprint, Edit2, Trash2 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 const initialPatients = [
@@ -26,14 +26,22 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
 );
 
 const AdminPatients = () => {
-  const [patientsList, setPatientsList] = useState(initialPatients);
+  const [patientsList, setPatientsList] = useState(() => {
+    const saved = localStorage.getItem('clinicdesk_patients');
+    return saved ? JSON.parse(saved) : initialPatients;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('clinicdesk_patients', JSON.stringify(patientsList));
+  }, [patientsList]);
+
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [showModal, setShowModal] = useState(false);
-  
+
   const generateId = () => `PT-${Math.floor(1000 + Math.random() * 9000)}`;
-  
-  const [formData, setFormData] = useState({ id: '', name: '', email: '', phone: '', dob: '', gender: 'Male', bloodGroup: 'A+', address: '' });
+
+  const [formData, setFormData] = useState({ isEdit: false, id: '', name: '', email: '', phone: '', dob: '', gender: 'Male', bloodGroup: 'A+', address: '' });
 
   const statusOptions = ['All', 'Active', 'Critical', 'Discharged', 'Inactive'];
   const filtered = patientsList.filter(p => {
@@ -50,26 +58,59 @@ const AdminPatients = () => {
   };
 
   const handleOpenModal = () => {
-    setFormData({ id: generateId(), name: '', email: '', phone: '', dob: '', gender: 'Male', bloodGroup: 'A+', address: '' });
+    setFormData({ isEdit: false, id: generateId(), name: '', email: '', phone: '', dob: '', gender: 'Male', bloodGroup: 'A+', address: '' });
     setShowModal(true);
   };
 
+  const handleEditPatient = (pt) => {
+    setFormData({
+      isEdit: true,
+      id: pt.id,
+      name: pt.name,
+      email: pt.email === '-' ? '' : pt.email,
+      phone: pt.phone === '-' ? '' : pt.phone,
+      dob: '', // we don't store actual dob currently, but you could calculate it back if needed
+      gender: pt.gender,
+      bloodGroup: pt.bloodGroup,
+      address: ''
+    });
+    setShowModal(true);
+  };
+
+  const handleDeletePatient = (id) => {
+    if (window.confirm("Are you sure you want to remove this patient's record?")) {
+      setPatientsList(patientsList.filter(p => p.id !== id));
+    }
+  };
+
   const handleRegisterPatient = () => {
-    const age = formData.dob ? new Date().getFullYear() - new Date(formData.dob).getFullYear() : 0;
-    const newPatient = {
-      id: formData.id,
-      name: formData.name || 'Unknown Patient',
-      age: age || '-',
-      gender: formData.gender,
-      phone: formData.phone || '-',
-      email: formData.email || '-',
-      bloodGroup: formData.bloodGroup,
-      lastVisit: 'New Registration',
-      status: 'Active',
-      doctor: 'Unassigned',
-    };
-    
-    setPatientsList([newPatient, ...patientsList]);
+    const age = formData.dob ? new Date().getFullYear() - new Date(formData.dob).getFullYear() : (formData.isEdit ? patientsList.find(p => p.id === formData.id)?.age : 0);
+
+    if (formData.isEdit) {
+      setPatientsList(patientsList.map(p => p.id === formData.id ? {
+        ...p,
+        name: formData.name || p.name,
+        age: age || p.age,
+        gender: formData.gender,
+        phone: formData.phone || '-',
+        email: formData.email || '-',
+        bloodGroup: formData.bloodGroup,
+      } : p));
+    } else {
+      const newPatient = {
+        id: formData.id,
+        name: formData.name || 'Unknown Patient',
+        age: age || '-',
+        gender: formData.gender,
+        phone: formData.phone || '-',
+        email: formData.email || '-',
+        bloodGroup: formData.bloodGroup,
+        lastVisit: 'New Registration',
+        status: 'Active',
+        doctor: 'Unassigned',
+      };
+      setPatientsList([newPatient, ...patientsList]);
+    }
     setShowModal(false);
   };
 
@@ -144,9 +185,14 @@ const AdminPatients = () => {
                   <td className="px-6 py-4 text-sm text-slate-600 ">{pt.doctor}</td>
                   <td className="px-6 py-4"><span className={cn("text-xs font-bold px-2.5 py-1 rounded-lg", statusColor(pt.status))}>{pt.status}</span></td>
                   <td className="px-6 py-4 text-right">
-                    <button className="p-2 rounded-lg text-slate-400 hover:text-slate-700 :text-white hover:bg-slate-100 :bg-slate-800 transition-colors opacity-0 group-hover:opacity-100">
-                      <MoreVertical size={16} />
-                    </button>
+                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={(e) => { e.stopPropagation(); handleEditPatient(pt); }} className="p-2 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-100 transition-all">
+                        <Edit2 size={14} />
+                      </button>
+                      <button onClick={(e) => { e.stopPropagation(); handleDeletePatient(pt.id); }} className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all">
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </td>
                 </motion.tr>
               ))}
@@ -167,12 +213,12 @@ const AdminPatients = () => {
             <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()} className="bg-white rounded-[24px] shadow-2xl w-full max-w-lg p-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-[#0a1a0f] ">Register New Patient</h2>
+                <h2 className="text-xl font-bold text-[#0a1a0f] ">{formData.isEdit ? "Edit Patient Record" : "Register New Patient"}</h2>
                 <button onClick={() => setShowModal(false)} className="p-2 rounded-lg hover:bg-slate-100 :bg-slate-800 text-slate-400"><X size={20} /></button>
               </div>
-              
+
               <div className="space-y-5">
-                
+
                 {/* Auto-generated ID Field */}
                 <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-4 flex items-center justify-between">
                   <div>
@@ -187,56 +233,56 @@ const AdminPatients = () => {
 
                 <div>
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Full Name</label>
-                  <input type="text" placeholder="Patient full name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+                  <input type="text" placeholder="Patient full name" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Email</label>
-                    <input type="email" placeholder="patient@mail.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
+                    <input type="email" placeholder="patient@mail.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Phone</label>
-                    <input type="tel" placeholder="+1 555-0000" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
+                    <input type="tel" placeholder="+1 555-0000" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-3 gap-4">
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Date of Birth</label>
-                    <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})}
+                    <input type="date" value={formData.dob} onChange={e => setFormData({ ...formData, dob: e.target.value })}
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Gender</label>
-                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})}
+                    <select value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value })}
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500">
                       <option>Male</option><option>Female</option><option>Other</option>
                     </select>
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Blood Group</label>
-                    <select value={formData.bloodGroup} onChange={e => setFormData({...formData, bloodGroup: e.target.value})}
+                    <select value={formData.bloodGroup} onChange={e => setFormData({ ...formData, bloodGroup: e.target.value })}
                       className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500">
-                      {['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(b => <option key={b}>{b}</option>)}
+                      {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(b => <option key={b}>{b}</option>)}
                     </select>
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 block">Address</label>
-                  <textarea placeholder="Full address" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})}
+                  <textarea placeholder="Full address" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 resize-none h-20 custom-scrollbar" />
                 </div>
               </div>
-              
+
               <div className="flex gap-3 mt-8">
                 <button onClick={() => setShowModal(false)} className="flex-1 py-3 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 :bg-slate-800 transition-colors">Cancel</button>
                 <button onClick={handleRegisterPatient} className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2">
-                  <Plus size={18} /> Register Patient
+                  <Plus size={18} /> {formData.isEdit ? "Save Changes" : "Register Patient"}
                 </button>
               </div>
             </motion.div>
