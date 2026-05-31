@@ -11,7 +11,6 @@ import AppointmentAnalytics from "../../components/admin/AppointmentAnalytics";
 import RevenueAnalytics from "../../components/admin/RevenueAnalytics";
 import StaffManagementOverview from "../../components/admin/StaffManagementOverview";
 import AIInsights from "../../components/admin/AIInsights";
-import AIDiagnosisWidget from "../../components/doctor/AIDiagnosisWidget";
 import AuditLogs from "../../components/admin/AuditLogs";
 import EmergencyManagement from "../../components/admin/EmergencyManagement";
 const AdminDashboard = () => {
@@ -78,24 +77,10 @@ const AdminDashboard = () => {
           <AppointmentAnalytics /> <RevenueAnalytics />
         </div>
         {/* Management & Logs Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          
-          <div className="lg:col-span-1">
-            
-            <AIInsights />
-          </div>
-          <div className="lg:col-span-1">
-            
-            <AIDiagnosisWidget />
-          </div>
-          <div className="lg:col-span-1">
-            
-            <StaffManagementOverview />
-          </div>
-          <div className="lg:col-span-1">
-            
-            <AuditLogs />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <AIInsights />
+          <StaffManagementOverview />
+          <AuditLogs />
         </div>
       </div>
     </div>

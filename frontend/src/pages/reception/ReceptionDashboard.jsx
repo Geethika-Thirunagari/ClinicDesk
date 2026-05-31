@@ -1,15 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Calendar, CreditCard, Clock, UserPlus, ChevronRight, CheckCircle, Wallet, ScanLine, MessageSquareHeart } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 
-const queue = [
-  { id: 1, token: 'T-902', patient: 'Alice Johnson', doctor: 'Dr. Smith', time: '09:00 AM', status: 'Active' },
-  { id: 2, token: 'T-903', patient: 'Robert Williams', doctor: 'Dr. Smith', time: '09:45 AM', status: 'Waiting' },
-  { id: 3, token: 'T-904', patient: 'Maria Garcia', doctor: 'Dr. Chen', time: '10:00 AM', status: 'Waiting' },
-];
+// No longer using hardcoded queue here, moved to state inside the component
 
 const StatCard = ({ title, value, icon: Icon, color, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }}
@@ -28,6 +24,24 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
 const ReceptionDashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
+
+  const [liveQueue, setLiveQueue] = useState([]);
+  const [patientStats, setPatientStats] = useState({ totalBookings: 0, checkedIn: 0, waiting: 0 });
+
+  useEffect(() => {
+    // Load lists from storage
+    const storedQueue = JSON.parse(localStorage.getItem('clinicdesk_queue') || '[]');
+    const storedPatients = JSON.parse(localStorage.getItem('clinicdesk_patients') || '[]');
+
+    setLiveQueue(storedQueue);
+
+    // Calculate simple stats for the dashboard
+    setPatientStats({
+      totalBookings: storedPatients.length + storedQueue.length, // Rough proxy for today's activity
+      checkedIn: storedQueue.length,
+      waiting: storedQueue.filter(q => q.status === 'Waiting').length
+    });
+  }, []);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 font-['Outfit']">
@@ -50,10 +64,10 @@ const ReceptionDashboard = () => {
 
       {/* KPI Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Bookings" value="48" icon={Calendar} color="bg-blue-600" delay={0.1} />
-        <StatCard title="Waiting Queue" value="12" icon={Clock} color="bg-amber-600" delay={0.15} />
-        <StatCard title="Checked In" value="31" icon={CheckCircle} color="bg-emerald-600" delay={0.2} />
-        <StatCard title="Due Payments" value="05" icon={CreditCard} color="bg-rose-600" delay={0.25} />
+        <StatCard title="Today total" value={patientStats.totalBookings} icon={Calendar} color="bg-blue-600" delay={0.1} />
+        <StatCard title="Waiting Queue" value={patientStats.waiting} icon={Clock} color="bg-amber-600" delay={0.15} />
+        <StatCard title="Checked In" value={patientStats.checkedIn} icon={CheckCircle} color="bg-emerald-600" delay={0.2} />
+        <StatCard title="Consulting info" value="Full" icon={CreditCard} color="bg-rose-600" delay={0.25} />
       </div>
 
       {/* Main Sections */}
@@ -69,26 +83,33 @@ const ReceptionDashboard = () => {
             <button onClick={() => navigate('/reception/queue')} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-[#0a1a0f]">Live Feed</button>
           </div>
 
-          <div className="space-y-3 flex-1">
-            {queue.map((q, i) => (
-              <motion.div key={q.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
-                className={cn("flex items-center justify-between p-4 rounded-xl border transition-all group cursor-pointer",
-                  q.status === 'Active' ? "bg-blue-50 border-blue-100 shadow-sm" : "bg-white border-[#e2e8e2] hover:border-emerald-200")}>
-                <div className="flex items-center gap-4">
-                  <span className="text-xs font-black text-blue-600 w-10">{q.token}</span>
-                  <div className="w-px h-6 bg-slate-100 group-hover:bg-emerald-100 transition-colors"></div>
-                  <div>
-                    <h4 className="font-bold text-sm text-[#0a1a0f] group-hover:text-emerald-700 transition-colors">{q.patient}</h4>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{q.doctor} • {q.time}</p>
+          <div className="space-y-3 flex-1 overflow-y-auto max-h-[300px] pr-1 custom-scrollbar">
+            {liveQueue.length > 0 ? (
+              liveQueue.map((q, i) => (
+                <motion.div key={q.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
+                  className={cn("flex items-center justify-between p-4 rounded-xl border transition-all group cursor-pointer",
+                    q.status === 'Active' ? "bg-blue-50 border-blue-100 shadow-sm" : "bg-white border-[#e2e8e2] hover:border-emerald-200")}>
+                  <div className="flex items-center gap-4">
+                    <span className="text-xs font-black text-blue-600 w-10">{q.token}</span>
+                    <div className="w-px h-6 bg-slate-100 group-hover:bg-emerald-100 transition-colors"></div>
+                    <div>
+                      <h4 className="font-bold text-sm text-[#0a1a0f] group-hover:text-emerald-700 transition-colors">{q.patient}</h4>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{q.doctor} • {q.time}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className={cn("text-[8px] font-black px-2 py-0.5 rounded uppercase tracking-widest border",
-                    q.status === 'Active' ? "bg-blue-600 text-white border-blue-600" : "bg-amber-50 text-amber-600 border-amber-100")}>{q.status}</span>
-                  <ChevronRight size={14} className="text-slate-300 group-hover:text-emerald-500" />
-                </div>
-              </motion.div>
-            ))}
+                  <div className="flex items-center gap-3">
+                    <span className={cn("text-[8px] font-black px-2 py-0.5 rounded uppercase tracking-widest border",
+                      q.status === 'Active' ? "bg-blue-600 text-white border-blue-600" : "bg-amber-50 text-amber-600 border-amber-100")}>{q.status}</span>
+                    <ChevronRight size={14} className="text-slate-300 group-hover:text-emerald-500" />
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-10 opacity-30">
+                <Users size={32} className="mb-2" />
+                <p className="text-xs font-bold uppercase tracking-widest">No active traffic</p>
+              </div>
+            )}
           </div>
         </div>
 

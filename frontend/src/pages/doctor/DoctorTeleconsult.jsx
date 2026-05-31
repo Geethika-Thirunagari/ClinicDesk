@@ -9,6 +9,12 @@ import { cn } from '../../utils/cn';
 import { speakText, stopSpeaking } from '../../utils/speech';
 import TeleconsultVideoRoom from '../../components/teleconsult/TeleconsultVideoRoom';
 import VoiceHealthAssistant from '../../components/ai/VoiceHealthAssistant';
+import { aiService } from '../../services/ai.service';
+import {
+  isSymptomLike,
+  buildDoctorTriageMessage,
+  chatTime,
+} from '../../utils/teleconsultSymptoms';
 
 const DoctorTeleconsult = () => {
   // Call Controls State
@@ -116,43 +122,71 @@ const DoctorTeleconsult = () => {
     setPrescriptions(prev => prev.filter((_, i) => i !== index));
   };
 
-  // Send interactive chat message
-  const sendMessage = (e) => {
+  const appendSymptomToChat = (transcript, result) => {
+    const timeString = chatTime();
+    setChatMessages((prev) => [
+      ...prev,
+      { id: Date.now(), sender: 'patient', text: transcript, time: timeString },
+      {
+        id: Date.now() + 1,
+        sender: 'doctor',
+        text: buildDoctorTriageMessage(result),
+        time: timeString,
+      },
+    ]);
+  };
+
+  const analyzeSymptomForChat = async (text) => {
+    const result = await aiService.analyzeSymptoms(text);
+    appendSymptomToChat(text, result);
+  };
+
+  // Chat: symptoms → AI solution; normal questions → simulated patient reply
+  const sendMessage = async (e) => {
     e.preventDefault();
-    if (!newMessage.trim()) return;
-    
-    const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const docMsg = {
-      id: Date.now(),
-      sender: 'doctor',
-      text: newMessage,
-      time: timeString,
-    };
-    
-    setChatMessages((prev) => [...prev, docMsg]);
-    const userText = newMessage;
+    const text = newMessage.trim();
+    if (!text) return;
+
     setNewMessage('');
-    
-    // Simulate patient reply after 1.8 seconds
+
+    if (isSymptomLike(text)) {
+      await analyzeSymptomForChat(text);
+      return;
+    }
+
+    const timeString = chatTime();
+    setChatMessages((prev) => [
+      ...prev,
+      { id: Date.now(), sender: 'doctor', text, time: timeString },
+    ]);
+
     setTimeout(() => {
-      let reply = "Got it. I will keep that in mind, Doctor.";
-      const query = userText.toLowerCase();
+      let reply = 'Got it. I will keep that in mind, Doctor.';
+      const query = text.toLowerCase();
       if (query.includes('pain') || query.includes('chest') || query.includes('hurt')) {
-        reply = "Yes, it mostly starts when I climb stairs or jog. It fades after resting.";
-      } else if (query.includes('pill') || query.includes('medicine') || query.includes('dose') || query.includes('prescription')) {
+        reply = 'Yes, it mostly starts when I climb stairs or jog. It fades after resting.';
+      } else if (
+        query.includes('pill') ||
+        query.includes('medicine') ||
+        query.includes('dose') ||
+        query.includes('prescription')
+      ) {
         reply = "Okay, I'll start the new prescriptions today. Should I stop my previous ones?";
       } else if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
-        reply = "Hello Doctor! Thank you for the call.";
+        reply = 'Hello Doctor! Thank you for the call.';
       } else if (query.includes('exercise') || query.includes('diet') || query.includes('eat')) {
-        reply = "I will stick to a low-sodium diet and daily light walking.";
+        reply = 'I will stick to a low-sodium diet and daily light walking.';
       }
-      
-      setChatMessages((prev) => [...prev, {
-        id: Date.now() + 1,
-        sender: 'patient',
-        text: reply,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      }]);
+
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          sender: 'patient',
+          text: reply,
+          time: chatTime(),
+        },
+      ]);
     }, 1800);
   };
 
@@ -334,19 +368,11 @@ const DoctorTeleconsult = () => {
         compact
         title="Voice: patient symptoms → AI solution"
         autoSpeakSolution={false}
+        autoStart={isMicOn && !isCallEnded}
+        deferStartMs={1200}
+        silenceMs={1800}
         onAnalyzed={(transcript, result) => {
-          const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          setChatMessages((prev) => [
-            ...prev,
-            { id: Date.now(), sender: 'patient', text: transcript, time: timeString },
-          ]);
-          const note = result.recommendations?.length
-            ? `AI triage (${result.severity}): ${result.recommendations.join(' ')}`
-            : `AI triage noted — ${result.severity} severity.`;
-          setChatMessages((prev) => [
-            ...prev,
-            { id: Date.now() + 1, sender: 'doctor', text: note, time: timeString },
-          ]);
+          appendSymptomToChat(transcript, result);
         }}
       />
 
@@ -363,6 +389,7 @@ const DoctorTeleconsult = () => {
             remoteName="Alice Johnson"
             remoteId="PT-1024"
             enabled={!isCallEnded}
+            includeCallAudio={false}
           />
 
           {/* Video Control Bar */}
@@ -617,7 +644,7 @@ const DoctorTeleconsult = () => {
                   <form onSubmit={sendMessage} className="mt-2.5 relative flex gap-2">
                     <input 
                       type="text" 
-                      placeholder="Ask Alice a question..." 
+                      placeholder="Patient symptom (e.g. cold) or ask a question…" 
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       className="flex-1 pl-3.5 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs outline-none focus:border-blue-500 "

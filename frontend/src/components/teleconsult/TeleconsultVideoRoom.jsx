@@ -46,8 +46,14 @@ const TeleconsultVideoRoom = ({
   remoteName = 'Alice Johnson',
   remoteId = 'PT-1024',
   enabled = true,
+  /** false = camera only; keeps mic free for voice symptom assistant */
+  includeCallAudio = false,
 }) => {
-  const { stream, error, status, start } = useMediaStream({ enabled, video: true, audio: true });
+  const { stream, error, status, start } = useMediaStream({
+    enabled,
+    video: true,
+    audio: includeCallAudio,
+  });
 
   useEffect(() => {
     stream?.getVideoTracks().forEach((t) => { t.enabled = isVideoOn; });
@@ -124,7 +130,7 @@ const TeleconsultVideoRoom = ({
               </div>
             )}
             <div className="absolute top-2 left-2 flex items-center gap-1 bg-black/50 px-1.5 py-0.5 rounded text-[9px] text-emerald-300 font-bold z-10">
-              <Mic size={10} /> {isMicOn ? 'Live' : 'Muted'}
+              <Mic size={10} /> {includeCallAudio ? (isMicOn ? 'Live' : 'Muted') : 'Voice panel'}
             </div>
           </>
         ) : status === 'active' ? (

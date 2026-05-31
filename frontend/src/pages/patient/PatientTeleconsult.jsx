@@ -10,6 +10,12 @@ import { useAuthStore } from '../../store/useAuthStore';
 import TeleconsultVideoRoom from '../../components/teleconsult/TeleconsultVideoRoom';
 import { speakText, stopSpeaking } from '../../utils/speech';
 import VoiceHealthAssistant from '../../components/ai/VoiceHealthAssistant';
+import { aiService } from '../../services/ai.service';
+import {
+  isSymptomLike,
+  buildPatientDoctorReply,
+  chatTime,
+} from '../../utils/teleconsultSymptoms';
 
 const PatientTeleconsult = () => {
   const navigate = useNavigate();
@@ -64,53 +70,50 @@ const PatientTeleconsult = () => {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  const handleVoiceAnalyzed = (transcript, result) => {
-    const time = () =>
-      new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const postSymptomSolution = (transcript, result) => {
+    const timeString = chatTime();
+    const solutionText = buildPatientDoctorReply(result);
+    const doctorMsg = {
+      id: Date.now() + 1,
+      sender: 'doctor',
+      text: solutionText,
+      time: timeString,
+    };
 
     setChatMessages((prev) => [
       ...prev,
-      {
-        id: Date.now(),
-        sender: 'patient',
-        text: transcript,
-        time: time(),
-      },
+      { id: Date.now(), sender: 'patient', text: transcript, time: timeString },
+      doctorMsg,
     ]);
 
-    const solutionText = result.recommendations?.length
-      ? `I've reviewed what you described (${result.severity} priority). Here is my guidance: ${result.recommendations.join(' ')} We can discuss this further on the call.`
-      : `Thank you for explaining your symptoms. Based on initial assessment (${result.severity}), we'll continue evaluation during this visit.`;
-
-    setTimeout(() => {
-      const doctorMsg = {
-        id: Date.now() + 1,
-        sender: 'doctor',
-        text: solutionText,
-        time: time(),
-      };
-      setChatMessages((prev) => [...prev, doctorMsg]);
-      if (autoListen) {
-        setSpeakingId(doctorMsg.id);
-        speakText(solutionText, { onEnd: () => setSpeakingId(null) });
-      }
-    }, 600);
+    if (autoListen) {
+      setSpeakingId(doctorMsg.id);
+      speakText(solutionText, { onEnd: () => setSpeakingId(null) });
+    }
   };
 
-  const sendMessage = (e) => {
+  const handleVoiceAnalyzed = (transcript, result) => {
+    postSymptomSolution(transcript, result);
+  };
+
+  const sendMessage = async (e) => {
     e.preventDefault();
-    if (!newMessage.trim()) return;
     const text = newMessage.trim();
+    if (!text) return;
+    setNewMessage('');
+
+    if (isSymptomLike(text)) {
+      const result = await aiService.analyzeSymptoms(text);
+      postSymptomSolution(text, result);
+      return;
+    }
+
+    const timeString = chatTime();
     setChatMessages((prev) => [
       ...prev,
-      {
-        id: Date.now(),
-        sender: 'patient',
-        text,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      },
+      { id: Date.now(), sender: 'patient', text, time: timeString },
     ]);
-    setNewMessage('');
+
     setTimeout(() => {
       setChatMessages((prev) => [
         ...prev,
@@ -118,7 +121,7 @@ const PatientTeleconsult = () => {
           id: Date.now() + 1,
           sender: 'doctor',
           text: "Thank you for sharing that. I'll note it in your chart and we'll discuss next steps.",
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          time: chatTime(),
         },
       ]);
     }, 1500);
@@ -182,6 +185,9 @@ const PatientTeleconsult = () => {
         title="Tell us your problem (voice)"
         onAnalyzed={handleVoiceAnalyzed}
         autoSpeakSolution
+        autoStart={isMicOn && !isCallEnded}
+        deferStartMs={1200}
+        silenceMs={1800}
       />
 
       <div className="flex flex-col lg:flex-row gap-4 min-h-[520px]">
@@ -192,7 +198,8 @@ const PatientTeleconsult = () => {
             isMicOn={isMicOn}
             remoteName="Dr. Sarah Smith"
             remoteId="Cardiology"
-            enabled
+            enabled={!isCallEnded}
+            includeCallAudio={false}
           />
 
           <div className="absolute bottom-0 left-0 right-0 h-20 bg-slate-950/90 backdrop-blur flex items-center justify-center gap-3 z-30 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">

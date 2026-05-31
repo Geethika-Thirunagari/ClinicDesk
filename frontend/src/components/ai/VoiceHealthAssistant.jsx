@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, Loader2, Volume2, AlertCircle, Sparkles } from 'lucide-react';
+import { Mic, Loader2, Volume2, AlertCircle, Sparkles, RotateCcw } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import { aiService } from '../../services/ai.service';
 import { speakText, stopSpeaking } from '../../utils/speech';
 import SymptomAnalysisResults from './SymptomAnalysisResults';
+
+const MIN_TRANSCRIPT_CHARS = 3;
 
 /**
  * Auto-start listening → user speaks → auto AI solution when they pause.
@@ -16,21 +18,29 @@ const VoiceHealthAssistant = ({
   autoSpeakSolution = true,
   autoStart = true,
   autoAnalyze = true,
+  deferStartMs = 800,
+  silenceMs = 1800,
   title = 'Tell us your problem',
 }) => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [analyzeError, setAnalyzeError] = useState(null);
   const [status, setStatus] = useState('initializing');
-  const hasStartedRef = useRef(false);
   const analyzingRef = useRef(false);
   const runAnalysisRef = useRef(null);
+  const startListeningRef = useRef(() => {});
   const timeoutIdsRef = useRef([]);
+
+  const schedule = useCallback((fn, ms) => {
+    const id = window.setTimeout(fn, ms);
+    timeoutIdsRef.current.push(id);
+    return id;
+  }, []);
 
   const runAnalysis = useCallback(
     async (text) => {
       const symptoms = text.trim();
-      if (!symptoms || analyzingRef.current) return;
+      if (!symptoms || symptoms.length < MIN_TRANSCRIPT_CHARS || analyzingRef.current) return;
 
       analyzingRef.current = true;
       setLoading(true);
@@ -51,47 +61,42 @@ const VoiceHealthAssistant = ({
             onEnd: () => {
               if (autoStart) {
                 setStatus('listening');
-                const id = setTimeout(() => start(), 800);
-                timeoutIdsRef.current.push(id);
+                schedule(() => startListeningRef.current(), 800);
               }
             },
           });
         } else if (autoStart) {
-          const id = setTimeout(() => {
+          schedule(() => {
             setStatus('listening');
-            start();
+            startListeningRef.current();
           }, 1500);
-          timeoutIdsRef.current.push(id);
         }
-      } catch {
-        setAnalyzeError('Could not reach the AI service. Is the backend running?');
+      } catch (err) {
+        setAnalyzeError(err.message || 'Could not analyze symptoms. Try speaking again.');
         setStatus('error');
-        if (autoStart) {
-          const id = setTimeout(() => start(), 2000);
-          timeoutIdsRef.current.push(id);
-        }
+        if (autoStart) schedule(() => startListeningRef.current(), 2000);
       } finally {
         setLoading(false);
         analyzingRef.current = false;
       }
     },
-    [autoSpeakSolution, autoStart, onAnalyzed]
+    [autoSpeakSolution, autoStart, onAnalyzed, schedule]
   );
 
   runAnalysisRef.current = runAnalysis;
 
   const handleListeningEnd = useCallback(
     (fullText) => {
-      if (!autoAnalyze || !fullText.trim()) {
+      const trimmed = fullText.trim();
+      if (!autoAnalyze || trimmed.length < MIN_TRANSCRIPT_CHARS) {
         if (autoStart && !analyzingRef.current) {
-          const id = setTimeout(() => start(), 600);
-          timeoutIdsRef.current.push(id);
+          schedule(() => startListeningRef.current(), 500);
         }
         return;
       }
-      runAnalysisRef.current?.(fullText);
+      runAnalysisRef.current?.(trimmed);
     },
-    [autoAnalyze, autoStart]
+    [autoAnalyze, autoStart, schedule]
   );
 
   const {
@@ -103,22 +108,45 @@ const VoiceHealthAssistant = ({
     error: speechError,
     start,
     stop,
-    setTranscript,
+    reset,
   } = useSpeechRecognition({
     continuous: true,
+    silenceMs,
     onListeningEnd: handleListeningEnd,
   });
 
-  const displayText = fullText || transcript;
+  const startListening = useCallback(() => {
+    if (!supported || analyzingRef.current) return;
+    setStatus('listening');
+    start();
+  }, [supported, start]);
+
+  startListeningRef.current = startListening;
+
+  const handleListenAgain = () => {
+    timeoutIdsRef.current.forEach(clearTimeout);
+    timeoutIdsRef.current = [];
+    reset();
+    setResult(null);
+    setAnalyzeError(null);
+    analyzingRef.current = false;
+    stopSpeaking();
+    startListeningRef.current();
+  };
 
   useEffect(() => {
-    if (!supported || !autoStart || hasStartedRef.current) return;
-    hasStartedRef.current = true;
-    setStatus('listening');
-    const t = setTimeout(() => start(), 600);
-    timeoutIdsRef.current.push(t);
+    if (!supported) return undefined;
+
+    if (!autoStart) {
+      stop();
+      setStatus('paused');
+      return undefined;
+    }
+
+    setStatus('initializing');
+    const t = schedule(() => startListeningRef.current(), deferStartMs);
     return () => clearTimeout(t);
-  }, [supported, autoStart, start]);
+  }, [supported, autoStart, deferStartMs, schedule, stop]);
 
   useEffect(() => {
     return () => {
@@ -131,8 +159,12 @@ const VoiceHealthAssistant = ({
   }, [stop]);
 
   useEffect(() => {
-    if (isListening && status !== 'analyzing') setStatus('listening');
+    if (isListening && status !== 'analyzing' && status !== 'done') {
+      setStatus('listening');
+    }
   }, [isListening, status]);
+
+  const displayText = fullText || transcript;
 
   if (!supported) {
     return (
@@ -145,10 +177,11 @@ const VoiceHealthAssistant = ({
 
   const statusLabel = {
     initializing: 'Starting microphone…',
-    listening: 'Listening — speak your problem now',
+    listening: 'Listening — speak your problem, then pause',
     analyzing: 'Getting your solution…',
     done: 'Solution ready',
-    error: 'Something went wrong — listening again…',
+    error: 'Could not analyze — tap Listen again',
+    paused: 'Microphone paused — unmute to speak',
   }[status] || '';
 
   return (
@@ -160,7 +193,12 @@ const VoiceHealthAssistant = ({
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <div>
-          <h3 className={cn('font-bold text-[#0a1a0f] flex items-center gap-2', compact ? 'text-sm' : 'text-base')}>
+          <h3
+            className={cn(
+              'font-bold text-[#0a1a0f] flex items-center gap-2',
+              compact ? 'text-sm' : 'text-base'
+            )}
+          >
             {loading ? (
               <Loader2 size={18} className="text-indigo-600 animate-spin" />
             ) : isListening ? (
@@ -172,10 +210,21 @@ const VoiceHealthAssistant = ({
           </h3>
           <p className="text-xs text-indigo-600 font-semibold mt-1">{statusLabel}</p>
         </div>
+        {autoStart && (
+          <button
+            type="button"
+            onClick={handleListenAgain}
+            disabled={loading}
+            className="shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-indigo-200 text-[10px] font-bold text-indigo-700 hover:bg-indigo-50 disabled:opacity-50"
+          >
+            <RotateCcw size={12} /> Listen again
+          </button>
+        )}
       </div>
 
       <p className="text-xs text-slate-500 mb-3">
-        Speak naturally, then pause for a moment — your solution appears automatically. Demo only, not medical advice.
+        Speak clearly (e.g. &quot;chest pain when walking&quot;), pause 2 seconds — your solution
+        appears automatically. Demo only, not medical advice.
       </p>
 
       {(speechError || analyzeError) && (
@@ -198,7 +247,11 @@ const VoiceHealthAssistant = ({
         >
           {displayText || (
             <span className="text-slate-400 italic">
-              {isListening ? 'Waiting for you to speak…' : 'Your words will appear here'}
+              {status === 'paused'
+                ? 'Unmute the mic to start listening…'
+                : isListening
+                  ? 'Waiting for you to speak…'
+                  : 'Your words will appear here'}
             </span>
           )}
           {isListening && interim && (
@@ -226,7 +279,9 @@ const VoiceHealthAssistant = ({
             className="pt-3 border-t border-indigo-100"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Your solution</span>
+              <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
+                Your solution
+              </span>
               {autoSpeakSolution && (
                 <button
                   type="button"

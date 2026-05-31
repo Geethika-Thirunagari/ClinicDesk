@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Loader2, AlertTriangle } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { aiService } from '../../services/ai.service';
-import VoiceHealthAssistant from '../ai/VoiceHealthAssistant';
 import SymptomAnalysisResults from '../ai/SymptomAnalysisResults';
 
 export default function AIDiagnosisWidget() {
@@ -40,23 +39,12 @@ export default function AIDiagnosisWidget() {
                 AI Diagnostic Assistant
             </h2>
 
-            <div className="mb-4">
-                <VoiceHealthAssistant
-                    compact
-                    title="Voice symptom input"
-                    autoSpeakSolution={false}
-                    onAnalyzed={(text) => setSymptoms(text)}
-                    autoStart
-                    autoAnalyze
-                />
-            </div>
-
             <div className="relative mb-4">
                 <textarea
                     rows={3}
                     value={symptoms}
                     onChange={(e) => setSymptoms(e.target.value)}
-                    placeholder="Or type symptoms (e.g. fever and cough, chest pain)..."
+                    placeholder="Describe symptoms (e.g. fever and cough, chest pain)..."
                     className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm resize-none focus:ring-2 focus:ring-indigo-500 outline-none text-slate-700 transition-all placeholder:text-slate-400"
                 />
             </div>

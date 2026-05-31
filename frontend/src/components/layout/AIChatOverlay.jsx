@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Send, X, Sparkles, User, MessageCircle, MoreVertical } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { aiService } from '../../services/ai.service';
 
 const initialMessages = [
     { id: 1, role: 'assistant', text: "Hello! I'm your ClinicDesk AI. How can I help you manage your practice today?", time: 'Now' }
@@ -19,36 +20,56 @@ const AIChatOverlay = ({ isOpen, onClose }) => {
         }
     }, [messages, isTyping]);
 
-    const handleSend = (e) => {
+    const handleSend = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
 
-        const userMessage = { id: Date.now(), role: 'user', text: input, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
-        setMessages(prev => [...prev, userMessage]);
-        const query = input;
+        const userMessage = {
+            id: Date.now(),
+            role: 'user',
+            text: input,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+        const query = input.trim();
+        setMessages((prev) => [...prev, userMessage]);
         setInput('');
         setIsTyping(true);
 
-        // Simulated AI response logic
-        setTimeout(() => {
-            let response = "I'm analyzing that for you...";
-            const q = query.toLowerCase();
-
-            if (q.includes('revenue') || q.includes('money') || q.includes('earn')) {
-                response = "Your revenue this month is $124.5k, which is up 8.2% from last month. Most of the growth came from Cardiology teleconsultations.";
-            } else if (q.includes('patient') || q.includes('appointment')) {
-                response = "You have 342 appointments scheduled for today. 14 more than yesterday. Your busiest hour will be 10:00 AM with Dr. Smith.";
-            } else if (q.includes('staff') || q.includes('doctor')) {
-                response = "Currently, 86 staff members are active. Staffing levels are optimal for the current patient load.";
-            } else if (q.includes('hello') || q.includes('hi')) {
-                response = "Hi there! I can give you quick insights on revenue, staff schedules, or patient statistics. What would you like to know?";
-            } else {
-                response = "That's an interesting query. I'll need to check the comprehensive logs for more details, but based on the dashboard, everything looks within normal parameters.";
-            }
-
-            setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: response, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }]);
+        try {
+            const history = [...messages, userMessage].map((m) => ({
+                role: m.role === 'user' ? 'user' : 'assistant',
+                text: m.text,
+            }));
+            const data = await aiService.chat({
+                message: query,
+                history,
+                context: 'clinic_admin',
+            });
+            const response =
+                data.reply ||
+                'I could not generate a response. Please check that the backend is running.';
+            setMessages((prev) => [
+                ...prev,
+                {
+                    id: Date.now() + 1,
+                    role: 'assistant',
+                    text: response,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                },
+            ]);
+        } catch {
+            setMessages((prev) => [
+                ...prev,
+                {
+                    id: Date.now() + 1,
+                    role: 'assistant',
+                    text: 'Could not reach the AI service. Start the Django server (python run_server.py) and try again.',
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                },
+            ]);
+        } finally {
             setIsTyping(false);
-        }, 1500);
+        }
     };
 
     return (
@@ -124,7 +145,7 @@ const AIChatOverlay = ({ isOpen, onClose }) => {
                                 <Send size={16} />
                             </button>
                         </form>
-                        <p className="text-[9px] text-slate-400 text-center mt-3 font-semibold uppercase tracking-widest">Powered by ClinicDesk Genesis AI</p>
+                        <p className="text-[9px] text-slate-400 text-center mt-3 font-semibold uppercase tracking-widest">Powered by Google Gemini</p>
                     </div>
                 </motion.div>
             )}

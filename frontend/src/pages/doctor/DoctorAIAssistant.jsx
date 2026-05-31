@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Send, Sparkles, AlertTriangle, AlertCircle, RefreshCw, FileText, CheckCircle2, ChevronRight, Search } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { aiService } from '../../services/ai.service';
+import { isSymptomLike } from '../../utils/teleconsultSymptoms';
 
 const initialSuggestions = [
   { text: "Female, 45, chronic fatigue and high TSH levels", category: "Endocrine" },
@@ -57,44 +59,73 @@ export default function DoctorAIAssistant() {
   const [generatedSummary, setGeneratedSummary] = useState("");
   const [isSummarizing, setIsSummarizing] = useState(false);
 
-  const handleSend = (textToSend) => {
-    const text = textToSend || inputText;
-    if (!text.trim()) return;
+  const handleSend = async (textToSend) => {
+    const text = (textToSend || inputText).trim();
+    if (!text) return;
 
-    const userMsg = { role: 'user', text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
-    setMessages(prev => [...prev, userMsg]);
-    setInputText("");
+    const userMsg = {
+      role: 'user',
+      text,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+    setMessages((prev) => [...prev, userMsg]);
+    setInputText('');
     setIsGenerating(true);
 
-    setTimeout(() => {
-      // Look up matches in mock database
-      let matchKey = Object.keys(mockDifferential).find(key => 
-        text.toLowerCase().includes(key.toLowerCase()) || 
-        key.toLowerCase().split(', ').some(word => text.toLowerCase().includes(word))
-      );
-
-      let responseText = "";
-      let foundDiff = [];
-
-      if (matchKey) {
-        foundDiff = mockDifferential[matchKey];
-        responseText = `Based on the parameters clinical evaluation indicates ${foundDiff[0].diagnosis} (approx ${foundDiff[0].probability}% confidence) as the primary suspect. I have loaded the full differential diagnosis list in the workspace panel to the right.`;
+    try {
+      if (isSymptomLike(text) || text.length > 25) {
+        const result = await aiService.analyzeSymptoms(text);
+        const foundDiff = (result.predictions || []).map((p, i) => ({
+          diagnosis: p.condition,
+          probability: p.probability,
+          critical: result.severity === 'CRITICAL' || result.severity === 'HIGH',
+          notes: result.recommendations?.[i] || result.recommendations?.[0] || 'Review during consult.',
+        }));
+        if (foundDiff.length === 0) {
+          foundDiff.push({
+            diagnosis: 'Clinical review needed',
+            probability: 50,
+            critical: false,
+            notes: result.recommendations?.join(' ') || '',
+          });
+        }
+        setDifferential(foundDiff);
+        const responseText = `Gemini assessment (${result.severity}, ${result.confidence}): Primary concern is ${foundDiff[0].diagnosis}. Recommendations: ${(result.recommendations || []).join(' ')}`;
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            text: responseText,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          },
+        ]);
       } else {
-        foundDiff = [
-          { diagnosis: "Generalized Viral Syndrome", probability: 60, critical: false, notes: "Provide supportive care, rest, hydration. Review if symptoms worsen." },
-          { diagnosis: "Atypical Presentation (Monitor)", probability: 40, critical: false, notes: "Follow up in 48-72 hours. Order baseline CBC, BMP if persistent." }
-        ];
-        responseText = "I've analyzed the symptoms. Given the general description, a standard symptomatic analysis has been mapped to the workspace side panel. Please specify age, gender, and key vitals for higher fidelity recommendations.";
+        const history = [...messages, userMsg].map((m) => ({
+          role: m.role === 'user' ? 'user' : 'assistant',
+          text: m.text,
+        }));
+        const data = await aiService.chat({ message: text, history, context: 'doctor' });
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            text: data.reply || 'No response from AI.',
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          },
+        ]);
       }
-
-      setDifferential(foundDiff);
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        text: responseText,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          text: 'AI unavailable. Ensure backend is running and GOOGLE_GEMINI_API_KEY is set in backend/.env',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ]);
+    } finally {
       setIsGenerating(false);
-    }, 1200);
+    }
   };
 
   const handleCheckInteraction = () => {

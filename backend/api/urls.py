@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 from .views import login_view, profile_view
-from .ai_views import analyze_symptoms
+from .ai_views import analyze_symptoms, ai_chat
 
 urlpatterns = [
     # Auth Endpoints
@@ -11,4 +11,5 @@ urlpatterns = [
 
     # AI Engine Endpoints
     path('ai/analyze-symptoms/', analyze_symptoms, name='analyze_symptoms'),
+    path('ai/chat/', ai_chat, name='ai_chat'),
 ]

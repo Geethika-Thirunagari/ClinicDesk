@@ -1,0 +1,7 @@
+.env
+.env.local
+backend/.env
+frontend/.env*.pyc
+__pycache__/
+db.sqlite3
+node_modules/
